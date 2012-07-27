@@ -1,19 +1,27 @@
-; Copyright (C) Yagnesh Raghava Yakkala. http://yagnesh.org
-;    File: wrf.ncl
-; Created: Tuesday, July 24 2012
-; License: GPL v3 or later. <http://www.gnu.org/licenses/gpl.html>
-;
-
+load "$nsc/WRFUserARW.ncl"
+;_____________________________________________________________________________
+; Function: no_of_levels
+;      Doc: Spitsout number of levels in varailbe
+;_____________________________________________________________________________
 undef("no_of_levels")
-function no_of_levels( f:file )
+function no_of_levels( f:file,varname:string)
+local var
 begin
+  var = f->$varname$
   dims = dimsizes(var)
+
+  if ( Leng(dims).le.2) then
+
+  end if
+
+
 end
 
 ;_____________________________________________________________________________
 ; wrf_user_getvar_weighted_sum:
 ;          Calculate weight of the layer will be calculated using
 ;          hydrostatic equation.
+;_____________________________________________________________________________
 undef("wrf_user_getvar_weighted_sum")
 function wrf_user_getvar_weighted_sum(file_handle,var_in:string,time_in:integer)
 local var,varname, var, ph,phb,pres,gh,dim, wgt_var, noflevels, \
@@ -84,6 +92,8 @@ begin
   pres@txString         = "Skin Temperature "      ; add common title
 ;;  gsn_panel(wks,plot,(/noft/2 , 2/),pres)        ; create panel plot
 
+  return (pres)
+
 end
 
 ;;--------------------------------------------------------------------
@@ -107,8 +117,6 @@ begin
   if ( var .eq. "tc" ) then
     return
   end if
-
-
 end
 
 ;---------------------------------------------------------------------
@@ -213,8 +221,12 @@ begin
 
   return loc
 end
-;- "wv_wrf_ll_to_ij" ends here --
 
+;_____________________________________________________________________________
+; Fuction: set_zoom_in
+; Doc:
+;
+;_____________________________________________________________________________
 undef("set_zoom_in")
 function set_zoom_in(x1,y1,x2,y2,map_args[1]:logical)
 local x1,y1,x2,y2,map_args
@@ -230,56 +242,54 @@ begin
   return(map_args)
 
 end
-;- "set_zoom_in" ends here --
 
+;_____________________________________________________________________________
 ; Fuction: hgt_contour
 ; Doc:
+;    wks:
+;    nc_file:
+;    opt_args:
 ;
-;---------------------------------------------------------------------
+;_____________________________________________________________________________
 undef("hgt_contour")
-function hgt_contour(nc_file[1]:file,opt_args[1]:logical)
+function hgt_contour(wks:graphic,nc_file[1]:file,opt_args[1]:logical)
 local opt_args
-
 
 begin
 
-  opt_args = set_no_frame_res(opt_args)
+  opts_args = set_no_frame_res(opt_args)
 
   Z = nc_file->HGT(0,:,:)
 
   lat_wrf = nc_file->XLAT(0,:,:)
   lon_wrf = nc_file->XLONG(0,:,:)
 
-  wks = gsn_open_wks("png", "terrain")
   gsn_define_colormap(wks, "OceanLakeLandSnow")
 
-  opt_args = True
   opt_args@cnFillOn = True
   opt_args@cnLinesOn = True
   opt_args@gsnSpreadColors = True
   opt_args@gsnPaperMargin = 1.
-  opt_args@pmTickMarkDisplayMode = "Always"
   opt_args@gsnAddCyclic = False
+
+  opt_args@pmTickMarkDisplayMode = "Always"
   opt_args@sfXArray = lon_wrf
   opt_args@sfYArray = lat_wrf
-  opt_args@mpLimitMode = "LatLon"
   opt_args@cnLevelSelectionMode = "ExplicitLevels"
   opt_args@cnLevels = fspan(0.,3000., 12)
-  opt_args = wrf_map_opt_argsources(wrf,opt_args)
+  opt_args = wrf_map_resources(nc_file,opt_args)
 
   projection = opt_args@mpProjection
+  opt_args@mpLimitMode = "LatLon"
   opt_args@mpMinLatF =   opt_args@start_lat
   opt_args@mpMaxLatF =   opt_args@end_lat
   opt_args@mpMinLonF =   opt_args@start_lon
   opt_args@mpMaxLonF =   opt_args@end_lon
   opt_args@tiMainString = "Digital Elevation Model"
 
-  opt_args = set_no_frame_res(opt_args)
-
-  plot = gsn_csm_contour_map(wks, Z, opt_args)
+  plot = gsn_csm_contour(wks, Z, opt_args)
   return(plot)
 
 end
-;- "hgt_contour" ends here --
 
 ;;; wrf.ncl ends here
