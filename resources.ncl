@@ -19,7 +19,7 @@ local res_in, res_out
 begin
 
   res_out          = res_in
-  opt_args@gsnMaximize = True
+  res_out@gsnMaximize = True
   res_out@gsnDraw  = False              ; Do not draw plot
   res_out@gsnFrame = False              ; Do not advance frame
   res_out@Footer   = False
