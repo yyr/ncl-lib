@@ -27,4 +27,20 @@ begin
   return(res_out)
 
 end
-;- "set_no_frame_res" ends here --
+
+;_____________________________________________________________________________
+; Fuction: set_cn_resorces
+; Doc:
+;
+;_____________________________________________________________________________
+undef("set_cn_resorces")
+function set_cn_resorces(opts_in:logical)
+local opts_out
+
+begin
+  opts_out = opts_in
+  opts_out@gsnSpreadColors = True
+  opts_out@cnFillOn = True
+  opts_out@cnLinesOn = True
+  return(opts_out)
+end
