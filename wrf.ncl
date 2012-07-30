@@ -1,4 +1,31 @@
+load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_code.ncl"
+load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_csm.ncl"
 load "$nsc/WRFUserARW.ncl"
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; I/O ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;_____________________________________________________________________________
+; Fuction: wrf_input_file
+; Doc:
+;
+;_____________________________________________________________________________
+undef("wrf_input_file")
+function wrf_input_file(env_name:string)
+local infile_name,wrf_in
+
+begin
+  infile_name = getenv(env_name)
+
+  if ( isstring(infile_name) ) then
+    wrf_in = addfile(infile_name, "r")
+    else
+      announce("Fatal: wrfout environment variable is not set ")
+      exit
+  end if
+  return(wrf_in)
+end
+
+
 ;_____________________________________________________________________________
 ; Function: no_of_levels
 ;      Doc: Spitsout number of levels in varailbe
@@ -252,23 +279,24 @@ end
 ;
 ;_____________________________________________________________________________
 undef("hgt_contour")
-function hgt_contour(wks:graphic,nc_file[1]:file,opt_args[1]:logical)
+function hgt_contour(nc_file[1]:file,wks:graphic,opt_args[1]:logical)
 local opt_args
 
 begin
 
-  opts_args = set_no_frame_res(opt_args)
+
 
   Z = nc_file->HGT(0,:,:)
 
   lat_wrf = nc_file->XLAT(0,:,:)
   lon_wrf = nc_file->XLONG(0,:,:)
 
+
   gsn_define_colormap(wks, "OceanLakeLandSnow")
 
-  opt_args@cnFillOn = True
-  opt_args@cnLinesOn = True
-  opt_args@gsnSpreadColors = True
+  opts_args = set_no_frame_res(opt_args)
+  opt_args = set_cn_resorces(opt_args)
+
   opt_args@gsnPaperMargin = 1.
   opt_args@gsnAddCyclic = False
 
@@ -277,15 +305,9 @@ begin
   opt_args@sfYArray = lat_wrf
   opt_args@cnLevelSelectionMode = "ExplicitLevels"
   opt_args@cnLevels = fspan(0.,3000., 12)
-  opt_args = wrf_map_resources(nc_file,opt_args)
+;  opt_args = wrf_map_resources(nc_file,opt_args)
 
-  projection = opt_args@mpProjection
-  opt_args@mpLimitMode = "LatLon"
-  opt_args@mpMinLatF =   opt_args@start_lat
-  opt_args@mpMaxLatF =   opt_args@end_lat
-  opt_args@mpMinLonF =   opt_args@start_lon
-  opt_args@mpMaxLonF =   opt_args@end_lon
-  opt_args@tiMainString = "Digital Elevation Model"
+  opt_args@tiMainString = "Model Heght"
 
   plot = gsn_csm_contour(wks, Z, opt_args)
   return(plot)
