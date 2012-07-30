@@ -20,6 +20,11 @@ function usage()
     echo "pass"
 }
 
+function print_report()
+{
+    echo "pass"
+}
+
 function run_test()
 {
     test_name=${1%\.*}
@@ -27,7 +32,7 @@ function run_test()
     echo "running test: $test_name"
     ncl $@ |tee $log_file
     no_fatal=`grep -e "fatal" $log_file | wc -l`
-    no_warn=`grep -e "Warn" $log_file | wc -l`
+    no_warn=`grep -i "Warn" $log_file | wc -l`
     if [ $? -ne 0 ]; then
         echo "$no_warn warnings, $no_fatal Fatal errors"
         echo "test: $test_name failed!"
