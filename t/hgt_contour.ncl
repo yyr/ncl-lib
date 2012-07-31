@@ -1,5 +1,4 @@
 load "$lib_dir/yagUtils.ncl"
-load "$lib_dir/WRFUserARW.ncl"
 
 begin
 
@@ -7,7 +6,14 @@ begin
 
   wks = gsn_open_wks("png","hgt_cont")
 
-  opts = True
-  pl = hgt_contour(a,wks,opts)
-  hgt = wrf_map_overlays(a,wks,(/pl/),True,True)
+  hgt = hgt_contour(a,wks,True)
+
+  mp_res = wrf_map_resources(a,True)
+  mp  = wrf_map(wks,a,mp_res)
+
+  overlay(mp,hgt)
+
+  draw(wks)
+  frame(wks)
+
 end

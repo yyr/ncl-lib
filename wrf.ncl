@@ -284,23 +284,19 @@ local opt_args
 
 begin
 
-
-
   Z = nc_file->HGT(0,:,:)
 
   lat_wrf = nc_file->XLAT(0,:,:)
   lon_wrf = nc_file->XLONG(0,:,:)
 
+  set_colormap(wks,"hgt")
 
-  gsn_define_colormap(wks, "OceanLakeLandSnow")
-
-  opts_args = set_no_frame_res(opt_args)
+  opt_args = set_no_frame_res(opt_args)
   opt_args = set_cn_resorces(opt_args)
 
   opt_args@gsnPaperMargin = 1.
   opt_args@gsnAddCyclic = False
 
-  opt_args@pmTickMarkDisplayMode = "Always"
   opt_args@sfXArray = lon_wrf
   opt_args@sfYArray = lat_wrf
   opt_args@cnLevelSelectionMode = "ExplicitLevels"
