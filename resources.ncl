@@ -23,11 +23,28 @@ begin
   res_out@gsnMaximize = True
   res_out@gsnDraw  = False              ; Do not draw plot
   res_out@gsnFrame = False              ; Do not advance frame
-  res_out@Footer   = False
 
   return(res_out)
 
 end
+
+;_____________________________________________________________________________
+; Fuction: set_high_res_coast
+; Doc:
+;
+;_____________________________________________________________________________
+undef("set_high_res_coast")
+function set_high_res_coast(mp_res_in:logical)
+local mp_res_out
+
+begin
+  mp_res_out = mp_res_in
+  mp_res_out@mpDataBaseVersion    = "HighRes"
+  mp_res_out@mpGeophysicalLineColor = "Black"
+  mp_res_out@mpGeophysicalLineThicknessF = 1.5
+  return(mp_res_out)
+end
+
 
 ;_____________________________________________________________________________
 ; Fuction: set_cn_resorces
