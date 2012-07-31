@@ -4,4 +4,8 @@
 res = True
 
 
+;; colormap resources
+colormap = True
+colormap@hgt = "OceanLakeLandSnow"
+
 ;;; gen_conf.ncl ends here
