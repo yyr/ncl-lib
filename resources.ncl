@@ -7,6 +7,7 @@
 ; Description:
 ; my dumb ncl functions/procedures
 
+load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_code.ncl"
 ;_____________________________________________________________________________
 ; Fuction: set_no_frame_res
 ; Doc:
@@ -43,4 +44,26 @@ begin
   opts_out@cnFillOn = True
   opts_out@cnLinesOn = True
   return(opts_out)
+end
+
+;_____________________________________________________________________________
+; Fuction: set_colormap
+; Doc: set colormap based on the HGT, these are personal choice, one should be
+;  over ride these from the configuration file
+;_____________________________________________________________________________
+undef("set_colormap")
+procedure set_colormap(ws:graphic,var:string)
+local colormap
+begin
+;  load $nsc/gen_conf.ncl
+
+  ;; colormap resources
+  colormap = True
+  colormap@hgt = "OceanLakeLandSnow"
+
+  if ( var .eq. "hgt" .or. var .eq. "HGT" ) then
+    gsn_define_colormap(ws, colormap@$var$)
+  end if
+
+  return
 end
