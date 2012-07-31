@@ -47,16 +47,18 @@ function run_test()
     log_file="/tmp/$test_name".log
     passed="no"
 
-    printf "\n\n\nStarted running test: %s\n\n" "$test_name"
+    printf "\nStarted running test: %s\n\n" "$test_name"
     ncl $@ |tee $log_file
     test_exit_status=$?
 
-    echo "DONE test: $test_name , exit status is: $test_exit_status"
+    printf "\nFinished running test: %s, exit status is: %d\n\n" \
+        $test_name $test_exit_status
 
     no_fatal=`grep -i "fatal" $log_file | wc -l`
     no_warn=`grep -i "Warn" $log_file | wc -l`
 
-    if [[ $test_exit_status != 0 || $$no_fatal != 0 || $no_warn != 0 ]]; then
+
+    if [[ $test_exit_status != 0 || $no_fatal != 0 || $no_warn != 0 ]]; then
         print_report
     else
         passed="yes"
