@@ -23,8 +23,9 @@ function usage()
 
 function initialize_report()
 {
+    printf "\n\nReport: Tests started at %s\n" "`date`" > $report_file
     line=$(printf '%0.1s' "-"{1..70})
-    printf "%s\n" $line > $report_file
+    printf "%s\n" $line >> $report_file
     printf "| %-30s| %-10s | %-10s| %-10s| %-10s\n" \
         "Test Name" "passed" "Warnings" "Fatal" >> $report_file
     printf "%s\n" $line >> $report_file
@@ -39,19 +40,23 @@ function print_report()
 
 function run_test()
 {
-    test_name=${1%\.*}
+    test_name=${1##*/}
+    test_name=${test_name%\.*}
     no_warn=0
     no_fatal=0
     log_file="/tmp/$test_name".log
     passed="no"
 
-    echo "running test: $test_name"
+    printf "\n\n\nStarted running test: %s\n\n" "$test_name"
     ncl $@ |tee $log_file
+    test_exit_status=$?
 
-    no_fatal=`grep -e "fatal" $log_file | wc -l`
+    echo "DONE test: $test_name , exit status is: $test_exit_status"
+
+    no_fatal=`grep -i "fatal" $log_file | wc -l`
     no_warn=`grep -i "Warn" $log_file | wc -l`
 
-    if [ $? -ne 0 ]; then
+    if [[ $test_exit_status != 0 || $$no_fatal != 0 || $no_warn != 0 ]]; then
         print_report
     else
         passed="yes"
@@ -73,4 +78,5 @@ else
 fi
 
 cat $report_file
+
 # run_tests.sh ends here
