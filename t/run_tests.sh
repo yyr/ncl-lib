@@ -76,7 +76,12 @@ then
         run_test $file
     done
 else
-    run_test $@
+    if [ `ls $@` ]; then
+        run_test $@
+    else
+        echo "no such file!! \"$@\""
+        exit 24
+    fi
 fi
 
 cat $report_file
