@@ -4,6 +4,11 @@
 ; License: GPL v3 or later. <http://www.gnu.org/licenses/gpl.html>
 ;
 
+;; define exit_codes
+coerce_error = 2
+arg_error = 4
+resource_error = 8
+
 ;_____________________________________________________________________________
 ; Fuction: announce
 ; Doc: just announces stdout what ever given with print statement
@@ -19,6 +24,5 @@ begin
   system("echo ___________________________________________________________")
   system("echo ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯")
 end
-;- |announce| ends here --
 
 ;;; generic.ncl ends here
