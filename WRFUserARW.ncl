@@ -3989,7 +3989,6 @@ begin
     end if
 
     opts = opt_args      ; Make a copy of the resource list
-    opts  = True
 
 ;---Set some map resources based on parameters and variables in input file.
     opts = wrf_map_resources(in_file,opts)
