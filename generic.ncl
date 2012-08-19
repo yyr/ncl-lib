@@ -48,7 +48,7 @@ function rank_of_file_var(file_in:file,var:string)
 local nd,dims
 
 begin
-  dims = filevardimsizes(file_in,varname)
+  dims = filevardimsizes(file_in,var)
   nd = dimsizes(dims)
   return(nd)
 end
