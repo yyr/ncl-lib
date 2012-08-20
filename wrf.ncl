@@ -25,7 +25,6 @@ begin
   return(wrf_in)
 end
 
-
 ;_____________________________________________________________________________
 ; Function: no_of_levels
 ;      Doc: Spitsout number of levels in varailbe
@@ -40,7 +39,6 @@ begin
   if ( Leng(dims).le.2) then
 
   end if
-
 
 end
 
@@ -274,6 +272,7 @@ begin
 
   opt_args = set_no_frame_res(opt_args)
   opt_args = set_cn_resorces(opt_args)
+  opt_args = set_high_res_coast(opt_args)
 
   opt_args@gsnPaperMargin = 1.
   opt_args@gsnAddCyclic = False
@@ -281,14 +280,17 @@ begin
   opt_args@sfXArray = lon_wrf
   opt_args@sfYArray = lat_wrf
   opt_args@cnLevelSelectionMode = "ExplicitLevels"
-  opt_args@cnLevels = fspan(0.,3000., 12)
-;  opt_args = wrf_map_resources(nc_file,opt_args)
+  opt_args@cnLevels = (/1.,100.,200.,400.,800.,1600.,2400./)
 
-  opt_args@tiMainString = "Model Heght"
+  opt_args = wrf_map_resources(nc_file,opt_args)
+  opt_args@mpGridLineColor       =  1       ; Turn off grid lat/lon lines
+  opt_args@mpGridAndLimbOn       =  True
 
-  plot = gsn_csm_contour(wks, Z, opt_args)
+  opt_args@tiMainString = "Model Domain"
+
+  plot = gsn_csm_contour_map(wks, Z, opt_args)
+
   return(plot)
-
 end
 
 ;;; wrf.ncl ends here
