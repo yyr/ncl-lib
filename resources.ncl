@@ -79,7 +79,7 @@ begin
   colormap@hgt = "OceanLakeLandSnow"
 
   if ( var .eq. "hgt" .or. var .eq. "HGT" ) then
-    gsn_define_colormap(ws, colormap@$var$)
+    gsn_define_colormap(ws, colormap@hgt)
   end if
 
   return
