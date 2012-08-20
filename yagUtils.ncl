@@ -9,4 +9,5 @@
 
 load "$nsc/generic.ncl"
 load "$nsc/resources.ncl"
+load "$nsc/wps.ncl"
 load "$nsc/wrf.ncl"
