@@ -96,5 +96,30 @@ begin
   return
 end
 
+;_____________________________________________________________________________
+; Fuction: angle_with_horizontal
+; Doc: find angle between horizontal axis and line joining with given points in
+;      the domain.
+;_____________________________________________________________________________
+undef("angle_with_horizontal")
+function angle_with_horizontal(x1:numeric,x2:numeric,y1:numeric,y2:numeric)
+local ang,x_proj,y_proj, x1_f, x2_f, y1_f, y2_f
+
+begin
+
+  ;; make sure they are floats
+  x1_f = tofloat(x1)
+  x2_f = tofloat(x2)
+  y1_f = tofloat(y1)
+  y2_f = tofloat(y2)
+
+  x_proj = x2_f-x1_f
+  y_proj = y2_f-y1_f
+
+  ang = atan2(y_proj,x_proj)
+
+  return(ang)
+end
+
 
 ;;; generic.ncl ends here
