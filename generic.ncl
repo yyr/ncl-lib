@@ -39,6 +39,37 @@ begin
 end
 
 ;_____________________________________________________________________________
+; Fuction: dim_len
+; Doc: give the length in a given dimension(dim) of given variable.
+;
+;_____________________________________________________________________________
+undef("dim_len")
+function dim_len(var,dim)
+local dims,length
+
+begin
+  dims = dimsizes(var)
+
+  if ( dim + 1  .gt. rank_of(var) )  then
+    print("Fatal: Given variable has less dimesions than query!")
+    return
+  end if
+
+  length = dims(dim)
+  return(length)
+end
+
+;_____________________________________________________________________________
+; Fuction: dim_len0
+; Doc:
+;
+;_____________________________________________________________________________
+undef("dim_len0")
+function dim_len0(var)
+begin
+  return(dim_len(var,0))
+end
+;_____________________________________________________________________________
 ; Fuction: rank_of_file_var
 ; Doc: returns rank of a file variable.
 ;
