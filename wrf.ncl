@@ -14,9 +14,9 @@ begin
 
   if ( isstring(infile_name) ) then
     wrf_in = addfile(infile_name, "r")
-    else
-      announce("Fatal: wrfout environment variable is not set ")
-      exit
+  else
+    announce("Fatal: wrfout environment variable is not set ")
+    exit
   end if
   return(wrf_in)
 end
