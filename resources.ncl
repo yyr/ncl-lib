@@ -84,3 +84,29 @@ begin
 
   return
 end
+
+;_____________________________________________________________________________
+; Fuction: set_vc_res
+; Doc: set some common vector resources. (fair defaults)
+;
+;_____________________________________________________________________________
+undef("set_vc_res")
+function set_vc_res(res_in:logical)
+local res_out
+
+begin
+
+  res_out  = res_in
+
+  res_out@vcMonoLineArrowColor = True
+  res_out@vcGlyphStyle        = "CurlyVector"    ; turn on curly vectors
+  res_out@vcMinDistanceF = 0.03
+
+  res_out@vcRefMagnitudeF = 20.
+  res_out@vcRefLengthF = 0.02
+  res_out@vcRefAnnoOrthogonalPosF   = -1    ; Move reference into plot.
+  res_out@vcRefAnnoArrowUseVecColor = False    ; Allow us to change ref vec color
+  res_out@vcRefAnnoArrowLineColor   = "black"  ; Black ref vector
+
+  return(res_out)
+end
