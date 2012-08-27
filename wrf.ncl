@@ -105,24 +105,31 @@ end
 ;  tc ->  tempereture in celcious [not yet implimented]
 undef("wrf_my_getvar")
 function wrf_my_getvar(file_handle:file,var_in:string,t_in:integer)
-local test,fh,var,T,tin,qv,ql
+local test,fh,var,T,tin,qv,ql,my_get_vars
 
 begin
+
+  my_get_vars = (/"th_v", "tc"/)
+
   fh = file_handle
-  var = var_in(0)
-  tin = t_in(0)
-  if ( var .eq. "T" ) then
-    T = wrf_user_getvar(fh,"T",tin)
-    T = T + 300
-    return(T)
-  end if
+  var = var_in
+  tin = t_in
 
-  if ( var .eq. "th_v" ) then
-    T = wrf_user_getvar(fh,"T",tin)
-    T = T + 300
+  if ( .not.any(var .eq. my_get_vars)) then
+    ;; call the wrf_user_getvar if asked data cannot be handled in this
+    ;; function.
 
-    qv = wrf_user_getvar(fh,"QVAPOR",tin)
-    ql = wrf_user_getvar(fh,"QCLOUD",tin)
+    return(wrf_user_getvar(fh,var,tin))
+
+  else
+    ;; start obtaining variables from file for given string
+
+    if ( var .eq. "th_v" ) then
+      T = wrf_user_getvar(fh,"T",tin)
+      T = T + 300
+
+      qv = wrf_user_getvar(fh,"QVAPOR",tin)
+      ql = wrf_user_getvar(fh,"QCLOUD",tin)
 
     ;; virtual portential temperature formula
     ;; th_v = th (1 + 0.61 * r - r_L)
@@ -131,16 +138,20 @@ begin
     ;; r    : mixing ratio of water vapor
     ;; r_L  : mixing ratio of liquid water
 
-    th_v = T * ( 1 + 0.61 * qv - ql)
-    copy_VarAtts(T,th_v)
-    th_v@description = "Virtual Potential Temperature"
-    return(th_v)
+      th_v = T * ( 1 + 0.61 * qv - ql)
+      copy_VarAtts(T,th_v)
+      th_v@description = "Virtual Potential Temperature"
+      return(th_v)
+    end if
 
-  end if
+    if ( var .eq. "tc" ) then
+      return
+    end if
 
-  if ( var .eq. "tc" ) then
-    return
-  end if
+  end if                        ; outer if
+
+  return
+
 end
 
 ;---------------------------------------------------------------------
