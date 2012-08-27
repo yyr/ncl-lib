@@ -2177,7 +2177,7 @@ begin
     times(i) = chartostring(times_in_file(i,:))
   end do
   times@description = "times in file"
-  print(times)
+;  print(times)
   return(times)
 
 end
