@@ -104,8 +104,9 @@ end
 ;  T -> theta with removed offset
 ;  tc ->  tempereture in celcious [not yet implimented]
 undef("wrf_my_getvar")
-function wrf_my_getvar(file_handle,var_in:numeric,t_in:integer)
-local test,fh,var,T,tin
+function wrf_my_getvar(file_handle:file,var_in:string,t_in:integer)
+local test,fh,var,T,tin,qv,ql
+
 begin
   fh = file_handle
   var = var_in(0)
@@ -114,6 +115,27 @@ begin
     T = wrf_user_getvar(fh,"T",tin)
     T = T + 300
     return(T)
+  end if
+
+  if ( var .eq. "th_v" ) then
+    T = wrf_user_getvar(fh,"T",tin)
+    T = T + 300
+
+    qv = wrf_user_getvar(fh,"QVAPOR",tin)
+    ql = wrf_user_getvar(fh,"QCLOUD",tin)
+
+    ;; virtual portential temperature formula
+    ;; th_v = th (1 + 0.61 * r - r_L)
+    ;; th_v : virt pot temp
+    ;; th   : potential temp
+    ;; r    : mixing ratio of water vapor
+    ;; r_L  : mixing ratio of liquid water
+
+    th_v = T * ( 1 + 0.61 * qv - ql)
+    copy_VarAtts(T,th_v)
+    th_v@description = "Virtual Potential Temperature"
+    return(th_v)
+
   end if
 
   if ( var .eq. "tc" ) then
