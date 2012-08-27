@@ -98,11 +98,12 @@ begin
 
 end
 
-;;--------------------------------------------------------------------
-; function to retrieve diagnosis variable
-; this is companion of wrf_user_getvar
-;  T -> theta with removed offset
-;  tc ->  tempereture in celcious [not yet implimented]
+;_____________________________________________________________________________
+; Fuction: wrf_my_getvar
+; Doc: a wrapper function of in built wrf_my_getvar to retrieve diagnosis
+;      variables from wrf output file
+;_____________________________________________________________________________
+
 undef("wrf_my_getvar")
 function wrf_my_getvar(file_handle:file,var_in:string,t_in:integer)
 local test,fh,var,T,tin,qv,ql,my_get_vars
