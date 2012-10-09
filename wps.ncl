@@ -181,9 +181,8 @@ begin
   mpres@end_lat     = end_lat
   mpres@end_lon     = end_lon
 
-;  mp = wrf_wps_map(wks,mpres)
-;  draw(mp)
-
+  ; mp = wrf_wps_map(wks,mpres)
+  ; draw(mp)
 
   if ( mpres@max_dom .gt. 1 ) then
 
@@ -205,17 +204,17 @@ begin
       end if
 
 
-                                ; nest start and end points in large domain space
+      ; nest start and end points in large domain space
       if ( mpres@parent_id(idom) .eq. 1) then
-                                ; corner value
+        ; corner value
         i_start = mpres@i_parent_start(idom)
         j_start = mpres@j_parent_start(idom)
-                                ; end point
+        ; end point
         i_end = (mpres@e_we(idom)-1)/mpres@parent_grid_ratio(idom) + i_start
         j_end = (mpres@e_sn(idom)-1)/mpres@parent_grid_ratio(idom) + j_start
       end if
       if ( mpres@parent_id(idom) .ge. 2) then
-                                ; corner value
+        ; corner value
         nd = mpres@parent_id(idom)
         i_points = ((mpres@e_we(idom)-1)/mpres@parent_grid_ratio(idom))
         j_points = ((mpres@e_sn(idom)-1)/mpres@parent_grid_ratio(idom))
@@ -226,17 +225,17 @@ begin
           aj_start = aj_start/mpres@parent_grid_ratio(nd-1) + mpres@j_parent_start(nd-1)
           i_points = (i_points/mpres@parent_grid_ratio(nd-1))
           j_points = (j_points/mpres@parent_grid_ratio(nd-1))
-                                ;nd = nd - 1
+          ;nd = nd - 1
           nd = mpres@parent_id(nd-1)
         end do
         i_start = tointeger(ai_start + .5 )
         j_start = tointeger(aj_start + .5 )
-                                ; end point
+        ; end point
         i_end = i_points + i_start + 1
         j_end = j_points + j_start + 1
       end if
 
-                                ; get the four corners
+      ; get the four corners
 
       xx = int2flt(i_start)
       yy = int2flt(j_start)
@@ -271,18 +270,18 @@ begin
 
       idd = idom + 1
       dom_text = "d0"+idd
-        if ( txres@txJust .eq. "BottomLeft" ) then
-          gsn_text(wks,mp,dom_text,lon_NW,lat_NW,txres)
-        else
-          gsn_text_ndc(wks,dom_text,x_out(3)+0.01,y_out(3)-0.01,txres)
-        end if
+      if ( txres@txJust .eq. "BottomLeft" ) then
+        gsn_text(wks,mp,dom_text,lon_NW,lat_NW,txres)
+      else
+        gsn_text_ndc(wks,dom_text,x_out(3)+0.01,y_out(3)-0.01,txres)
+      end if
 
-      end do
+    end do
 
-    end if
+  end if
 
-    return(mp)
+  return(mp)
 
-  end
+end
 
 ;;; wps.ncl ends here
