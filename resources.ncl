@@ -21,6 +21,7 @@ begin
 
   res_out          = res_in
   res_out@gsnMaximize = True
+  res_out@gsnPaperMargin  = 0.0         ; no margins
   res_out@gsnDraw  = False              ; Do not draw plot
   res_out@gsnFrame = False              ; Do not advance frame
 
