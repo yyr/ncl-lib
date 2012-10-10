@@ -325,4 +325,26 @@ begin
   return(plot)
 end
 
+;_____________________________________________________________________________
+; procedure: draw_time_string
+; Doc:
+;_____________________________________________________________________________
+undef("draw_time_string")
+procedure draw_time_string(cn[1]:graphic,res:logical)
+
+begin
+
+  anno = NhlAddAnnotation(cn,txt0)
+  setvalues anno
+    "amZone"           : 3
+    "amSide"           : "Top"
+    "amJust"           : res@MainTitlePos
+    "amParallelPosF"   : res@MainTitlePosF
+    "amOrthogonalPosF" : MTOPosF
+    "amResizeNotify"   : False
+  end setvalues
+
+  return
+end
+
 ;;; wrf.ncl ends here
