@@ -46,7 +46,7 @@ end
 undef("wrf_user_getvar_weighted_sum")
 function wrf_user_getvar_weighted_sum(file_handle,var_in:string,time_in:integer)
 local var,varname, var, ph,phb,pres,gh,dim, wgt_var, noflevels, \
-lay_var,dgh,dp, lay_wgt, lay_wgt_var, wgt_var,time,g
+        lay_var,dgh,dp, lay_wgt, lay_wgt_var, wgt_var,time,g
 
 begin
   g = 9.8                       ; gravity
@@ -132,12 +132,12 @@ begin
       qv = wrf_user_getvar(fh,"QVAPOR",tin)
       ql = wrf_user_getvar(fh,"QCLOUD",tin)
 
-    ;; virtual portential temperature formula
-    ;; th_v = th (1 + 0.61 * r - r_L)
-    ;; th_v : virt pot temp
-    ;; th   : potential temp
-    ;; r    : mixing ratio of water vapor
-    ;; r_L  : mixing ratio of liquid water
+      ;; virtual portential temperature formula
+      ;; th_v = th (1 + 0.61 * r - r_L)
+      ;; th_v : virt pot temp
+      ;; th   : potential temp
+      ;; r    : mixing ratio of water vapor
+      ;; r_L  : mixing ratio of liquid water
 
       th_v = T * ( 1 + 0.61 * qv - ql)
       copy_VarAtts(T,th_v)
@@ -306,6 +306,8 @@ begin
 
   opt_args@gsnPaperMargin = 1.
   opt_args@gsnAddCyclic = False
+  opt_args@gsnLeftString = ""
+  opt_args@gsnRightString = ""
 
   opt_args@sfXArray = lon_wrf
   opt_args@sfYArray = lat_wrf
