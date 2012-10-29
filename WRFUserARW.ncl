@@ -62,7 +62,7 @@ load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/contributed.ncl"
 ;--------------------------------------------------------------------------------
 undef("wrf_user_set_xy")
 function wrf_user_set_xy( var:numeric, xp:numeric, yp:numeric, x1:numeric, \
-                          y1:numeric, angle:numeric, opts )
+        y1:numeric, angle:numeric, opts )
 
 ;  mass coordinate version of ncl user routines
 
@@ -75,91 +75,91 @@ begin
   dims = dimsizes(var)
 
   if (.not. opts) then        ; We have a pivot point and location and
-			      ; need to calculate the start and end points of
-			      ; the cross section
+    ; need to calculate the start and end points of
+    ; the cross section
 
-     if ((angle .gt. 315.) .or. (angle .lt. 45.) .or. \
-         ((angle .gt. 135.) .and. (angle .lt. 225.)) )  then
+    if ((angle .gt. 315.) .or. (angle .lt. 45.) .or. \
+            ((angle .gt. 135.) .and. (angle .lt. 225.)) )  then
 
 ;  x = y*slope + intercept
 
-          slope = -(360.-angle)/45.
-          if( angle .lt. 45. ) then
-            slope = angle/45.
-          end if
-          if( angle .gt. 135.) then
-            slope = (angle-180.)/45.
-          end if
-          intercept = xp - yp*slope
+      slope = -(360.-angle)/45.
+      if( angle .lt. 45. ) then
+        slope = angle/45.
+      end if
+      if( angle .gt. 135.) then
+        slope = (angle-180.)/45.
+      end if
+      intercept = xp - yp*slope
 
 ; find intersections with domain boundaries
 
-          y0 = 0.
-          x0 = y0*slope + intercept
+      y0 = 0.
+      x0 = y0*slope + intercept
 
-          if( x0 .lt. 0.) then  ; intersect outside of left boundary
-            x0 = 0.
-            y0 =  (x0 - intercept)/slope
-          end if
-          if( x0 .gt. dims(2)-1) then  ; intersect outside of right boundary
-            x0 = dims(2)-1
-            y0 =  (x0 - intercept)/slope
-          end if
+      if( x0 .lt. 0.) then  ; intersect outside of left boundary
+        x0 = 0.
+        y0 =  (x0 - intercept)/slope
+      end if
+      if( x0 .gt. dims(2)-1) then  ; intersect outside of right boundary
+        x0 = dims(2)-1
+        y0 =  (x0 - intercept)/slope
+      end if
 
-          y1 = dims(1)-1.  ;  need to make sure this will be a float?
-          x1 = y1*slope + intercept
+      y1 = dims(1)-1.  ;  need to make sure this will be a float?
+      x1 = y1*slope + intercept
 
-          if( x1 .lt. 0.) then  ; intersect outside of left boundary
-            x1 = 0.
-            y1 =  (x1 - intercept)/slope
-          end if
-          if( x1 .gt. dims(2)-1) then  ; intersect outside of right boundary
-            x1 = dims(2)-1
-            y1 =  (x1 - intercept)/slope
-          end if
+      if( x1 .lt. 0.) then  ; intersect outside of left boundary
+        x1 = 0.
+        y1 =  (x1 - intercept)/slope
+      end if
+      if( x1 .gt. dims(2)-1) then  ; intersect outside of right boundary
+        x1 = dims(2)-1
+        y1 =  (x1 - intercept)/slope
+      end if
 
-     else
+    else
 
 ;  y = x*slope + intercept
 
-          slope = (90.-angle)/45.
-          if( angle .gt. 225. ) then
-            slope = (270.-angle)/45.
-          end if
-          intercept = yp - xp*slope
+      slope = (90.-angle)/45.
+      if( angle .gt. 225. ) then
+        slope = (270.-angle)/45.
+      end if
+      intercept = yp - xp*slope
 
 ; find intersections with domain boundaries
 
-          x0 = 0.
-          y0 = x0*slope + intercept
+      x0 = 0.
+      y0 = x0*slope + intercept
 
-          if( y0 .lt. 0.) then  ; intersect outside of bottom boundary
-            y0 = 0.
-            x0 =  (y0 - intercept)/slope
-          end if
-          if( y0 .gt. dims(1)-1) then  ; intersect outside of top boundary
-            y0 = dims(1)-1
-            x0 =  (y0 - intercept)/slope
-          end if
+      if( y0 .lt. 0.) then  ; intersect outside of bottom boundary
+        y0 = 0.
+        x0 =  (y0 - intercept)/slope
+      end if
+      if( y0 .gt. dims(1)-1) then  ; intersect outside of top boundary
+        y0 = dims(1)-1
+        x0 =  (y0 - intercept)/slope
+      end if
 
-          x1 = dims(2)-1.  ;  need to make sure this will be a float?
-          y1 = x1*slope + intercept
+      x1 = dims(2)-1.  ;  need to make sure this will be a float?
+      y1 = x1*slope + intercept
 
-          if( y1 .lt. 0.) then  ; intersect outside of bottom boundary
-            y1 = 0.
-            x1 =  (y1 - intercept)/slope
-          end if
-          if( y1 .gt. dims(1)-1) then  ; intersect outside of top boundary
-            y1 = dims(1)-1
-            x1 =  (y1 - intercept)/slope
-          end if
+      if( y1 .lt. 0.) then  ; intersect outside of bottom boundary
+        y1 = 0.
+        x1 =  (y1 - intercept)/slope
+      end if
+      if( y1 .gt. dims(1)-1) then  ; intersect outside of top boundary
+        y1 = dims(1)-1
+        x1 =  (y1 - intercept)/slope
+      end if
 
-     end if  ; we have beginning and ending points
+    end if  ; we have beginning and ending points
 
   end if
 
 
-  if (opts) then   	; We have a specified start and end point
+  if (opts) then    ; We have a specified start and end point
     x0 = xp
     y0 = yp
     if ( x1 .gt. dims(2)-1 ) then
@@ -196,8 +196,8 @@ end
 
 undef("wrf_user_intrp3d")
 function wrf_user_intrp3d( var3d:numeric, z_in:numeric, \
-                           plot_type:string, \
-                           loc_param:numeric, angle:numeric, opts:logical )
+        plot_type:string, \
+        loc_param:numeric, angle:numeric, opts:logical )
 
 ; var3d      - 3d field to interpolate (all input fields must be unstaggered)
 ; z_in       - interpolate to this field (either p/z)
@@ -214,104 +214,104 @@ begin
 
   if(plot_type .eq. "h" ) then   ;  horizontal cross section needed
 
-     dimL = dimsizes(loc_param)
+    dimL = dimsizes(loc_param)
 
-     dims = dimsizes(var3d)
-     nd = dimsizes(dims)
+    dims = dimsizes(var3d)
+    nd = dimsizes(dims)
 
-     dimX = dims(nd-1)
-     dimY = dims(nd-2)
-     dimZ = dims(nd-3)
-     dim4 = 1
-     dim5 = 1
-     if ( nd .eq. 4 ) then
-       dim4 = dims(nd-4)
-     end if
-     if ( nd .eq. 5 ) then
-       dim4 = dims(nd-4)
-       dim5 = dims(nd-5)
-     end if
+    dimX = dims(nd-1)
+    dimY = dims(nd-2)
+    dimZ = dims(nd-3)
+    dim4 = 1
+    dim5 = 1
+    if ( nd .eq. 4 ) then
+      dim4 = dims(nd-4)
+    end if
+    if ( nd .eq. 5 ) then
+      dim4 = dims(nd-4)
+      dim5 = dims(nd-5)
+    end if
 
-     var3  = new ( (/ dim5, dim4, dimZ, dimY, dimX /) , typeof(var3d) )
-     z     = new ( (/ dim5, dim4, dimZ, dimY, dimX /) , typeof(var3d) )
-     var2d = new ( (/ dim5, dim4, dimL, dimY, dimX /) , typeof(var3d) )
+    var3  = new ( (/ dim5, dim4, dimZ, dimY, dimX /) , typeof(var3d) )
+    z     = new ( (/ dim5, dim4, dimZ, dimY, dimX /) , typeof(var3d) )
+    var2d = new ( (/ dim5, dim4, dimL, dimY, dimX /) , typeof(var3d) )
 
-     if ( nd .eq. 5 ) then
-       var3 = var3d
-          z =  z_in
-     end if
-     if ( nd .eq. 4 ) then
-       var3(0,:,:,:,:) = var3d(:,:,:,:)
-          z(0,:,:,:,:) =  z_in(:,:,:,:)
-     end if
-     if ( nd .eq. 3 ) then
-       var3(0,0,:,:,:) = var3d(:,:,:)
-          z(0,0,:,:,:) =  z_in(:,:,:)
-     end if
+    if ( nd .eq. 5 ) then
+      var3 = var3d
+      z =  z_in
+    end if
+    if ( nd .eq. 4 ) then
+      var3(0,:,:,:,:) = var3d(:,:,:,:)
+      z(0,:,:,:,:) =  z_in(:,:,:,:)
+    end if
+    if ( nd .eq. 3 ) then
+      var3(0,0,:,:,:) = var3d(:,:,:)
+      z(0,0,:,:,:) =  z_in(:,:,:)
+    end if
 
 
-     if ( z(0,0,0,0,0) .gt. 500.) then
-       ; We must be interpolating to pressure
-       ; This routine needs input field and level in hPa - lets make sure of this
-       if ( z(0,0,0,0,0) .gt. 2000. ) then
-         ; looks like we have Pa as input - make this hPa
-         z = z * 0.01
-       end if
-       if ( loc_param(0) .gt. 2000. ) then
-         ; looks like the input was specified in Pa - change this
-         loc_param = loc_param * 0.01
-       end if
-     end if
+    if ( z(0,0,0,0,0) .gt. 500.) then
+      ; We must be interpolating to pressure
+      ; This routine needs input field and level in hPa - lets make sure of this
+      if ( z(0,0,0,0,0) .gt. 2000. ) then
+        ; looks like we have Pa as input - make this hPa
+        z = z * 0.01
+      end if
+      if ( loc_param(0) .gt. 2000. ) then
+        ; looks like the input was specified in Pa - change this
+        loc_param = loc_param * 0.01
+      end if
+    end if
 
-     do il = 0,dimL-1
-       var = wrf_interp_3d_z(var3,z,loc_param(il))
-       var2d(:,:,il,:,:) = var(:,:,:,:)
-     end do
+    do il = 0,dimL-1
+      var = wrf_interp_3d_z(var3,z,loc_param(il))
+      var2d(:,:,il,:,:) = var(:,:,:,:)
+    end do
 
-     copy_VarAtts(var3d,var3)
-     if(isatt(var3,"description")) then
-       delete_VarAtts(var3,(/"description"/))
-     end if
-     if(isatt(var3,"units")) then
-       delete_VarAtts(var3,(/"units"/))
-     end if
-     if(isatt(var3,"MemoryOrder")) then
-       delete_VarAtts(var3,(/"MemoryOrder"/))
-     end if
-     if(isatt(var3,"_FillValue")) then
-       delete_VarAtts(var3,(/"_FillValue"/))
-     end if
-     copy_VarAtts(var3,var2d)
+    copy_VarAtts(var3d,var3)
+    if(isatt(var3,"description")) then
+      delete_VarAtts(var3,(/"description"/))
+    end if
+    if(isatt(var3,"units")) then
+      delete_VarAtts(var3,(/"units"/))
+    end if
+    if(isatt(var3,"MemoryOrder")) then
+      delete_VarAtts(var3,(/"MemoryOrder"/))
+    end if
+    if(isatt(var3,"_FillValue")) then
+      delete_VarAtts(var3,(/"_FillValue"/))
+    end if
+    copy_VarAtts(var3,var2d)
 
-     nn = nd-2
-     var2d!nn = "plevs"
+    nn = nd-2
+    var2d!nn = "plevs"
 
-     if ( dimL .gt. 1 ) then
-       if ( nd .eq. 5 ) then
-         return( var2d )
-       end if
-       if ( nd .eq. 4 ) then
-         return( var2d(0,:,:,:,:) )
-       end if
-       if ( nd .eq. 3 ) then
-         return( var2d(0,0,:,:,:) )
-       end if
-     else
-       if ( z(0,0,0,0,0) .gt. 500.) then
-          var2d@PlotLevelID = loc_param + " hPa"
-       else
-          var2d@PlotLevelID = .001*loc_param + " km"
-       end if
-       if ( nd .eq. 5 ) then
-         return( var2d(:,:,0,:,:) )
-       end if
-       if ( nd .eq. 4 ) then
-         return( var2d(0,:,0,:,:) )
-       end if
-       if ( nd .eq. 3 ) then
-         return( var2d(0,0,0,:,:) )
-       end if
-     end if
+    if ( dimL .gt. 1 ) then
+      if ( nd .eq. 5 ) then
+        return( var2d )
+      end if
+      if ( nd .eq. 4 ) then
+        return( var2d(0,:,:,:,:) )
+      end if
+      if ( nd .eq. 3 ) then
+        return( var2d(0,0,:,:,:) )
+      end if
+    else
+      if ( z(0,0,0,0,0) .gt. 500.) then
+        var2d@PlotLevelID = loc_param + " hPa"
+      else
+        var2d@PlotLevelID = .001*loc_param + " km"
+      end if
+      if ( nd .eq. 5 ) then
+        return( var2d(:,:,0,:,:) )
+      end if
+      if ( nd .eq. 4 ) then
+        return( var2d(0,:,0,:,:) )
+      end if
+      if ( nd .eq. 3 ) then
+        return( var2d(0,0,0,:,:) )
+      end if
+    end if
 
 
   end if
@@ -321,110 +321,110 @@ begin
 
   if(plot_type .eq. "v" ) then   ;  vertical cross section needed
 
-     dims = dimsizes(var3d)
+    dims = dimsizes(var3d)
 
-     if ( dimsizes(dims) .eq. 4 ) then
-       if ( z_in(0,0,0,0) .gt. 500.) then
-         ; We must be interpolating to pressure
-           ; This routine needs input field and level in hPa - lets make sure of this
-         if ( z_in(0,0,0,0) .gt. 2000. ) then
-           ; looks like we have Pa as input - make this hPa
-           z_in = z_in * 0.01
-         end if
-       end if
-       z = z_in(0,:,:,:)
-     else
-       if ( z_in(0,0,0) .gt. 500.) then
-         ; We must be interpolating to pressure
-           ; This routine needs input field and level in hPa - lets make sure of this
-         if ( z_in(0,0,0) .gt. 2000. ) then
-           ; looks like we have Pa as input - make this hPa
-           z_in = z_in * 0.01
-         end if
-       end if
-       z = z_in
-     end if
+    if ( dimsizes(dims) .eq. 4 ) then
+      if ( z_in(0,0,0,0) .gt. 500.) then
+        ; We must be interpolating to pressure
+        ; This routine needs input field and level in hPa - lets make sure of this
+        if ( z_in(0,0,0,0) .gt. 2000. ) then
+          ; looks like we have Pa as input - make this hPa
+          z_in = z_in * 0.01
+        end if
+      end if
+      z = z_in(0,:,:,:)
+    else
+      if ( z_in(0,0,0) .gt. 500.) then
+        ; We must be interpolating to pressure
+        ; This routine needs input field and level in hPa - lets make sure of this
+        if ( z_in(0,0,0) .gt. 2000. ) then
+          ; looks like we have Pa as input - make this hPa
+          z_in = z_in * 0.01
+        end if
+      end if
+      z = z_in
+    end if
 
 
 ; set vertical cross section
-     if (opts) then
-       xy = wrf_user_set_xy( z, loc_param(0)-1, loc_param(2)-1, \    ; the -1 is for NCL dimensions
-                                loc_param(1)-1, loc_param(3)-1, \
-                                angle, opts )
-     else
-       xy = wrf_user_set_xy( z, loc_param(0), loc_param(1), \
-                                0.0, 0.0, angle, opts )
-     end if
-     xp = dimsizes(xy)
+    if (opts) then
+      xy = wrf_user_set_xy( z, loc_param(0)-1, loc_param(2)-1, \    ; the -1 is for NCL dimensions
+              loc_param(1)-1, loc_param(3)-1, \
+              angle, opts )
+    else
+      xy = wrf_user_set_xy( z, loc_param(0), loc_param(1), \
+              0.0, 0.0, angle, opts )
+    end if
+    xp = dimsizes(xy)
 
 
 ; first we interp z
-     var2dz   = wrf_interp_2d_xy( z, xy)
+    var2dz   = wrf_interp_2d_xy( z, xy)
 
 ;  interp to constant z grid
-     if(var2dz(0,0) .gt. var2dz(1,0) ) then  ; monotonically decreasing coordinate
-        z_max = floor(max(z)/10)*10     ; bottom value
-        z_min = ceil(min(z)/10)*10      ; top value
-        dz = 10
-        nlevels = tointeger( (z_max-z_min)/dz)
-        z_var2d = new( (/nlevels/), typeof(z))
-        z_var2d(0) = z_max
-        dz = -dz
-     else
-        z_max = max(z)
-        z_min = 0.
-        dz = 0.01 * z_max
-        nlevels = tointeger( z_max/dz )
-        z_var2d = new( (/nlevels/), typeof(z))
-        z_var2d(0) = z_min
-     end if
+    if(var2dz(0,0) .gt. var2dz(1,0) ) then  ; monotonically decreasing coordinate
+      z_max = floor(max(z)/10)*10     ; bottom value
+      z_min = ceil(min(z)/10)*10      ; top value
+      dz = 10
+      nlevels = tointeger( (z_max-z_min)/dz)
+      z_var2d = new( (/nlevels/), typeof(z))
+      z_var2d(0) = z_max
+      dz = -dz
+    else
+      z_max = max(z)
+      z_min = 0.
+      dz = 0.01 * z_max
+      nlevels = tointeger( z_max/dz )
+      z_var2d = new( (/nlevels/), typeof(z))
+      z_var2d(0) = z_min
+    end if
 
-     do i=1, nlevels-1
-        z_var2d(i) = z_var2d(0)+i*dz
-     end do
+    do i=1, nlevels-1
+      z_var2d(i) = z_var2d(0)+i*dz
+    end do
 
 
 ; interp the variable
-     if ( dimsizes(dims) .eq. 4 ) then
-       var2d = new( (/dims(0), nlevels, xp(0)/), typeof(var2dz))
-       do it = 0,dims(0)-1
-         var2dtmp = wrf_interp_2d_xy( var3d(it,:,:,:), xy)
-         do i=0,xp(0)-1
-            var2d(it,:,i) = wrf_interp_1d( var2dtmp(:,i), var2dz(:,i), z_var2d)
-         end do
-       end do
-       var2d!0 = var3d!0
-       var2d!1 = "Vertical"
-       var2d!2 = "Horizontal"
-     else
-       var2d = new( (/nlevels, xp(0)/), typeof(var2dz))
-       var2dtmp = wrf_interp_2d_xy( var3d, xy)
-       do i=0,xp(0)-1
-          var2d(:,i) = wrf_interp_1d( var2dtmp(:,i), var2dz(:,i), z_var2d)
-       end do
-       var2d!0 = "Vertical"
-       var2d!1 = "Horizontal"
-     end if
+    if ( dimsizes(dims) .eq. 4 ) then
+      var2d = new( (/dims(0), nlevels, xp(0)/), typeof(var2dz))
+      do it = 0,dims(0)-1
+        var2dtmp = wrf_interp_2d_xy( var3d(it,:,:,:), xy)
+        do i=0,xp(0)-1
+          var2d(it,:,i) = wrf_interp_1d( var2dtmp(:,i), var2dz(:,i), z_var2d)
+        end do
+      end do
+      var2d!0 = var3d!0
+      var2d!1 = "Vertical"
+      var2d!2 = "Horizontal"
+    else
+      var2d = new( (/nlevels, xp(0)/), typeof(var2dz))
+      var2dtmp = wrf_interp_2d_xy( var3d, xy)
+      do i=0,xp(0)-1
+        var2d(:,i) = wrf_interp_1d( var2dtmp(:,i), var2dz(:,i), z_var2d)
+      end do
+      var2d!0 = "Vertical"
+      var2d!1 = "Horizontal"
+    end if
 
 
 
-     st_x = tointeger(xy(0,0)) + 1
-     st_y = tointeger(xy(0,1)) + 1
-     ed_x = tointeger(xy(xp(0)-1,0)) + 1
-     ed_y = tointeger(xy(xp(0)-1,1)) + 1
-     if (opts) then
-       var2d@Orientation = "Cross-Sesion: (" + \
-                            st_x + "," + st_y + ") to (" + \
-                            ed_x + "," + ed_y + ")"
-     else
-       var2d@Orientation = "Cross-Sesion: (" + \
-                            st_x + "," + st_y + ") to (" + \
-                            ed_x + "," + ed_y + ") ; center=(" + \
-                            loc_param(0) + "," + loc_param(1) + \
-                            ") ; angle=" + angle
-     end if
+    st_x = tointeger(xy(0,0)) + 1
+    st_y = tointeger(xy(0,1)) + 1
+    ed_x = tointeger(xy(xp(0)-1,0)) + 1
+    ed_y = tointeger(xy(xp(0)-1,1)) + 1
+    if (opts) then
+      var2d@Orientation = "Cross-Sesion: (" + \
+              st_x + "," + st_y + ") to (" + \
+              ed_x + "," + ed_y + ")"
+    else
+      var2d@Orientation = "Cross-Sesion: (" + \
+              st_x + "," + st_y + ") to (" + \
+              ed_x + "," + ed_y + ") ; center=(" + \
+              loc_param(0) + "," + loc_param(1) + \
+              ") ; angle=" + angle
+    end if
 
-     return(var2d)
+    return(var2d)
   end if
 
 
@@ -435,7 +435,7 @@ end
 
 undef("wrf_user_intrp2d")
 function wrf_user_intrp2d( var2d:numeric, \
-                           loc_param:numeric, angle:numeric, opts:logical )
+        loc_param:numeric, angle:numeric, opts:logical )
 
 ; var2d      - 2d field to interpolate
 ; loc_param  - plane for vertical plots (2 values representing an xy point
@@ -447,52 +447,52 @@ function wrf_user_intrp2d( var2d:numeric, \
 
 begin
 
-     dims = dimsizes(var2d)
-     nd = dimsizes(dims)
-     dimX = dims(nd-1)
-     dimY = dims(nd-2)
-     dimT = 1
-     if ( nd .eq. 3 ) then
-       dimT = dims(nd-3)
-     end if
-     var2dtmp = new( (/ 1, dimY, dimX /), typeof(var2d) )
+  dims = dimsizes(var2d)
+  nd = dimsizes(dims)
+  dimX = dims(nd-1)
+  dimY = dims(nd-2)
+  dimT = 1
+  if ( nd .eq. 3 ) then
+    dimT = dims(nd-3)
+  end if
+  var2dtmp = new( (/ 1, dimY, dimX /), typeof(var2d) )
 
 
 ; set vertical cross section
-     if ( nd .eq. 3 ) then
-       var2dtmp(0,:,:) = var2d(0,:,:)
-     else
-       var2dtmp(0,:,:) = var2d(:,:)
-     end if
-     if (opts) then
-       xy = wrf_user_set_xy( var2dtmp, \
-                             loc_param(0)-1, loc_param(2)-1, \    ; the -1 is for NCL dimensions
-                             loc_param(1)-1, loc_param(3)-1, \
-                             angle, opts )
-     else
-       xy = wrf_user_set_xy( var2dtmp, \
-                             loc_param(0), loc_param(1), \
-                             0.0, 0.0, angle, opts )
-     end if
-     xp = dimsizes(xy)
+  if ( nd .eq. 3 ) then
+    var2dtmp(0,:,:) = var2d(0,:,:)
+  else
+    var2dtmp(0,:,:) = var2d(:,:)
+  end if
+  if (opts) then
+    xy = wrf_user_set_xy( var2dtmp, \
+            loc_param(0)-1, loc_param(2)-1, \    ; the -1 is for NCL dimensions
+            loc_param(1)-1, loc_param(3)-1, \
+            angle, opts )
+  else
+    xy = wrf_user_set_xy( var2dtmp, \
+            loc_param(0), loc_param(1), \
+            0.0, 0.0, angle, opts )
+  end if
+  xp = dimsizes(xy)
 
-     var2dout = new( (/ dimT, xp(0) /), typeof(var2d) )
+  var2dout = new( (/ dimT, xp(0) /), typeof(var2d) )
 
-     var1dtmp = wrf_interp_2d_xy( var2dtmp, xy )
-     var2dout(0,:) = var1dtmp(0,:)
-     if ( dimT .eq. 1 ) then
-       var2dout!1 = "Horizontal"
-       return ( var2dout(0,:) )
-     end if
+  var1dtmp = wrf_interp_2d_xy( var2dtmp, xy )
+  var2dout(0,:) = var1dtmp(0,:)
+  if ( dimT .eq. 1 ) then
+    var2dout!1 = "Horizontal"
+    return ( var2dout(0,:) )
+  end if
 
-     do it = 1,dimT-1
-       var2dtmp(0,:,:) = var2d(it,:,:)
-       var1dtmp = wrf_interp_2d_xy( var2dtmp, xy )
-       var2dout(it,:) = var1dtmp(0,:)
-     end do
-     var2dout!0 = "Time"
-     var2dout!1 = "Horizontal"
-     return(var2dout)
+  do it = 1,dimT-1
+    var2dtmp(0,:,:) = var2d(it,:,:)
+    var1dtmp = wrf_interp_2d_xy( var2dtmp, xy )
+    var2dout(it,:) = var1dtmp(0,:)
+  end do
+  var2dout!0 = "Time"
+  var2dout!1 = "Horizontal"
+  return(var2dout)
 
 end
 
@@ -590,1303 +590,1303 @@ end
 undef("wrf_user_getvar")
 function wrf_user_getvar( file_handle, varin[*]:string, time_in:integer )
 local variable, time, var, u, v, u_in, v_in, pii, radians_per_degree, \
-dims, nd, latitude, longitude, rank
+        dims, nd, latitude, longitude, rank
 begin
 
 ;---As of NCL V6.0.0, wrf_user_getvar can now handle a file or a list of files.
   if(typeof(file_handle).eq."file") then
     ISFILE = True
     nc_file = file_handle
-  else if(typeof(file_handle).eq."list") then
-    ISFILE = False
-    nc_file = file_handle[0]
-  else
-    print("wrf_user_getvar: error: the first argument must be a file or a list of files opened with addfile or addfiles")
-    return
-  end if
+    else if(typeof(file_handle).eq."list") then
+      ISFILE = False
+      nc_file = file_handle[0]
+    else
+      print("wrf_user_getvar: error: the first argument must be a file or a list of files opened with addfile or addfiles")
+      return
+    end if
   end if
 
   variable = varin(0)
   time = time_in(0)
 
   if( (variable .eq. "uvmet") .or. (variable .eq. "uvmet10") ) then
-       ;; Calculate winds rotated to earth coord.
+    ;; Calculate winds rotated to earth coord.
 
-       pii = 3.14159265
-       radians_per_degree = pii/180.
+    pii = 3.14159265
+    radians_per_degree = pii/180.
 
-       if( (variable .eq. "uvmet") )  then
-         getU = "U"
-         getV = "V"
-         if(.not. isfilevar(nc_file,"U")) then
-           if(isfilevar(nc_file,"UU")) then
-             getU = "UU"
-             getV = "VV"
-           end if
-         end if
-         if ( time .eq. -1 ) then
-           if(ISFILE) then
-             u_in = nc_file->$getU$
-             v_in = nc_file->$getV$
-           else
-             u_in = file_handle[:]->$getU$
-             v_in = file_handle[:]->$getV$
-           end if
-           u = wrf_user_unstagger(u_in,u_in@stagger)
-           v = wrf_user_unstagger(v_in,v_in@stagger)
-       else
-           if(ISFILE) then
-             u_in   = nc_file->$getU$(time_in,:,:,:)
-             v_in   = nc_file->$getV$(time_in,:,:,:)
-           else
-             u_in   = file_handle[:]->$getU$(time_in,:,:,:)
-             v_in   = file_handle[:]->$getV$(time_in,:,:,:)
-           end if
-           u = wrf_user_unstagger(u_in,u_in@stagger)
-           v = wrf_user_unstagger(v_in,v_in@stagger)
-         end if
-       end if
+    if( (variable .eq. "uvmet") )  then
+      getU = "U"
+      getV = "V"
+      if(.not. isfilevar(nc_file,"U")) then
+        if(isfilevar(nc_file,"UU")) then
+          getU = "UU"
+          getV = "VV"
+        end if
+      end if
+      if ( time .eq. -1 ) then
+        if(ISFILE) then
+          u_in = nc_file->$getU$
+          v_in = nc_file->$getV$
+        else
+          u_in = file_handle[:]->$getU$
+          v_in = file_handle[:]->$getV$
+        end if
+        u = wrf_user_unstagger(u_in,u_in@stagger)
+        v = wrf_user_unstagger(v_in,v_in@stagger)
+      else
+        if(ISFILE) then
+          u_in   = nc_file->$getU$(time_in,:,:,:)
+          v_in   = nc_file->$getV$(time_in,:,:,:)
+        else
+          u_in   = file_handle[:]->$getU$(time_in,:,:,:)
+          v_in   = file_handle[:]->$getV$(time_in,:,:,:)
+        end if
+        u = wrf_user_unstagger(u_in,u_in@stagger)
+        v = wrf_user_unstagger(v_in,v_in@stagger)
+      end if
+    end if
 
-       if( (variable .eq. "uvmet10") )  then
-         if(isfilevar(nc_file,"U10")) then
-           if ( time .eq. -1 ) then
-             if(ISFILE) then
-               u_in   = nc_file->U10
-               v_in   = nc_file->V10
-             else
-               u_in   = file_handle[:]->U10
-               v_in   = file_handle[:]->V10
-             end if
-             u = wrf_user_unstagger(u_in,u_in@stagger)
-             v = wrf_user_unstagger(v_in,v_in@stagger)
-           else
-             if(ISFILE) then
-               u_in  = nc_file->U10(time_in,:,:)
-               v_in  = nc_file->V10(time_in,:,:)
-             else
-               u_in  = file_handle[:]->U10(time_in,:,:)
-               v_in  = file_handle[:]->V10(time_in,:,:)
-             end if
-             u = wrf_user_unstagger(u_in,u_in@stagger)
-             v = wrf_user_unstagger(v_in,v_in@stagger)
-           end if
-         else  ; may be a met file, so get lowest level of UU and VV
-           if(isfilevar(nc_file,"UU")) then
-             print("wrf_user_getvar: Assume this is a met_em file - getting lowest level from UU and VV fields")
-             if ( time .eq. -1 ) then
-               if(ISFILE) then
-                 u_in  = nc_file->UU(:,0,:,:)
-                 v_in  = nc_file->VV(:,0,:,:)
-               else
-                 u_in  = file_handle[:]->UU(:,0,:,:)
-                 v_in  = file_handle[:]->VV(:,0,:,:)
-               end if
-               u = wrf_user_unstagger(u_in,u_in@stagger)
-               v = wrf_user_unstagger(v_in,v_in@stagger)
-             else
-               if(ISFILE) then
-                 u_in  = nc_file->UU(time_in,0,:,:)
-                 v_in  = nc_file->VV(time_in,0,:,:)
-               else
-                 u_in  = file_handle[:]->UU(time_in,0,:,:)
-                 v_in  = file_handle[:]->VV(time_in,0,:,:)
-               end if
-               u = wrf_user_unstagger(u_in,u_in@stagger)
-               v = wrf_user_unstagger(v_in,v_in@stagger)
-             end if
-           end if
-         end if
-       end if
-
-
-       map_projection = nc_file@MAP_PROJ
+    if( (variable .eq. "uvmet10") )  then
+      if(isfilevar(nc_file,"U10")) then
+        if ( time .eq. -1 ) then
+          if(ISFILE) then
+            u_in   = nc_file->U10
+            v_in   = nc_file->V10
+          else
+            u_in   = file_handle[:]->U10
+            v_in   = file_handle[:]->V10
+          end if
+          u = wrf_user_unstagger(u_in,u_in@stagger)
+          v = wrf_user_unstagger(v_in,v_in@stagger)
+        else
+          if(ISFILE) then
+            u_in  = nc_file->U10(time_in,:,:)
+            v_in  = nc_file->V10(time_in,:,:)
+          else
+            u_in  = file_handle[:]->U10(time_in,:,:)
+            v_in  = file_handle[:]->V10(time_in,:,:)
+          end if
+          u = wrf_user_unstagger(u_in,u_in@stagger)
+          v = wrf_user_unstagger(v_in,v_in@stagger)
+        end if
+        else  ; may be a met file, so get lowest level of UU and VV
+        if(isfilevar(nc_file,"UU")) then
+          print("wrf_user_getvar: Assume this is a met_em file - getting lowest level from UU and VV fields")
+          if ( time .eq. -1 ) then
+            if(ISFILE) then
+              u_in  = nc_file->UU(:,0,:,:)
+              v_in  = nc_file->VV(:,0,:,:)
+            else
+              u_in  = file_handle[:]->UU(:,0,:,:)
+              v_in  = file_handle[:]->VV(:,0,:,:)
+            end if
+            u = wrf_user_unstagger(u_in,u_in@stagger)
+            v = wrf_user_unstagger(v_in,v_in@stagger)
+          else
+            if(ISFILE) then
+              u_in  = nc_file->UU(time_in,0,:,:)
+              v_in  = nc_file->VV(time_in,0,:,:)
+            else
+              u_in  = file_handle[:]->UU(time_in,0,:,:)
+              v_in  = file_handle[:]->VV(time_in,0,:,:)
+            end if
+            u = wrf_user_unstagger(u_in,u_in@stagger)
+            v = wrf_user_unstagger(v_in,v_in@stagger)
+          end if
+        end if
+      end if
+    end if
 
 
-       if( any(map_projection.eq.(/0,3,6/)) ) then  ; no rotation needed
-         dims = dimsizes(u)
-         nd = dimsizes(dims)
-         if ( nd .eq. 5 ) then
-           uvmet = new( (/ 2, dims(0), dims(1), dims(2), dims(3), dims(4) /), typeof(u))
-           uvmet(0,:,:,:,:,:) = u(:,:,:,:,:)
-           uvmet(1,:,:,:,:,:) = v(:,:,:,:,:)
-         end if
-         if ( nd .eq. 4 ) then
-           uvmet = new( (/ 2, dims(0), dims(1), dims(2), dims(3) /), typeof(u))
-           uvmet(0,:,:,:,:) = u(:,:,:,:)
-           uvmet(1,:,:,:,:) = v(:,:,:,:)
-         end if
-         if ( nd .eq. 3 ) then
-           uvmet = new( (/ 2, dims(0), dims(1), dims(2) /), typeof(u))
-           uvmet(0,:,:,:) = u(:,:,:)
-           uvmet(1,:,:,:) = v(:,:,:)
-         end if
-         if ( nd .eq. 2 ) then
-           uvmet = new( (/ 2, dims(0), dims(1) /), typeof(u))
-           uvmet(0,:,:) = u(:,:)
-           uvmet(1,:,:) = v(:,:)
-         end if
-         delete_VarAtts(u,(/"description","units"/))
-         copy_VarAtts(u,uvmet)
-         uvmet@description = " u,v met velocity"
-         uvmet!0 = "u_v"
-       end if
+    map_projection = nc_file@MAP_PROJ
 
 
-       if( any(map_projection.eq.(/1,2/)) ) then  ; no rotation needed
-         cen_lat  = nc_file@CEN_LAT
-         if(isatt(nc_file,"STAND_LON")) then
-             cen_long = nc_file@STAND_LON
-         else
-             cen_long = nc_file@CEN_LON
-         end if
-         true_lat1 = nc_file@TRUELAT1
-         true_lat2 = nc_file@TRUELAT2
+    if( any(map_projection.eq.(/0,3,6/)) ) then  ; no rotation needed
+      dims = dimsizes(u)
+      nd = dimsizes(dims)
+      if ( nd .eq. 5 ) then
+        uvmet = new( (/ 2, dims(0), dims(1), dims(2), dims(3), dims(4) /), typeof(u))
+        uvmet(0,:,:,:,:,:) = u(:,:,:,:,:)
+        uvmet(1,:,:,:,:,:) = v(:,:,:,:,:)
+      end if
+      if ( nd .eq. 4 ) then
+        uvmet = new( (/ 2, dims(0), dims(1), dims(2), dims(3) /), typeof(u))
+        uvmet(0,:,:,:,:) = u(:,:,:,:)
+        uvmet(1,:,:,:,:) = v(:,:,:,:)
+      end if
+      if ( nd .eq. 3 ) then
+        uvmet = new( (/ 2, dims(0), dims(1), dims(2) /), typeof(u))
+        uvmet(0,:,:,:) = u(:,:,:)
+        uvmet(1,:,:,:) = v(:,:,:)
+      end if
+      if ( nd .eq. 2 ) then
+        uvmet = new( (/ 2, dims(0), dims(1) /), typeof(u))
+        uvmet(0,:,:) = u(:,:)
+        uvmet(1,:,:) = v(:,:)
+      end if
+      delete_VarAtts(u,(/"description","units"/))
+      copy_VarAtts(u,uvmet)
+      uvmet@description = " u,v met velocity"
+      uvmet!0 = "u_v"
+    end if
 
-         getLAT = "XLAT"
-         getLON = "XLONG"
-         if(.not. isfilevar(nc_file,"XLAT")) then
-           if(isfilevar(nc_file,"XLAT_M")) then
-             getLAT = "XLAT_M"
-             getLON = "XLONG_M"
-           end if
-         end if
-         if ( time .eq. -1 ) then
-           if(ISFILE) then
-             latitude  = nc_file->$getLAT$
-             longitude = nc_file->$getLON$
-           else
-             latitude  = file_handle[:]->$getLAT$
-             longitude = file_handle[:]->$getLON$
-           end if
-         else
-           if(ISFILE) then
-             latitude  = nc_file->$getLAT$(time_in,:,:)
-             longitude = nc_file->$getLON$(time_in,:,:)
-           else
-             latitude  = file_handle[:]->$getLAT$(time_in,:,:)
-             longitude = file_handle[:]->$getLON$(time_in,:,:)
-           end if
-         end if
 
-         cone = 1.
-         if( map_projection .eq. 1) then    ; Lambert Conformal mapping
-           if( (fabs(true_lat1 - true_lat2) .gt. 0.1) .and.  \
-               (fabs(true_lat2 - 90. )      .gt. 0.1)       ) then
-               cone = log(cos(true_lat1*radians_per_degree)) \
-                     -log(cos(true_lat2*radians_per_degree))
-               cone = cone/( log(tan(( 45. -fabs(true_lat1/2.))*radians_per_degree)) - \
-                             log(tan((45. -fabs(true_lat2/2.))*radians_per_degree)) )
-           else
-               cone = sin(fabs(true_lat1)*radians_per_degree)
-           end if
-         end if
-         if(map_projection .eq. 2) then      ; polar stereographic
-           cone = 1.
-         end if
-         if(map_projection .eq. 3) then      ; Mercator
-           cone = 0.
-         end if
+    if( any(map_projection.eq.(/1,2/)) ) then  ; no rotation needed
+      cen_lat  = nc_file@CEN_LAT
+      if(isatt(nc_file,"STAND_LON")) then
+        cen_long = nc_file@STAND_LON
+      else
+        cen_long = nc_file@CEN_LON
+      end if
+      true_lat1 = nc_file@TRUELAT1
+      true_lat2 = nc_file@TRUELAT2
 
-         uvmet = wrf_uvmet( u, v, latitude, longitude, cen_long, cone )
-         delete_VarAtts(u,(/"description","units"/))
-         copy_VarAtts(u,uvmet)
+      getLAT = "XLAT"
+      getLON = "XLONG"
+      if(.not. isfilevar(nc_file,"XLAT")) then
+        if(isfilevar(nc_file,"XLAT_M")) then
+          getLAT = "XLAT_M"
+          getLON = "XLONG_M"
+        end if
+      end if
+      if ( time .eq. -1 ) then
+        if(ISFILE) then
+          latitude  = nc_file->$getLAT$
+          longitude = nc_file->$getLON$
+        else
+          latitude  = file_handle[:]->$getLAT$
+          longitude = file_handle[:]->$getLON$
+        end if
+      else
+        if(ISFILE) then
+          latitude  = nc_file->$getLAT$(time_in,:,:)
+          longitude = nc_file->$getLON$(time_in,:,:)
+        else
+          latitude  = file_handle[:]->$getLAT$(time_in,:,:)
+          longitude = file_handle[:]->$getLON$(time_in,:,:)
+        end if
+      end if
 
-       end if
+      cone = 1.
+      if( map_projection .eq. 1) then    ; Lambert Conformal mapping
+        if( (fabs(true_lat1 - true_lat2) .gt. 0.1) .and.  \
+                (fabs(true_lat2 - 90. )      .gt. 0.1)       ) then
+          cone = log(cos(true_lat1*radians_per_degree)) \
+                  -log(cos(true_lat2*radians_per_degree))
+          cone = cone/( log(tan(( 45. -fabs(true_lat1/2.))*radians_per_degree)) - \
+                  log(tan((45. -fabs(true_lat2/2.))*radians_per_degree)) )
+        else
+          cone = sin(fabs(true_lat1)*radians_per_degree)
+        end if
+      end if
+      if(map_projection .eq. 2) then      ; polar stereographic
+        cone = 1.
+      end if
+      if(map_projection .eq. 3) then      ; Mercator
+        cone = 0.
+      end if
 
-       if( (variable .eq. "uvmet10") )  then
-         uvmet@description = " u10,v10 met velocity"
-       end if
-       return(uvmet)
+      uvmet = wrf_uvmet( u, v, latitude, longitude, cen_long, cone )
+      delete_VarAtts(u,(/"description","units"/))
+      copy_VarAtts(u,uvmet)
+
+    end if
+
+    if( (variable .eq. "uvmet10") )  then
+      uvmet@description = " u10,v10 met velocity"
+    end if
+    return(uvmet)
 
   end if
 
 
 
   if( variable .eq. "ua" ) then
-       ;  U interpolated to mass points
-       getTHIS = "U"
-       if(.not. isfilevar(nc_file,"U")) then
-         if(isfilevar(nc_file,"UU")) then
-           getTHIS = "UU"
-         end if
-       end if
-       if ( time .eq. -1 ) then
-         if(ISFILE) then
-           var = nc_file->$getTHIS$
-         else
-           var = file_handle[:]->$getTHIS$
-         end if
-       else
-         if(ISFILE) then
-           var = nc_file->$getTHIS$(time_in,:,:,:)
-         else
-           var = file_handle[:]->$getTHIS$(time_in,:,:,:)
-         end if
-       end if
+    ;  U interpolated to mass points
+    getTHIS = "U"
+    if(.not. isfilevar(nc_file,"U")) then
+      if(isfilevar(nc_file,"UU")) then
+        getTHIS = "UU"
+      end if
+    end if
+    if ( time .eq. -1 ) then
+      if(ISFILE) then
+        var = nc_file->$getTHIS$
+      else
+        var = file_handle[:]->$getTHIS$
+      end if
+    else
+      if(ISFILE) then
+        var = nc_file->$getTHIS$(time_in,:,:,:)
+      else
+        var = file_handle[:]->$getTHIS$(time_in,:,:,:)
+      end if
+    end if
 
-       ua = wrf_user_unstagger(var,var@stagger)
+    ua = wrf_user_unstagger(var,var@stagger)
 
-       return(ua)
+    return(ua)
   end if
 
 
 
   if( variable .eq. "va" ) then
-       ; V interpolated to mass points
-       getTHIS = "V"
-       if(.not. isfilevar(nc_file,"V")) then
-         if(isfilevar(nc_file,"VV")) then
-           getTHIS = "VV"
-         end if
-       end if
-       if ( time .eq. -1 ) then
-         if(ISFILE) then
-           var = nc_file->$getTHIS$
-         else
-           var = file_handle[:]->$getTHIS$
-         end if
-       else
-         if(ISFILE) then
-           var = nc_file->$getTHIS$(time_in,:,:,:)
-         else
-           var = file_handle[:]->$getTHIS$(time_in,:,:,:)
-         end if
-       end if
+    ; V interpolated to mass points
+    getTHIS = "V"
+    if(.not. isfilevar(nc_file,"V")) then
+      if(isfilevar(nc_file,"VV")) then
+        getTHIS = "VV"
+      end if
+    end if
+    if ( time .eq. -1 ) then
+      if(ISFILE) then
+        var = nc_file->$getTHIS$
+      else
+        var = file_handle[:]->$getTHIS$
+      end if
+    else
+      if(ISFILE) then
+        var = nc_file->$getTHIS$(time_in,:,:,:)
+      else
+        var = file_handle[:]->$getTHIS$(time_in,:,:,:)
+      end if
+    end if
 
-       va = wrf_user_unstagger(var,var@stagger)
+    va = wrf_user_unstagger(var,var@stagger)
 
-       return(va)
+    return(va)
   end if
 
 
 
   if( variable .eq. "wa" ) then
-       ; W interpolated to mass points
-       if ( time .eq. -1 ) then
-         if(ISFILE) then
-           var = nc_file->W
-         else
-           var = file_handle[:]->W
-         end if
-       else
-         if(ISFILE) then
-           var = nc_file->W(time_in,:,:,:)
-         else
-           var = file_handle[:]->W(time_in,:,:,:)
-         end if
-       end if
+    ; W interpolated to mass points
+    if ( time .eq. -1 ) then
+      if(ISFILE) then
+        var = nc_file->W
+      else
+        var = file_handle[:]->W
+      end if
+    else
+      if(ISFILE) then
+        var = nc_file->W(time_in,:,:,:)
+      else
+        var = file_handle[:]->W(time_in,:,:,:)
+      end if
+    end if
 
-       wa = wrf_user_unstagger(var,var@stagger)
+    wa = wrf_user_unstagger(var,var@stagger)
 
-       return(wa)
+    return(wa)
   end if
 
 
 
   if( any( variable .eq. (/"p","pres","pressure"/) ) ) then
-       ; Full model pressure [=base pressure (PB) + pertubation pressure (P)]
-       if(isfilevar(nc_file,"P")) then
-         if ( time .eq. -1 ) then
-           if(ISFILE) then
-             var = nc_file->P
-             PB  = nc_file->PB
-           else
-             var = file_handle[:]->P
-             PB  = file_handle[:]->PB
-           end if
-         else
-           if(ISFILE) then
-             var = nc_file->P(time_in,:,:,:)
-             PB  = nc_file->PB(time_in,:,:,:)
-           else
-             var = file_handle[:]->P(time_in,:,:,:)
-             PB  = file_handle[:]->PB(time_in,:,:,:)
-           end if
-         end if
-         var = var + PB
-       else
-         ;; may be a met_em file - see if we can get PRES
-         if(isfilevar(nc_file,"PRES")) then
-           if ( time .eq. -1 ) then
-             if(ISFILE) then
-               var = nc_file->PRES
-             else
-               var = file_handle[:]->PRES
-             end if
-           else
-             if(ISFILE) then
-               var = nc_file->PRES(time_in,:,:,:)
-             else
-               var = file_handle[:]->PRES(time_in,:,:,:)
-             end if
-           end if
-         end if
-       end if
-       var@description = "Pressure"
-       if( variable .eq. "pressure" ) then
-         var = var * 0.01
-         var@units = "hPa"
-       end if
-       return(var)
+    ; Full model pressure [=base pressure (PB) + pertubation pressure (P)]
+    if(isfilevar(nc_file,"P")) then
+      if ( time .eq. -1 ) then
+        if(ISFILE) then
+          var = nc_file->P
+          PB  = nc_file->PB
+        else
+          var = file_handle[:]->P
+          PB  = file_handle[:]->PB
+        end if
+      else
+        if(ISFILE) then
+          var = nc_file->P(time_in,:,:,:)
+          PB  = nc_file->PB(time_in,:,:,:)
+        else
+          var = file_handle[:]->P(time_in,:,:,:)
+          PB  = file_handle[:]->PB(time_in,:,:,:)
+        end if
+      end if
+      var = var + PB
+    else
+      ;; may be a met_em file - see if we can get PRES
+      if(isfilevar(nc_file,"PRES")) then
+        if ( time .eq. -1 ) then
+          if(ISFILE) then
+            var = nc_file->PRES
+          else
+            var = file_handle[:]->PRES
+          end if
+        else
+          if(ISFILE) then
+            var = nc_file->PRES(time_in,:,:,:)
+          else
+            var = file_handle[:]->PRES(time_in,:,:,:)
+          end if
+        end if
+      end if
+    end if
+    var@description = "Pressure"
+    if( variable .eq. "pressure" ) then
+      var = var * 0.01
+      var@units = "hPa"
+    end if
+    return(var)
   end if
 
 
 
   if( any( variable .eq. (/"geopt","geopotential","z","height"/) ) ) then
-       ; Height [=full geopotentail height / 9.81]
-       if(isfilevar(nc_file,"PH")) then
-         if ( time .eq. -1 ) then
-           if(ISFILE) then
-             var = nc_file->PH
-             PHB = nc_file->PHB
-           else
-             var = file_handle[:]->PH
-             PHB = file_handle[:]->PHB
-           end if
-         else
-           if(ISFILE) then
-             var = nc_file->PH(time,:,:,:)
-             PHB = nc_file->PHB(time,:,:,:)
-           else
-             var = file_handle[:]->PH(time,:,:,:)
-             PHB = file_handle[:]->PHB(time,:,:,:)
-           end if
-         end if
+    ; Height [=full geopotentail height / 9.81]
+    if(isfilevar(nc_file,"PH")) then
+      if ( time .eq. -1 ) then
+        if(ISFILE) then
+          var = nc_file->PH
+          PHB = nc_file->PHB
+        else
+          var = file_handle[:]->PH
+          PHB = file_handle[:]->PHB
+        end if
+      else
+        if(ISFILE) then
+          var = nc_file->PH(time,:,:,:)
+          PHB = nc_file->PHB(time,:,:,:)
+        else
+          var = file_handle[:]->PH(time,:,:,:)
+          PHB = file_handle[:]->PHB(time,:,:,:)
+        end if
+      end if
 
-         var = var + PHB
-         z = wrf_user_unstagger(var,var@stagger)
-         z@description = "Geopotential"
+      var = var + PHB
+      z = wrf_user_unstagger(var,var@stagger)
+      z@description = "Geopotential"
 
-       else
-         ;; may be a met_em file - see if we can get GHT - data in met_em file is Height in M
-         if(isfilevar(nc_file,"GHT")) then
-           if ( time .eq. -1 ) then
-             if(ISFILE) then
-               z = nc_file->GHT
-             else
-               z = file_handle[:]->GHT
-             end if
-           else
-             if(ISFILE) then
-               z = nc_file->GHT(time,:,:,:)
-             else
-               z = file_handle[:]->GHT(time,:,:,:)
-             end if
-           end if
-           z = z * 9.81
-           z@description = "Geopotential"
-           z@units       = "m2 s-2"
-         end if
-       end if
+    else
+      ;; may be a met_em file - see if we can get GHT - data in met_em file is Height in M
+      if(isfilevar(nc_file,"GHT")) then
+        if ( time .eq. -1 ) then
+          if(ISFILE) then
+            z = nc_file->GHT
+          else
+            z = file_handle[:]->GHT
+          end if
+        else
+          if(ISFILE) then
+            z = nc_file->GHT(time,:,:,:)
+          else
+            z = file_handle[:]->GHT(time,:,:,:)
+          end if
+        end if
+        z = z * 9.81
+        z@description = "Geopotential"
+        z@units       = "m2 s-2"
+      end if
+    end if
 
-       if( any( variable .eq. (/"z","height"/) ) ) then
-         z = z / 9.81
-         z@description = "Height"
-         z@units       = "m"
-       end if
-       return(z)
+    if( any( variable .eq. (/"z","height"/) ) ) then
+      z = z / 9.81
+      z@description = "Height"
+      z@units       = "m"
+    end if
+    return(z)
   end if
 
 
 
   if( any( variable .eq. (/"th","theta"/) ) ) then
-       ; Potentail Temperature is model output T + 300K
-       if ( time .eq. -1 ) then
-         if(ISFILE) then
-           var = nc_file->T
-         else
-           var = file_handle[:]->T
-         end if
-       else
-         if(ISFILE) then
-           var = nc_file->T(time_in,:,:,:)
-         else
-           var = file_handle[:]->T(time_in,:,:,:)
-         end if
-       end if
-       var = var + 300.
-       var@description = "Potential Temperature (theta) "
-       return(var)
+    ; Potentail Temperature is model output T + 300K
+    if ( time .eq. -1 ) then
+      if(ISFILE) then
+        var = nc_file->T
+      else
+        var = file_handle[:]->T
+      end if
+    else
+      if(ISFILE) then
+        var = nc_file->T(time_in,:,:,:)
+      else
+        var = file_handle[:]->T(time_in,:,:,:)
+      end if
+    end if
+    var = var + 300.
+    var@description = "Potential Temperature (theta) "
+    return(var)
   end if
 
 
 
   if( any( variable .eq. (/"tk","tc"/) ) ) then
-       ;; function wrf_tk needs theta and pressure (Pa) on input and returns temperature in K on return
-       if(isfilevar(nc_file,"T")) then
-         if ( time .eq. -1 ) then
-           if(ISFILE) then
-             T  = nc_file->T
-             P  = nc_file->P
-             PB = nc_file->PB
-           else
-             T  = file_handle[:]->T
-             P  = file_handle[:]->P
-             PB = file_handle[:]->PB
-           end if
-         else
-           if(ISFILE) then
-             T  = nc_file->T(time_in,:,:,:)
-             P  = nc_file->P(time_in,:,:,:)
-             PB = nc_file->PB(time_in,:,:,:)
-           else
-             T  = file_handle[:]->T(time_in,:,:,:)
-             P  = file_handle[:]->P(time_in,:,:,:)
-             PB = file_handle[:]->PB(time_in,:,:,:)
-           end if
-         end if
-         T = T + 300.
-         P = P + PB
-         t = wrf_tk( P , T )
-         delete_VarAtts(T,(/"description"/))
-         copy_VarAtts(T,t)
-       else
-         ;; may be a met_em file - see if we can get TT
-         if(isfilevar(nc_file,"TT")) then
-           if ( time .eq. -1 ) then
-             if(ISFILE) then
-               t = nc_file->TT
-             else
-               t = file_handle[:]->TT
-             end if
-           else
-             if(ISFILE) then
-               t = nc_file->TT(time_in,:,:,:)
-             else
-               t = file_handle[:]->TT(time_in,:,:,:)
-             end if
-           end if
-         end if
-       end if
-       if( variable .eq. "tc" ) then
-         t = t - 273.16
-         t@units = "C"     ; Overwrite return units
-       end if
-       return(t)
+    ;; function wrf_tk needs theta and pressure (Pa) on input and returns temperature in K on return
+    if(isfilevar(nc_file,"T")) then
+      if ( time .eq. -1 ) then
+        if(ISFILE) then
+          T  = nc_file->T
+          P  = nc_file->P
+          PB = nc_file->PB
+        else
+          T  = file_handle[:]->T
+          P  = file_handle[:]->P
+          PB = file_handle[:]->PB
+        end if
+      else
+        if(ISFILE) then
+          T  = nc_file->T(time_in,:,:,:)
+          P  = nc_file->P(time_in,:,:,:)
+          PB = nc_file->PB(time_in,:,:,:)
+        else
+          T  = file_handle[:]->T(time_in,:,:,:)
+          P  = file_handle[:]->P(time_in,:,:,:)
+          PB = file_handle[:]->PB(time_in,:,:,:)
+        end if
+      end if
+      T = T + 300.
+      P = P + PB
+      t = wrf_tk( P , T )
+      delete_VarAtts(T,(/"description"/))
+      copy_VarAtts(T,t)
+    else
+      ;; may be a met_em file - see if we can get TT
+      if(isfilevar(nc_file,"TT")) then
+        if ( time .eq. -1 ) then
+          if(ISFILE) then
+            t = nc_file->TT
+          else
+            t = file_handle[:]->TT
+          end if
+        else
+          if(ISFILE) then
+            t = nc_file->TT(time_in,:,:,:)
+          else
+            t = file_handle[:]->TT(time_in,:,:,:)
+          end if
+        end if
+      end if
+    end if
+    if( variable .eq. "tc" ) then
+      t = t - 273.16
+      t@units = "C"     ; Overwrite return units
+    end if
+    return(t)
   end if
 
 
 
-   if( variable .eq. "eth" ) then
-   ;Equivalent Potential Temperature in degrees K
-       if(isfilevar(nc_file,"T")) then
-         if ( time .eq. -1 ) then
-           if(ISFILE) then
-             T  = nc_file->T
-             P  = nc_file->P
-             PB = nc_file->PB
-             QV = nc_file->QVAPOR
-           else
-             T  = file_handle[:]->T
-             P  = file_handle[:]->P
-             PB = file_handle[:]->PB
-             QV = file_handle[:]->QVAPOR
-           end if
-         else
-           if(ISFILE) then
-             T  = nc_file->T(time_in,:,:,:)
-             P  = nc_file->P(time_in,:,:,:)
-             PB = nc_file->PB(time_in,:,:,:)
-             QV = nc_file->QVAPOR(time_in,:,:,:)
-           else
-             T  = file_handle[:]->T(time_in,:,:,:)
-             P  = file_handle[:]->P(time_in,:,:,:)
-             PB = file_handle[:]->PB(time_in,:,:,:)
-             QV = file_handle[:]->QVAPOR(time_in,:,:,:)
-           end if
-         end if
-         T  = T + 300.        ; potential temperature in K.
-         P  = P + PB          ; full pressure in Pa.
-         tk = wrf_tk( P , T ) ; temperature in K.
-         eth = wrf_eth ( QV, tk, P )
-         delete_VarAtts(T,(/"description"/))
-         copy_VarAtts(T,eth)
-         return(eth)
-       else
-         print("This diagnostic only for with WRF data file and not for WPS files")
-         exit
-       end if
+  if( variable .eq. "eth" ) then
+    ;Equivalent Potential Temperature in degrees K
+    if(isfilevar(nc_file,"T")) then
+      if ( time .eq. -1 ) then
+        if(ISFILE) then
+          T  = nc_file->T
+          P  = nc_file->P
+          PB = nc_file->PB
+          QV = nc_file->QVAPOR
+        else
+          T  = file_handle[:]->T
+          P  = file_handle[:]->P
+          PB = file_handle[:]->PB
+          QV = file_handle[:]->QVAPOR
+        end if
+      else
+        if(ISFILE) then
+          T  = nc_file->T(time_in,:,:,:)
+          P  = nc_file->P(time_in,:,:,:)
+          PB = nc_file->PB(time_in,:,:,:)
+          QV = nc_file->QVAPOR(time_in,:,:,:)
+        else
+          T  = file_handle[:]->T(time_in,:,:,:)
+          P  = file_handle[:]->P(time_in,:,:,:)
+          PB = file_handle[:]->PB(time_in,:,:,:)
+          QV = file_handle[:]->QVAPOR(time_in,:,:,:)
+        end if
+      end if
+      T  = T + 300.        ; potential temperature in K.
+      P  = P + PB          ; full pressure in Pa.
+      tk = wrf_tk( P , T ) ; temperature in K.
+      eth = wrf_eth ( QV, tk, P )
+      delete_VarAtts(T,(/"description"/))
+      copy_VarAtts(T,eth)
+      return(eth)
+    else
+      print("This diagnostic only for with WRF data file and not for WPS files")
+      exit
+    end if
 
-   end if
+  end if
 
 
 
   if( variable .eq. "td" ) then
-       ;; function wrf_td needs qv and pressure (Pa) on input and returns dewpoint temperature on return
-       if ( time .eq. -1 ) then
-         if(ISFILE) then
-           P      = nc_file->P
-           PB     = nc_file->PB
-           QVAPOR = nc_file->QVAPOR
-         else
-           P      = file_handle[:]->P
-           PB     = file_handle[:]->PB
-           QVAPOR = file_handle[:]->QVAPOR
-         end if
-       else
-         if(ISFILE) then
-           P      = nc_file->P(time_in,:,:,:)
-           PB     = nc_file->PB(time_in,:,:,:)
-           QVAPOR = nc_file->QVAPOR(time_in,:,:,:)
-         else
-           P      = file_handle[:]->P(time_in,:,:,:)
-           PB     = file_handle[:]->PB(time_in,:,:,:)
-           QVAPOR = file_handle[:]->QVAPOR(time_in,:,:,:)
-         end if
-       end if
-       P = P + PB
-       td  = wrf_td( P , QVAPOR )
-       delete_VarAtts(QVAPOR,(/"description","units"/))
-       copy_VarAtts(QVAPOR,td)
-       return(td)
+    ;; function wrf_td needs qv and pressure (Pa) on input and returns dewpoint temperature on return
+    if ( time .eq. -1 ) then
+      if(ISFILE) then
+        P      = nc_file->P
+        PB     = nc_file->PB
+        QVAPOR = nc_file->QVAPOR
+      else
+        P      = file_handle[:]->P
+        PB     = file_handle[:]->PB
+        QVAPOR = file_handle[:]->QVAPOR
+      end if
+    else
+      if(ISFILE) then
+        P      = nc_file->P(time_in,:,:,:)
+        PB     = nc_file->PB(time_in,:,:,:)
+        QVAPOR = nc_file->QVAPOR(time_in,:,:,:)
+      else
+        P      = file_handle[:]->P(time_in,:,:,:)
+        PB     = file_handle[:]->PB(time_in,:,:,:)
+        QVAPOR = file_handle[:]->QVAPOR(time_in,:,:,:)
+      end if
+    end if
+    P = P + PB
+    td  = wrf_td( P , QVAPOR )
+    delete_VarAtts(QVAPOR,(/"description","units"/))
+    copy_VarAtts(QVAPOR,td)
+    return(td)
   end if
 
 
 
   if( variable .eq. "td2" ) then
-       ;; function wrf_td needs qv and pressure (Pa) on input and returns dewpoint temperature on return
-       if ( time .eq. -1 ) then
-         if(ISFILE) then
-           PSFC = nc_file->PSFC
-           Q2   = nc_file->Q2
-         else
-           PSFC = file_handle[:]->PSFC
-           Q2   = file_handle[:]->Q2
-         end if
-       else
-         if(ISFILE) then
-           PSFC = nc_file->PSFC(time_in,:,:)
-           Q2   = nc_file->Q2(time_in,:,:)
-         else
-           PSFC = file_handle[:]->PSFC(time_in,:,:)
-           Q2   = file_handle[:]->Q2(time_in,:,:)
-         end if
-       end if
-       td = wrf_td( PSFC , Q2 )
-       delete_VarAtts(Q2,(/"description","units"/))
-       copy_VarAtts(Q2,td)
-       td@description = "2m Dewpoint Temperature"   ; Overwrite return description
-       return(td)
+    ;; function wrf_td needs qv and pressure (Pa) on input and returns dewpoint temperature on return
+    if ( time .eq. -1 ) then
+      if(ISFILE) then
+        PSFC = nc_file->PSFC
+        Q2   = nc_file->Q2
+      else
+        PSFC = file_handle[:]->PSFC
+        Q2   = file_handle[:]->Q2
+      end if
+    else
+      if(ISFILE) then
+        PSFC = nc_file->PSFC(time_in,:,:)
+        Q2   = nc_file->Q2(time_in,:,:)
+      else
+        PSFC = file_handle[:]->PSFC(time_in,:,:)
+        Q2   = file_handle[:]->Q2(time_in,:,:)
+      end if
+    end if
+    td = wrf_td( PSFC , Q2 )
+    delete_VarAtts(Q2,(/"description","units"/))
+    copy_VarAtts(Q2,td)
+    td@description = "2m Dewpoint Temperature"   ; Overwrite return description
+    return(td)
   end if
 
 
 
   if( variable .eq. "slp" ) then
-       if(isfilevar(nc_file,"T")) then
-         ;; first compute theta - function wrf_tk needs theta and pressure (Pa) on input
-         ;; THEN compute sea level pressure, from qv, p (Pa), tk, z
-         if ( time .eq. -1 ) then
-           if(ISFILE) then
-             T      = nc_file->T
-             P      = nc_file->P
-             PB     = nc_file->PB
-             QVAPOR = nc_file->QVAPOR
-             PH     = nc_file->PH
-             PHB    = nc_file->PHB
-           else
-             T      = file_handle[:]->T
-             P      = file_handle[:]->P
-             PB     = file_handle[:]->PB
-             QVAPOR = file_handle[:]->QVAPOR
-             PH     = file_handle[:]->PH
-             PHB    = file_handle[:]->PHB
-           end if
-         else
-           if(ISFILE) then
-             T      = nc_file->T(time_in,:,:,:)
-             P      = nc_file->P(time_in,:,:,:)
-             PB     = nc_file->PB(time_in,:,:,:)
-             QVAPOR = nc_file->QVAPOR(time_in,:,:,:)
-             PH     = nc_file->PH(time_in,:,:,:)
-             PHB    = nc_file->PHB(time_in,:,:,:)
-           else
-             T      = file_handle[:]->T(time_in,:,:,:)
-             P      = file_handle[:]->P(time_in,:,:,:)
-             PB     = file_handle[:]->PB(time_in,:,:,:)
-             QVAPOR = file_handle[:]->QVAPOR(time_in,:,:,:)
-             PH     = file_handle[:]->PH(time_in,:,:,:)
-             PHB    = file_handle[:]->PHB(time_in,:,:,:)
-           end if
-         end if
-         T = T + 300.
-         P = P + PB
-         QVAPOR = QVAPOR > 0.000
-         PH    = ( PH + PHB ) / 9.81
-         z = wrf_user_unstagger(PH,PH@stagger)
+    if(isfilevar(nc_file,"T")) then
+      ;; first compute theta - function wrf_tk needs theta and pressure (Pa) on input
+      ;; THEN compute sea level pressure, from qv, p (Pa), tk, z
+      if ( time .eq. -1 ) then
+        if(ISFILE) then
+          T      = nc_file->T
+          P      = nc_file->P
+          PB     = nc_file->PB
+          QVAPOR = nc_file->QVAPOR
+          PH     = nc_file->PH
+          PHB    = nc_file->PHB
+        else
+          T      = file_handle[:]->T
+          P      = file_handle[:]->P
+          PB     = file_handle[:]->PB
+          QVAPOR = file_handle[:]->QVAPOR
+          PH     = file_handle[:]->PH
+          PHB    = file_handle[:]->PHB
+        end if
+      else
+        if(ISFILE) then
+          T      = nc_file->T(time_in,:,:,:)
+          P      = nc_file->P(time_in,:,:,:)
+          PB     = nc_file->PB(time_in,:,:,:)
+          QVAPOR = nc_file->QVAPOR(time_in,:,:,:)
+          PH     = nc_file->PH(time_in,:,:,:)
+          PHB    = nc_file->PHB(time_in,:,:,:)
+        else
+          T      = file_handle[:]->T(time_in,:,:,:)
+          P      = file_handle[:]->P(time_in,:,:,:)
+          PB     = file_handle[:]->PB(time_in,:,:,:)
+          QVAPOR = file_handle[:]->QVAPOR(time_in,:,:,:)
+          PH     = file_handle[:]->PH(time_in,:,:,:)
+          PHB    = file_handle[:]->PHB(time_in,:,:,:)
+        end if
+      end if
+      T = T + 300.
+      P = P + PB
+      QVAPOR = QVAPOR > 0.000
+      PH    = ( PH + PHB ) / 9.81
+      z = wrf_user_unstagger(PH,PH@stagger)
 
-         tk = wrf_tk( P , T )    ; calculate TK
-         slp   = wrf_slp( z, tk, P, QVAPOR )  ; calculate slp
-         delete_VarAtts(T,(/"description","units"/))
-         copy_VarAtts(T,slp)
-       else
-         ;; may be a met_em file - see if we can get PMSL
-         if(isfilevar(nc_file,"PMSL")) then
-           if ( time .eq. -1 ) then
-             if(ISFILE) then
-               slp = nc_file->PMSL
-             else
-               slp = file_handle[:]->PMSL
-             end if
-           else
-             if(ISFILE) then
-               slp = nc_file->PMSL(time_in,:,:)
-             else
-               slp = file_handle[:]->PMSL(time_in,:,:)
-             end if
-           end if
-         end if
-       end if
+      tk = wrf_tk( P , T )    ; calculate TK
+      slp   = wrf_slp( z, tk, P, QVAPOR )  ; calculate slp
+      delete_VarAtts(T,(/"description","units"/))
+      copy_VarAtts(T,slp)
+    else
+      ;; may be a met_em file - see if we can get PMSL
+      if(isfilevar(nc_file,"PMSL")) then
+        if ( time .eq. -1 ) then
+          if(ISFILE) then
+            slp = nc_file->PMSL
+          else
+            slp = file_handle[:]->PMSL
+          end if
+        else
+          if(ISFILE) then
+            slp = nc_file->PMSL(time_in,:,:)
+          else
+            slp = file_handle[:]->PMSL(time_in,:,:)
+          end if
+        end if
+      end if
+    end if
 
-       return(slp)
+    return(slp)
   end if
 
 
 
   if( variable .eq. "rh" ) then
-       if(isfilevar(nc_file,"T")) then
-         ;; first compute theta - function wrf_tk needs theta and pressure (Pa) on input
-         ;; THEN compute rh, using tk, p (Pa), QVAPOR
-         if ( time .eq. -1 ) then
-           if(ISFILE) then
-             T      = nc_file->T
-             P      = nc_file->P
-             PB     = nc_file->PB
-             QVAPOR = nc_file->QVAPOR
-           else
-             T      = file_handle[:]->T
-             P      = file_handle[:]->P
-             PB     = file_handle[:]->PB
-             QVAPOR = file_handle[:]->QVAPOR
-           end if
-         else
-           if(ISFILE) then
-             T      = nc_file->T(time_in,:,:,:)
-             P      = nc_file->P(time_in,:,:,:)
-             PB     = nc_file->PB(time_in,:,:,:)
-             QVAPOR = nc_file->QVAPOR(time_in,:,:,:)
-           else
-             T      = file_handle[:]->T(time_in,:,:,:)
-             P      = file_handle[:]->P(time_in,:,:,:)
-             PB     = file_handle[:]->PB(time_in,:,:,:)
-             QVAPOR = file_handle[:]->QVAPOR(time_in,:,:,:)
-           end if
-         end if
-         T = T + 300.
-         P  = P + PB
-         QVAPOR = QVAPOR > 0.000
-         tk = wrf_tk( P , T )
-         rh = wrf_rh( QVAPOR, P, tk )
-         delete_VarAtts(T,(/"description","units"/))
-         copy_VarAtts(T,rh)
-       else
-         ;; may be a met_em file - see if we can get RH
-         if(isfilevar(nc_file,"RH")) then
-           if ( time .eq. -1 ) then
-             if(ISFILE) then
-               rh = nc_file->RH
-             else
-               rh = file_handle[:]->RH
-             end if
-           else
-             if(ISFILE) then
-               rh = nc_file->RH(time_in,:,:,:)
-             else
-               rh = file_handle[:]->RH(time_in,:,:,:)
-             end if
-           end if
-         end if
-       end if
-       return(rh)
+    if(isfilevar(nc_file,"T")) then
+      ;; first compute theta - function wrf_tk needs theta and pressure (Pa) on input
+      ;; THEN compute rh, using tk, p (Pa), QVAPOR
+      if ( time .eq. -1 ) then
+        if(ISFILE) then
+          T      = nc_file->T
+          P      = nc_file->P
+          PB     = nc_file->PB
+          QVAPOR = nc_file->QVAPOR
+        else
+          T      = file_handle[:]->T
+          P      = file_handle[:]->P
+          PB     = file_handle[:]->PB
+          QVAPOR = file_handle[:]->QVAPOR
+        end if
+      else
+        if(ISFILE) then
+          T      = nc_file->T(time_in,:,:,:)
+          P      = nc_file->P(time_in,:,:,:)
+          PB     = nc_file->PB(time_in,:,:,:)
+          QVAPOR = nc_file->QVAPOR(time_in,:,:,:)
+        else
+          T      = file_handle[:]->T(time_in,:,:,:)
+          P      = file_handle[:]->P(time_in,:,:,:)
+          PB     = file_handle[:]->PB(time_in,:,:,:)
+          QVAPOR = file_handle[:]->QVAPOR(time_in,:,:,:)
+        end if
+      end if
+      T = T + 300.
+      P  = P + PB
+      QVAPOR = QVAPOR > 0.000
+      tk = wrf_tk( P , T )
+      rh = wrf_rh( QVAPOR, P, tk )
+      delete_VarAtts(T,(/"description","units"/))
+      copy_VarAtts(T,rh)
+    else
+      ;; may be a met_em file - see if we can get RH
+      if(isfilevar(nc_file,"RH")) then
+        if ( time .eq. -1 ) then
+          if(ISFILE) then
+            rh = nc_file->RH
+          else
+            rh = file_handle[:]->RH
+          end if
+        else
+          if(ISFILE) then
+            rh = nc_file->RH(time_in,:,:,:)
+          else
+            rh = file_handle[:]->RH(time_in,:,:,:)
+          end if
+        end if
+      end if
+    end if
+    return(rh)
   end if
 
 
 
   if( variable .eq. "rh2" ) then
-       if(isfilevar(nc_file,"T2")) then
-         ;; Compute rh2, using T2, PSFC, Q2
-         if ( time .eq. -1 ) then
-           if(ISFILE) then
-             T2   = nc_file->T2
-             PSFC = nc_file->PSFC
-             Q2   = nc_file->Q2
-           else
-             T2   = file_handle[:]->T2
-             PSFC = file_handle[:]->PSFC
-             Q2   = file_handle[:]->Q2
-           end if
-         else
-           if(ISFILE) then
-             T2   = nc_file->T2(time_in,:,:)
-             PSFC = nc_file->PSFC(time_in,:,:)
-             Q2   = nc_file->Q2(time_in,:,:)
-           else
-             T2   = file_handle[:]->T2(time_in,:,:)
-             PSFC = file_handle[:]->PSFC(time_in,:,:)
-             Q2   = file_handle[:]->Q2(time_in,:,:)
-           end if
-         end if
-         Q2 = Q2 > 0.000
-         rh = wrf_rh( Q2, PSFC, T2 )
-         delete_VarAtts(T2,(/"description","units"/))
-         copy_VarAtts(T2,rh)
-         rh@description = "2m Relative Humidity"
-       else
-         ;; may be a met_em file - see if we can get RH
-         if(isfilevar(nc_file,"RH")) then
-           print("Probably a met_em file - get lowerst level from RH field")
-           if ( time .eq. -1 ) then
-             if(ISFILE) then
-               rh2 = nc_file->RH(:,0,:,:)
-             else
-               rh2 = file_handle[:]->RH(:,0,:,:)
-             end if
-           else
-             if(ISFILE) then
-               rh2 = nc_file->RH(time_in,0,:,:)
-             else
-               rh2 = file_handle[:]->RH(time_in,0,:,:)
-             end if
-           end if
-         end if
-       end if
-       return(rh)
+    if(isfilevar(nc_file,"T2")) then
+      ;; Compute rh2, using T2, PSFC, Q2
+      if ( time .eq. -1 ) then
+        if(ISFILE) then
+          T2   = nc_file->T2
+          PSFC = nc_file->PSFC
+          Q2   = nc_file->Q2
+        else
+          T2   = file_handle[:]->T2
+          PSFC = file_handle[:]->PSFC
+          Q2   = file_handle[:]->Q2
+        end if
+      else
+        if(ISFILE) then
+          T2   = nc_file->T2(time_in,:,:)
+          PSFC = nc_file->PSFC(time_in,:,:)
+          Q2   = nc_file->Q2(time_in,:,:)
+        else
+          T2   = file_handle[:]->T2(time_in,:,:)
+          PSFC = file_handle[:]->PSFC(time_in,:,:)
+          Q2   = file_handle[:]->Q2(time_in,:,:)
+        end if
+      end if
+      Q2 = Q2 > 0.000
+      rh = wrf_rh( Q2, PSFC, T2 )
+      delete_VarAtts(T2,(/"description","units"/))
+      copy_VarAtts(T2,rh)
+      rh@description = "2m Relative Humidity"
+    else
+      ;; may be a met_em file - see if we can get RH
+      if(isfilevar(nc_file,"RH")) then
+        print("Probably a met_em file - get lowerst level from RH field")
+        if ( time .eq. -1 ) then
+          if(ISFILE) then
+            rh2 = nc_file->RH(:,0,:,:)
+          else
+            rh2 = file_handle[:]->RH(:,0,:,:)
+          end if
+        else
+          if(ISFILE) then
+            rh2 = nc_file->RH(time_in,0,:,:)
+          else
+            rh2 = file_handle[:]->RH(time_in,0,:,:)
+          end if
+        end if
+      end if
+    end if
+    return(rh)
   end if
 
 
 
   if( variable .eq. "pvo" ) then
-       if ( time .eq. -1 ) then
-         if(ISFILE) then
-           U    = nc_file->U
-           V    = nc_file->V
-           T    = nc_file->T
-           P    = nc_file->P
-           PB   = nc_file->PB
-           MSFU = nc_file->MAPFAC_U
-           MSFV = nc_file->MAPFAC_V
-           MSFM = nc_file->MAPFAC_M
-           COR  = nc_file->F
-         else
-           U    = file_handle[:]->U
-           V    = file_handle[:]->V
-           T    = file_handle[:]->T
-           P    = file_handle[:]->P
-           PB   = file_handle[:]->PB
-           MSFU = file_handle[:]->MAPFAC_U
-           MSFV = file_handle[:]->MAPFAC_V
-           MSFM = file_handle[:]->MAPFAC_M
-           COR  = file_handle[:]->F
-         end if
-       else
-         if(ISFILE) then
-           U    = nc_file->U(time_in,:,:,:)
-           V    = nc_file->V(time_in,:,:,:)
-           T    = nc_file->T(time_in,:,:,:)
-           P    = nc_file->P(time_in,:,:,:)
-           PB   = nc_file->PB(time_in,:,:,:)
-           MSFU = nc_file->MAPFAC_U(time_in,:,:)
-           MSFV = nc_file->MAPFAC_V(time_in,:,:)
-           MSFM = nc_file->MAPFAC_M(time_in,:,:)
-           COR  = nc_file->F(time_in,:,:)
-         else
-           U    = file_handle[:]->U(time_in,:,:,:)
-           V    = file_handle[:]->V(time_in,:,:,:)
-           T    = file_handle[:]->T(time_in,:,:,:)
-           P    = file_handle[:]->P(time_in,:,:,:)
-           PB   = file_handle[:]->PB(time_in,:,:,:)
-           MSFU = file_handle[:]->MAPFAC_U(time_in,:,:)
-           MSFV = file_handle[:]->MAPFAC_V(time_in,:,:)
-           MSFM = file_handle[:]->MAPFAC_M(time_in,:,:)
-           COR  = file_handle[:]->F(time_in,:,:)
-         end if
-       end if
-       T = T + 300.
-       P = P + PB
-       DX = nc_file@DX
-       DY = nc_file@DY
+    if ( time .eq. -1 ) then
+      if(ISFILE) then
+        U    = nc_file->U
+        V    = nc_file->V
+        T    = nc_file->T
+        P    = nc_file->P
+        PB   = nc_file->PB
+        MSFU = nc_file->MAPFAC_U
+        MSFV = nc_file->MAPFAC_V
+        MSFM = nc_file->MAPFAC_M
+        COR  = nc_file->F
+      else
+        U    = file_handle[:]->U
+        V    = file_handle[:]->V
+        T    = file_handle[:]->T
+        P    = file_handle[:]->P
+        PB   = file_handle[:]->PB
+        MSFU = file_handle[:]->MAPFAC_U
+        MSFV = file_handle[:]->MAPFAC_V
+        MSFM = file_handle[:]->MAPFAC_M
+        COR  = file_handle[:]->F
+      end if
+    else
+      if(ISFILE) then
+        U    = nc_file->U(time_in,:,:,:)
+        V    = nc_file->V(time_in,:,:,:)
+        T    = nc_file->T(time_in,:,:,:)
+        P    = nc_file->P(time_in,:,:,:)
+        PB   = nc_file->PB(time_in,:,:,:)
+        MSFU = nc_file->MAPFAC_U(time_in,:,:)
+        MSFV = nc_file->MAPFAC_V(time_in,:,:)
+        MSFM = nc_file->MAPFAC_M(time_in,:,:)
+        COR  = nc_file->F(time_in,:,:)
+      else
+        U    = file_handle[:]->U(time_in,:,:,:)
+        V    = file_handle[:]->V(time_in,:,:,:)
+        T    = file_handle[:]->T(time_in,:,:,:)
+        P    = file_handle[:]->P(time_in,:,:,:)
+        PB   = file_handle[:]->PB(time_in,:,:,:)
+        MSFU = file_handle[:]->MAPFAC_U(time_in,:,:)
+        MSFV = file_handle[:]->MAPFAC_V(time_in,:,:)
+        MSFM = file_handle[:]->MAPFAC_M(time_in,:,:)
+        COR  = file_handle[:]->F(time_in,:,:)
+      end if
+    end if
+    T = T + 300.
+    P = P + PB
+    DX = nc_file@DX
+    DY = nc_file@DY
 
-       pvo = wrf_pvo( U, V, T, P, MSFU, MSFV, MSFM, COR, DX, DY, 0)
+    pvo = wrf_pvo( U, V, T, P, MSFU, MSFV, MSFM, COR, DX, DY, 0)
 
-       delete_VarAtts(T,(/"description","units"/))
-       copy_VarAtts(T,pvo)
-       return(pvo)
+    delete_VarAtts(T,(/"description","units"/))
+    copy_VarAtts(T,pvo)
+    return(pvo)
   end if
 
 
 
   if( variable .eq. "avo" ) then
-       if ( time .eq. -1 ) then
-         if(ISFILE) then
-           U    = nc_file->U
-           V    = nc_file->V
-           MSFU = nc_file->MAPFAC_U
-           MSFV = nc_file->MAPFAC_V
-           MSFM = nc_file->MAPFAC_M
-           COR  = nc_file->F
-         else
-           U    = file_handle[:]->U
-           V    = file_handle[:]->V
-           MSFU = file_handle[:]->MAPFAC_U
-           MSFV = file_handle[:]->MAPFAC_V
-           MSFM = file_handle[:]->MAPFAC_M
-           COR  = file_handle[:]->F
-         end if
-       else
-         if(ISFILE) then
-           U    = nc_file->U(time_in,:,:,:)
-           V    = nc_file->V(time_in,:,:,:)
-           MSFU = nc_file->MAPFAC_U(time_in,:,:)
-           MSFV = nc_file->MAPFAC_V(time_in,:,:)
-           MSFM = nc_file->MAPFAC_M(time_in,:,:)
-           COR  = nc_file->F(time_in,:,:)
-         else
-           U    = file_handle[:]->U(time_in,:,:,:)
-           V    = file_handle[:]->V(time_in,:,:,:)
-           MSFU = file_handle[:]->MAPFAC_U(time_in,:,:)
-           MSFV = file_handle[:]->MAPFAC_V(time_in,:,:)
-           MSFM = file_handle[:]->MAPFAC_M(time_in,:,:)
-           COR  = file_handle[:]->F(time_in,:,:)
-         end if
-       end if
-       DX = nc_file@DX
-       DY = nc_file@DY
+    if ( time .eq. -1 ) then
+      if(ISFILE) then
+        U    = nc_file->U
+        V    = nc_file->V
+        MSFU = nc_file->MAPFAC_U
+        MSFV = nc_file->MAPFAC_V
+        MSFM = nc_file->MAPFAC_M
+        COR  = nc_file->F
+      else
+        U    = file_handle[:]->U
+        V    = file_handle[:]->V
+        MSFU = file_handle[:]->MAPFAC_U
+        MSFV = file_handle[:]->MAPFAC_V
+        MSFM = file_handle[:]->MAPFAC_M
+        COR  = file_handle[:]->F
+      end if
+    else
+      if(ISFILE) then
+        U    = nc_file->U(time_in,:,:,:)
+        V    = nc_file->V(time_in,:,:,:)
+        MSFU = nc_file->MAPFAC_U(time_in,:,:)
+        MSFV = nc_file->MAPFAC_V(time_in,:,:)
+        MSFM = nc_file->MAPFAC_M(time_in,:,:)
+        COR  = nc_file->F(time_in,:,:)
+      else
+        U    = file_handle[:]->U(time_in,:,:,:)
+        V    = file_handle[:]->V(time_in,:,:,:)
+        MSFU = file_handle[:]->MAPFAC_U(time_in,:,:)
+        MSFV = file_handle[:]->MAPFAC_V(time_in,:,:)
+        MSFM = file_handle[:]->MAPFAC_M(time_in,:,:)
+        COR  = file_handle[:]->F(time_in,:,:)
+      end if
+    end if
+    DX = nc_file@DX
+    DY = nc_file@DY
 
-       avo = wrf_avo( U, V, MSFU, MSFV, MSFM, COR, DX, DY, 0)
+    avo = wrf_avo( U, V, MSFU, MSFV, MSFM, COR, DX, DY, 0)
 
-       delete_VarAtts(COR,(/"description","units"/))
-       copy_VarAtts(COR,avo)
-       return(avo)
+    delete_VarAtts(COR,(/"description","units"/))
+    copy_VarAtts(COR,avo)
+    return(avo)
   end if
 
 
 
   if( variable .eq. "dbz" .or. variable .eq. "mdbz" ) then
-       ; calculate dbz
-       ivarint  = 0
-       iliqskin = 0
-       dim_vars = dimsizes(varin)
-       do idims = 1,dim_vars-1
-         if ( idims .eq. 1 ) then
-           if ( varin(idims) .eq. "1" ) then
-             ivarint = 1
-           end if
-         end if
-         if ( idims .eq. 2 ) then
-           if ( varin(idims) .eq. "1" ) then
-             iliqskin = 1
-           end if
-         end if
-       end do
+    ; calculate dbz
+    ivarint  = 0
+    iliqskin = 0
+    dim_vars = dimsizes(varin)
+    do idims = 1,dim_vars-1
+      if ( idims .eq. 1 ) then
+        if ( varin(idims) .eq. "1" ) then
+          ivarint = 1
+        end if
+      end if
+      if ( idims .eq. 2 ) then
+        if ( varin(idims) .eq. "1" ) then
+          iliqskin = 1
+        end if
+      end if
+    end do
 
-       if ( time .eq. -1 ) then
-         if(ISFILE) then
-           T  = nc_file->T
-           P  = nc_file->P
-           PB = nc_file->PB
-           qv = nc_file->QVAPOR
-           qr = nc_file->QRAIN
-         else
-           T  = file_handle[:]->T
-           P  = file_handle[:]->P
-           PB = file_handle[:]->PB
-           qv = file_handle[:]->QVAPOR
-           qr = file_handle[:]->QRAIN
-         end if
-         if(isfilevar(nc_file,"QSNOW"))
-           if(ISFILE) then
-             qs = nc_file->QSNOW
-           else
-             qs = file_handle[:]->QSNOW
-           end if
-         end if
-         if(isfilevar(nc_file,"QGRAUP"))
-           if(ISFILE) then
-             qg = nc_file->QGRAUP
-           else
-             qg = file_handle[:]->QGRAUP
-           end if
-         end if
-       else
-         if(ISFILE) then
-           T  = nc_file->T(time_in,:,:,:)
-           P  = nc_file->P(time_in,:,:,:)
-           PB = nc_file->PB(time_in,:,:,:)
-           qv = nc_file->QVAPOR(time_in,:,:,:)
-           qr = nc_file->QRAIN(time_in,:,:,:)
-         else
-           T  = file_handle[:]->T(time_in,:,:,:)
-           P  = file_handle[:]->P(time_in,:,:,:)
-           PB = file_handle[:]->PB(time_in,:,:,:)
-           qv = file_handle[:]->QVAPOR(time_in,:,:,:)
-           qr = file_handle[:]->QRAIN(time_in,:,:,:)
-         end if
-         if(isfilevar(nc_file,"QSNOW"))
-           if(ISFILE) then
-             qs = nc_file->QSNOW(time_in,:,:,:)
-           else
-             qs = file_handle[:]->QSNOW(time_in,:,:,:)
-           end if
-         end if
-         if(isfilevar(nc_file,"QGRAUP"))
-           if(ISFILE) then
-             qg = nc_file->QGRAUP(time_in,:,:,:)
-           else
-             qg = file_handle[:]->QGRAUP(time_in,:,:,:)
-           end if
-         end if
-       end if
-       T  = T + 300.
-       P  = P + PB
-       tk = wrf_tk( P , T )
+    if ( time .eq. -1 ) then
+      if(ISFILE) then
+        T  = nc_file->T
+        P  = nc_file->P
+        PB = nc_file->PB
+        qv = nc_file->QVAPOR
+        qr = nc_file->QRAIN
+      else
+        T  = file_handle[:]->T
+        P  = file_handle[:]->P
+        PB = file_handle[:]->PB
+        qv = file_handle[:]->QVAPOR
+        qr = file_handle[:]->QRAIN
+      end if
+      if(isfilevar(nc_file,"QSNOW"))
+        if(ISFILE) then
+          qs = nc_file->QSNOW
+        else
+          qs = file_handle[:]->QSNOW
+        end if
+      end if
+      if(isfilevar(nc_file,"QGRAUP"))
+        if(ISFILE) then
+          qg = nc_file->QGRAUP
+        else
+          qg = file_handle[:]->QGRAUP
+        end if
+      end if
+    else
+      if(ISFILE) then
+        T  = nc_file->T(time_in,:,:,:)
+        P  = nc_file->P(time_in,:,:,:)
+        PB = nc_file->PB(time_in,:,:,:)
+        qv = nc_file->QVAPOR(time_in,:,:,:)
+        qr = nc_file->QRAIN(time_in,:,:,:)
+      else
+        T  = file_handle[:]->T(time_in,:,:,:)
+        P  = file_handle[:]->P(time_in,:,:,:)
+        PB = file_handle[:]->PB(time_in,:,:,:)
+        qv = file_handle[:]->QVAPOR(time_in,:,:,:)
+        qr = file_handle[:]->QRAIN(time_in,:,:,:)
+      end if
+      if(isfilevar(nc_file,"QSNOW"))
+        if(ISFILE) then
+          qs = nc_file->QSNOW(time_in,:,:,:)
+        else
+          qs = file_handle[:]->QSNOW(time_in,:,:,:)
+        end if
+      end if
+      if(isfilevar(nc_file,"QGRAUP"))
+        if(ISFILE) then
+          qg = nc_file->QGRAUP(time_in,:,:,:)
+        else
+          qg = file_handle[:]->QGRAUP(time_in,:,:,:)
+        end if
+      end if
+    end if
+    T  = T + 300.
+    P  = P + PB
+    tk = wrf_tk( P , T )
 
-       if ( .not. isvar("qs") ) then
-         qs = qv
-         qs = 0.0
-       end if
-       if ( .not. isvar("qg") ) then
-         qg = qv
-         qg = 0.0
-       end if
+    if ( .not. isvar("qs") ) then
+      qs = qv
+      qs = 0.0
+    end if
+    if ( .not. isvar("qg") ) then
+      qg = qv
+      qg = 0.0
+    end if
 
-       dbz = wrf_dbz ( P, tk, qv, qr, qs, qg, ivarint, iliqskin)
-       delete(qs)
-       delete(qg)
+    dbz = wrf_dbz ( P, tk, qv, qr, qs, qg, ivarint, iliqskin)
+    delete(qs)
+    delete(qg)
 
-       delete_VarAtts(T,(/"description","units"/))
-       copy_VarAtts(T,dbz)
+    delete_VarAtts(T,(/"description","units"/))
+    copy_VarAtts(T,dbz)
 
 
-       if ( variable .eq. "mdbz") then
-         dims = getvardims(dbz)
-         rank = dimsizes(dims)
-         if ( rank .eq. 5 ) then
-            mdbz = dim_max ( dbz($dims(0)$|:,$dims(1)$|:,$dims(3)$|:,$dims(4)$|:,$dims(2)$|:) )
-            mdbz!0 = dbz!0
-            mdbz!1 = dbz!1
-         end if
-         if ( rank .eq. 4 ) then
-            mdbz = dim_max ( dbz($dims(0)$|:,$dims(2)$|:,$dims(3)$|:,$dims(1)$|:) )
-            mdbz!0 = dbz!0
-         end if
-         if ( rank .eq. 3 ) then
-            mdbz = dim_max ( dbz($dims(1)$|:,$dims(2)$|:,$dims(0)$|:) )
-         end if
-         nn = rank-1
-         nm = rank-2
-         mdbz!nm = dbz!nn
-         nn = rank-2
-         nm = rank-3
-         mdbz!nm = dbz!nn
-         copy_VarAtts(dbz,mdbz)
-         mdbz@description = "Max Reflectivity"
-         return(mdbz)
-       else
-         return(dbz)
-       end if
+    if ( variable .eq. "mdbz") then
+      dims = getvardims(dbz)
+      rank = dimsizes(dims)
+      if ( rank .eq. 5 ) then
+        mdbz = dim_max ( dbz($dims(0)$|:,$dims(1)$|:,$dims(3)$|:,$dims(4)$|:,$dims(2)$|:) )
+        mdbz!0 = dbz!0
+        mdbz!1 = dbz!1
+      end if
+      if ( rank .eq. 4 ) then
+        mdbz = dim_max ( dbz($dims(0)$|:,$dims(2)$|:,$dims(3)$|:,$dims(1)$|:) )
+        mdbz!0 = dbz!0
+      end if
+      if ( rank .eq. 3 ) then
+        mdbz = dim_max ( dbz($dims(1)$|:,$dims(2)$|:,$dims(0)$|:) )
+      end if
+      nn = rank-1
+      nm = rank-2
+      mdbz!nm = dbz!nn
+      nn = rank-2
+      nm = rank-3
+      mdbz!nm = dbz!nn
+      copy_VarAtts(dbz,mdbz)
+      mdbz@description = "Max Reflectivity"
+      return(mdbz)
+    else
+      return(dbz)
+    end if
 
   end if
 
 
 
   if( any( variable .eq. (/"cape_3d","cape_2d"/) ) ) then
-       if ( time .eq. -1 ) then
-         if(ISFILE) then
-           T  = nc_file->T
-           P  = nc_file->P
-           PB = nc_file->PB
-           QV = nc_file->QVAPOR
-           PH  = nc_file->PH
-           PHB = nc_file->PHB
-           HGT = nc_file->HGT
-           PSFC = nc_file->PSFC
-         else
-           T  = file_handle[:]->T
-           P  = file_handle[:]->P
-           PB = file_handle[:]->PB
-           QV = file_handle[:]->QVAPOR
-           PH  = file_handle[:]->PH
-           PHB = file_handle[:]->PHB
-           HGT = file_handle[:]->HGT
-           PSFC = file_handle[:]->PSFC
-         end if
-       else
-         if(ISFILE) then
-           T  = nc_file->T(time_in,:,:,:)
-           P  = nc_file->P(time_in,:,:,:)
-           PB = nc_file->PB(time_in,:,:,:)
-           QV = nc_file->QVAPOR(time_in,:,:,:)
-           PH  = nc_file->PH(time_in,:,:,:)
-           PHB = nc_file->PHB(time_in,:,:,:)
-           HGT = nc_file->HGT(time_in,:,:)
-           PSFC = nc_file->PSFC(time_in,:,:)
-         else
-           T  = file_handle[:]->T(time_in,:,:,:)
-           P  = file_handle[:]->P(time_in,:,:,:)
-           PB = file_handle[:]->PB(time_in,:,:,:)
-           QV = file_handle[:]->QVAPOR(time_in,:,:,:)
-           PH  = file_handle[:]->PH(time_in,:,:,:)
-           PHB = file_handle[:]->PHB(time_in,:,:,:)
-           HGT = file_handle[:]->HGT(time_in,:,:)
-           PSFC = file_handle[:]->PSFC(time_in,:,:)
-         end if
-       end if
-       T = T + 300.
-       P  = P + PB
-       tk = wrf_tk( P , T )
-       PH =  PH + PHB
-       z = wrf_user_unstagger(PH,PH@stagger)
-       z = z/9.81
+    if ( time .eq. -1 ) then
+      if(ISFILE) then
+        T  = nc_file->T
+        P  = nc_file->P
+        PB = nc_file->PB
+        QV = nc_file->QVAPOR
+        PH  = nc_file->PH
+        PHB = nc_file->PHB
+        HGT = nc_file->HGT
+        PSFC = nc_file->PSFC
+      else
+        T  = file_handle[:]->T
+        P  = file_handle[:]->P
+        PB = file_handle[:]->PB
+        QV = file_handle[:]->QVAPOR
+        PH  = file_handle[:]->PH
+        PHB = file_handle[:]->PHB
+        HGT = file_handle[:]->HGT
+        PSFC = file_handle[:]->PSFC
+      end if
+    else
+      if(ISFILE) then
+        T  = nc_file->T(time_in,:,:,:)
+        P  = nc_file->P(time_in,:,:,:)
+        PB = nc_file->PB(time_in,:,:,:)
+        QV = nc_file->QVAPOR(time_in,:,:,:)
+        PH  = nc_file->PH(time_in,:,:,:)
+        PHB = nc_file->PHB(time_in,:,:,:)
+        HGT = nc_file->HGT(time_in,:,:)
+        PSFC = nc_file->PSFC(time_in,:,:)
+      else
+        T  = file_handle[:]->T(time_in,:,:,:)
+        P  = file_handle[:]->P(time_in,:,:,:)
+        PB = file_handle[:]->PB(time_in,:,:,:)
+        QV = file_handle[:]->QVAPOR(time_in,:,:,:)
+        PH  = file_handle[:]->PH(time_in,:,:,:)
+        PHB = file_handle[:]->PHB(time_in,:,:,:)
+        HGT = file_handle[:]->HGT(time_in,:,:)
+        PSFC = file_handle[:]->PSFC(time_in,:,:)
+      end if
+    end if
+    T = T + 300.
+    P  = P + PB
+    tk = wrf_tk( P , T )
+    PH =  PH + PHB
+    z = wrf_user_unstagger(PH,PH@stagger)
+    z = z/9.81
 
-       if( variable .eq. "cape_3d" ) then
-         cape = wrf_cape_3d( P, tk, QV, z, HGT, PSFC, True )
-         cape@description = "cape ; cin"
-       end if
-       if( variable .eq. "cape_2d" ) then
-         cape = wrf_cape_2d( P, tk, QV, z, HGT, PSFC, True )
-         delete_VarAtts(T,(/"MemoryOrder"/))
-         cape@MemoryOrder = "XY"
-         cape@description = "mcape ; mcin ; lcl ; lfc"
-       end if
-       delete_VarAtts(T,(/"description","units"/))
-       copy_VarAtts(T,cape)
+    if( variable .eq. "cape_3d" ) then
+      cape = wrf_cape_3d( P, tk, QV, z, HGT, PSFC, True )
+      cape@description = "cape ; cin"
+    end if
+    if( variable .eq. "cape_2d" ) then
+      cape = wrf_cape_2d( P, tk, QV, z, HGT, PSFC, True )
+      delete_VarAtts(T,(/"MemoryOrder"/))
+      cape@MemoryOrder = "XY"
+      cape@description = "mcape ; mcin ; lcl ; lfc"
+    end if
+    delete_VarAtts(T,(/"description","units"/))
+    copy_VarAtts(T,cape)
 
-       return(cape)
+    return(cape)
   end if
 
 
 
   if( any( variable .eq. (/"pw"/) ) ) then
-       ;Precipitable Water
-        print("calculating precipitable water")
-        gas_const = 287.  ; J/K/kg
-        Cp        = 1004. ; J/K/kg
-       if ( time .eq. -1 ) then
-        if(ISFILE) then
-          T   = nc_file->T
-          P   = nc_file->P
-          PB  = nc_file->PB
-          QV  = nc_file->QVAPOR
-          PH  = nc_file->PH
-          PHB = nc_file->PHB
-          QV  = nc_file->QVAPOR
-        else
-          T   = file_handle[:]->T
-          P   = file_handle[:]->P
-          PB  = file_handle[:]->PB
-          QV  = file_handle[:]->QVAPOR
-          PH  = file_handle[:]->PH
-          PHB = file_handle[:]->PHB
-          QV  = file_handle[:]->QVAPOR
-        end if
-       else
-        if(ISFILE) then
-          T   = nc_file->T(time_in,:,:,:)
-          P   = nc_file->P(time_in,:,:,:)
-          PB  = nc_file->PB(time_in,:,:,:)
-          QV  = nc_file->QVAPOR(time_in,:,:,:)
-          PH  = nc_file->PH(time_in,:,:,:)
-          PHB = nc_file->PHB(time_in,:,:,:)
-          QV  = nc_file->QVAPOR(time_in,:,:,:)
-        else
-          T   = file_handle[:]->T(time_in,:,:,:)
-          P   = file_handle[:]->P(time_in,:,:,:)
-          PB  = file_handle[:]->PB(time_in,:,:,:)
-          QV  = file_handle[:]->QVAPOR(time_in,:,:,:)
-          PH  = file_handle[:]->PH(time_in,:,:,:)
-          PHB = file_handle[:]->PHB(time_in,:,:,:)
-          QV  = file_handle[:]->QVAPOR(time_in,:,:,:)
-        end if
-       end if
+    ;Precipitable Water
+    print("calculating precipitable water")
+    gas_const = 287.  ; J/K/kg
+    Cp        = 1004. ; J/K/kg
+    if ( time .eq. -1 ) then
+      if(ISFILE) then
+        T   = nc_file->T
+        P   = nc_file->P
+        PB  = nc_file->PB
+        QV  = nc_file->QVAPOR
+        PH  = nc_file->PH
+        PHB = nc_file->PHB
+        QV  = nc_file->QVAPOR
+      else
+        T   = file_handle[:]->T
+        P   = file_handle[:]->P
+        PB  = file_handle[:]->PB
+        QV  = file_handle[:]->QVAPOR
+        PH  = file_handle[:]->PH
+        PHB = file_handle[:]->PHB
+        QV  = file_handle[:]->QVAPOR
+      end if
+    else
+      if(ISFILE) then
+        T   = nc_file->T(time_in,:,:,:)
+        P   = nc_file->P(time_in,:,:,:)
+        PB  = nc_file->PB(time_in,:,:,:)
+        QV  = nc_file->QVAPOR(time_in,:,:,:)
+        PH  = nc_file->PH(time_in,:,:,:)
+        PHB = nc_file->PHB(time_in,:,:,:)
+        QV  = nc_file->QVAPOR(time_in,:,:,:)
+      else
+        T   = file_handle[:]->T(time_in,:,:,:)
+        P   = file_handle[:]->P(time_in,:,:,:)
+        PB  = file_handle[:]->PB(time_in,:,:,:)
+        QV  = file_handle[:]->QVAPOR(time_in,:,:,:)
+        PH  = file_handle[:]->PH(time_in,:,:,:)
+        PHB = file_handle[:]->PHB(time_in,:,:,:)
+        QV  = file_handle[:]->QVAPOR(time_in,:,:,:)
+      end if
+    end if
 
-       pres   =  P + PB
-       height = (PH + PHB)/9.8           ; height at full levels
-       theta  =  T + 300.
-       temp   = theta * (pres/100000) ^ (gas_const/Cp)
-       vtemp  = (1 + 0.61*QV) * temp  ; virtual temp
+    pres   =  P + PB
+    height = (PH + PHB)/9.8           ; height at full levels
+    theta  =  T + 300.
+    temp   = theta * (pres/100000) ^ (gas_const/Cp)
+    vtemp  = (1 + 0.61*QV) * temp  ; virtual temp
 
-       dims = dimsizes(T)
-       nd = dimsizes(dims)
+    dims = dimsizes(T)
+    nd = dimsizes(dims)
 
-       if ( nd .eq. 4 ) then
-         zdiff  = height(:,0,:,:)
-         zdiff  = 0.
-         pw_sfc_ptop = height(:,0,:,:)
-         pw_sfc_ptop = 0.
-         do k = 0,dims(1)-1
-           zdiff(:,:,:) = (height(:,k+1,:,:) - height(:,k,:,:))
-           pw_sfc_ptop(:,:,:) =  pw_sfc_ptop(:,:,:) + ((pres(:,k,:,:)/(gas_const * vtemp(:,k,:,:))) * QV(:,k,:,:) * zdiff(:,:,:))
-         end do
-       end if
-       if ( nd .eq. 3 ) then
-         zdiff  = height(0,:,:)
-         zdiff  = 0.
-         pw_sfc_ptop = height(0,:,:)
-         pw_sfc_ptop = 0.
-         do k = 0,dims(0)-1
-           zdiff(:,:) = (height(k+1,:,:) - height(k,:,:))
-           pw_sfc_ptop(:,:) =  pw_sfc_ptop(:,:) + ((pres(k,:,:)/(gas_const * vtemp(k,:,:))) * QV(k,:,:) * zdiff(:,:))
-         end do
-       end if
+    if ( nd .eq. 4 ) then
+      zdiff  = height(:,0,:,:)
+      zdiff  = 0.
+      pw_sfc_ptop = height(:,0,:,:)
+      pw_sfc_ptop = 0.
+      do k = 0,dims(1)-1
+        zdiff(:,:,:) = (height(:,k+1,:,:) - height(:,k,:,:))
+        pw_sfc_ptop(:,:,:) =  pw_sfc_ptop(:,:,:) + ((pres(:,k,:,:)/(gas_const * vtemp(:,k,:,:))) * QV(:,k,:,:) * zdiff(:,:,:))
+      end do
+    end if
+    if ( nd .eq. 3 ) then
+      zdiff  = height(0,:,:)
+      zdiff  = 0.
+      pw_sfc_ptop = height(0,:,:)
+      pw_sfc_ptop = 0.
+      do k = 0,dims(0)-1
+        zdiff(:,:) = (height(k+1,:,:) - height(k,:,:))
+        pw_sfc_ptop(:,:) =  pw_sfc_ptop(:,:) + ((pres(k,:,:)/(gas_const * vtemp(k,:,:))) * QV(k,:,:) * zdiff(:,:))
+      end do
+    end if
 
-       pw_sfc_ptop@description = "Precipitable Water"
-       return(pw_sfc_ptop)
+    pw_sfc_ptop@description = "Precipitable Water"
+    return(pw_sfc_ptop)
   end if
 
 
 
   if( any( variable .eq. (/"helicity"/) ) ) then
-       getU = "U"
-       getV = "V"
-       if(.not. isfilevar(nc_file,"U")) then
-         if(isfilevar(nc_file,"UU")) then
-           getU = "UU"
-           getV = "VV"
-        end if
-       end if
-       if ( time .eq. -1 ) then
-        if(ISFILE) then
-          u_in  = nc_file->$getU$
-          v_in  = nc_file->$getV$
-          PH    = nc_file->PH
-          geopt = nc_file->PHB
-          ter   = nc_file->HGT
-        else
-          u_in  = file_handle[:]->$getU$
-          v_in  = file_handle[:]->$getV$
-          PH    = file_handle[:]->PH
-          geopt = file_handle[:]->PHB
-          ter   = file_handle[:]->HGT
-        end if
-       else
-        if(ISFILE) then
-          u_in  = nc_file->$getU$(time_in,:,:,:)
-          v_in  = nc_file->$getV$(time_in,:,:,:)
-          PH    = nc_file->PH(time_in,:,:,:)
-          geopt = nc_file->PHB(time_in,:,:,:)
-          ter   = nc_file->HGT(time_in,:,:)
-        else
-          u_in  = file_handle[:]->$getU$(time_in,:,:,:)
-          v_in  = file_handle[:]->$getV$(time_in,:,:,:)
-          PH    = file_handle[:]->PH(time_in,:,:,:)
-          geopt = file_handle[:]->PHB(time_in,:,:,:)
-          ter   = file_handle[:]->HGT(time_in,:,:)
-        end if
-       end if
+    getU = "U"
+    getV = "V"
+    if(.not. isfilevar(nc_file,"U")) then
+      if(isfilevar(nc_file,"UU")) then
+        getU = "UU"
+        getV = "VV"
+      end if
+    end if
+    if ( time .eq. -1 ) then
+      if(ISFILE) then
+        u_in  = nc_file->$getU$
+        v_in  = nc_file->$getV$
+        PH    = nc_file->PH
+        geopt = nc_file->PHB
+        ter   = nc_file->HGT
+      else
+        u_in  = file_handle[:]->$getU$
+        v_in  = file_handle[:]->$getV$
+        PH    = file_handle[:]->PH
+        geopt = file_handle[:]->PHB
+        ter   = file_handle[:]->HGT
+      end if
+    else
+      if(ISFILE) then
+        u_in  = nc_file->$getU$(time_in,:,:,:)
+        v_in  = nc_file->$getV$(time_in,:,:,:)
+        PH    = nc_file->PH(time_in,:,:,:)
+        geopt = nc_file->PHB(time_in,:,:,:)
+        ter   = nc_file->HGT(time_in,:,:)
+      else
+        u_in  = file_handle[:]->$getU$(time_in,:,:,:)
+        v_in  = file_handle[:]->$getV$(time_in,:,:,:)
+        PH    = file_handle[:]->PH(time_in,:,:,:)
+        geopt = file_handle[:]->PHB(time_in,:,:,:)
+        ter   = file_handle[:]->HGT(time_in,:,:)
+      end if
+    end if
 
-       ua    = wrf_user_unstagger(u_in,u_in@stagger)
-       va    = wrf_user_unstagger(v_in,v_in@stagger)
-       geopt  = geopt + PH
-       za     = wrf_user_unstagger(geopt,geopt@stagger)
-       za     = za / 9.81  ; change to height
+    ua    = wrf_user_unstagger(u_in,u_in@stagger)
+    va    = wrf_user_unstagger(v_in,v_in@stagger)
+    geopt  = geopt + PH
+    za     = wrf_user_unstagger(geopt,geopt@stagger)
+    za     = za / 9.81  ; change to height
 
-       ua1    = ua(::-1,:,:)
-       va1    = va(::-1,:,:)
-       za1    = za(::-1,:,:)
+    ua1    = ua(::-1,:,:)
+    va1    = va(::-1,:,:)
+    za1    = za(::-1,:,:)
 
-       top_ok = 0
-       top = 3000.
+    top_ok = 0
+    top = 3000.
 
-       dim_vars = dimsizes(varin)
-       if(dim_vars .eq. 2) then
-        if( varin(1) .eq. "3000" ) then
-           top = 3000.
-           top_ok = 1
-        end if
+    dim_vars = dimsizes(varin)
+    if(dim_vars .eq. 2) then
+      if( varin(1) .eq. "3000" ) then
+        top = 3000.
+        top_ok = 1
+      end if
 
-        if( varin(1) .eq. "1000" ) then
-           top = 1000.
-           top_ok = 1
-        end if
+      if( varin(1) .eq. "1000" ) then
+        top = 1000.
+        top_ok = 1
+      end if
 
-        if(top_ok .eq. 0) then
-          print("Top values of 1000 or 3000 are accepted.")
-          top = 3000.
-        end if
-       end if
+      if(top_ok .eq. 0) then
+        print("Top values of 1000 or 3000 are accepted.")
+        top = 3000.
+      end if
+    end if
 
-       print("Calculations are done with a top of " + top)
-       sreh = wrf_helicity(ua1, va1, za1, ter, top)
-       return(sreh)
+    print("Calculations are done with a top of " + top)
+    sreh = wrf_helicity(ua1, va1, za1, ter, top)
+    return(sreh)
   end if
 
 
 
   if( any(variable .eq. (/"updraft_helicity"/) ) )then
-       getU = "U"
-       getV = "V"
-       if(.not. isfilevar(nc_file,"U")) then
-         if(isfilevar(nc_file,"UU")) then
-           getU = "UU"
-           getV = "VV"
-         end if
-       end if
-       if ( time .eq. -1 ) then
-         if(ISFILE) then
-            u_in = nc_file->$getU$
-            v_in = nc_file->$getV$
-            w    = nc_file->W
-            ph   = nc_file->PH
-            phb  = nc_file->PHB
-         else
-            u_in = file_handle[:]->$getU$
-            v_in = file_handle[:]->$getV$
-            w    = file_handle[:]->W
-            ph   = file_handle[:]->PH
-            phb  = file_handle[:]->PHB
-         end if
-       else
-         if(ISFILE) then
-            u_in = nc_file->$getU$(time_in,:,:,:)
-            v_in = nc_file->$getV$(time_in,:,:,:)
-            w    = nc_file->W(time_in,:,:,:)
-            ph   = nc_file->PH(time_in,:,:,:)
-            phb  = nc_file->PHB(time_in,:,:,:)
-         else
-            u_in = file_handle[:]->$getU$(time_in,:,:,:)
-            v_in = file_handle[:]->$getV$(time_in,:,:,:)
-            w    = file_handle[:]->W(time_in,:,:,:)
-            ph   = file_handle[:]->PH(time_in,:,:,:)
-            phb  = file_handle[:]->PHB(time_in,:,:,:)
-         end if
-       end if
-       ua   = wrf_user_unstagger(u_in,u_in@stagger)
-       va   = wrf_user_unstagger(v_in,v_in@stagger)
-       mapfct = nc_file->MAPFAC_M(0,:,:)
-       zp = ph + phb
-       dx = nc_file@DX
-       dy = nc_file@DY
+    getU = "U"
+    getV = "V"
+    if(.not. isfilevar(nc_file,"U")) then
+      if(isfilevar(nc_file,"UU")) then
+        getU = "UU"
+        getV = "VV"
+      end if
+    end if
+    if ( time .eq. -1 ) then
+      if(ISFILE) then
+        u_in = nc_file->$getU$
+        v_in = nc_file->$getV$
+        w    = nc_file->W
+        ph   = nc_file->PH
+        phb  = nc_file->PHB
+      else
+        u_in = file_handle[:]->$getU$
+        v_in = file_handle[:]->$getV$
+        w    = file_handle[:]->W
+        ph   = file_handle[:]->PH
+        phb  = file_handle[:]->PHB
+      end if
+    else
+      if(ISFILE) then
+        u_in = nc_file->$getU$(time_in,:,:,:)
+        v_in = nc_file->$getV$(time_in,:,:,:)
+        w    = nc_file->W(time_in,:,:,:)
+        ph   = nc_file->PH(time_in,:,:,:)
+        phb  = nc_file->PHB(time_in,:,:,:)
+      else
+        u_in = file_handle[:]->$getU$(time_in,:,:,:)
+        v_in = file_handle[:]->$getV$(time_in,:,:,:)
+        w    = file_handle[:]->W(time_in,:,:,:)
+        ph   = file_handle[:]->PH(time_in,:,:,:)
+        phb  = file_handle[:]->PHB(time_in,:,:,:)
+      end if
+    end if
+    ua   = wrf_user_unstagger(u_in,u_in@stagger)
+    va   = wrf_user_unstagger(v_in,v_in@stagger)
+    mapfct = nc_file->MAPFAC_M(0,:,:)
+    zp = ph + phb
+    dx = nc_file@DX
+    dy = nc_file@DY
 
-       uh_opt = True
-       uh_opt@uhmnhgt = 2000.
-       uh_opt@uhmxhgt = 5000.
-       dim_vars = dimsizes(varin)
+    uh_opt = True
+    uh_opt@uhmnhgt = 2000.
+    uh_opt@uhmxhgt = 5000.
+    dim_vars = dimsizes(varin)
 
-       print("Calculating updraft helicity")
-       if(dim_vars .eq. 1) then
-         print("  Using defaults for the integration limits")
-       end if
+    print("Calculating updraft helicity")
+    if(dim_vars .eq. 1) then
+      print("  Using defaults for the integration limits")
+    end if
 
-       if(dim_vars .eq. 2) then
-         print("  Please enter both the minimum and maximum integration limits")
-         print("  Going to use defaults for the integration limits")
-       end if
+    if(dim_vars .eq. 2) then
+      print("  Please enter both the minimum and maximum integration limits")
+      print("  Going to use defaults for the integration limits")
+    end if
 
-       if(dim_vars .eq. 3) then
-         if ( stringtofloat(varin(1)) .lt. 1000. ) then
-           print("  Integration limits needs to be greater than 1000 meter")
-           print("  Going to use defaults for the integration limits")
-         else
-           uh_opt@uhmnhgt = stringtofloat(varin(1))
-           uh_opt@uhmxhgt = stringtofloat(varin(2))
-           print("  Setting custom integration limits")
-         end if
-       end if
+    if(dim_vars .eq. 3) then
+      if ( stringtofloat(varin(1)) .lt. 1000. ) then
+        print("  Integration limits needs to be greater than 1000 meter")
+        print("  Going to use defaults for the integration limits")
+      else
+        uh_opt@uhmnhgt = stringtofloat(varin(1))
+        uh_opt@uhmxhgt = stringtofloat(varin(2))
+        print("  Setting custom integration limits")
+      end if
+    end if
 
-       print("  min = "+uh_opt@uhmnhgt+" max = "+uh_opt@uhmxhgt)
-       uh = wrf_updraft_helicity(zp, mapfct, ua, va, w, dx, dy, uh_opt)
-       delete(uh_opt)
+    print("  min = "+uh_opt@uhmnhgt+" max = "+uh_opt@uhmxhgt)
+    uh = wrf_updraft_helicity(zp, mapfct, ua, va, w, dx, dy, uh_opt)
+    delete(uh_opt)
 
-       return(uh)
+    return(uh)
   end if
 
 
@@ -1975,9 +1975,9 @@ begin
     end if
     if( ndims .eq. 1) then
       if(ISFILE) then
-      var = nc_file->$variable$(time_in)
+        var = nc_file->$variable$(time_in)
       else
-      var = file_handle[:]->$variable$(time_in)
+        var = file_handle[:]->$variable$(time_in)
       end if
     end if
   end if
@@ -2186,7 +2186,7 @@ end
 
 undef("wrf_user_latlon_to_ij")
 function wrf_user_latlon_to_ij( nc_file:file, latitude:numeric, \
-                                longitude:numeric )
+        longitude:numeric )
 
 begin
   WE       = "WEST-EAST_GRID_DIMENSION"
@@ -2213,7 +2213,7 @@ end
 
 undef("wrf_user_ll_to_ij")
 function wrf_user_ll_to_ij( file_handle, longitude:numeric, latitude:numeric, \
-                            opts_args:logical )
+        opts_args:logical )
 
 begin
 ;
@@ -2223,13 +2223,13 @@ begin
   if(typeof(file_handle).eq."file") then
     ISFILE = True
     nc_file = file_handle
-  else if(typeof(file_handle).eq."list") then
-    ISFILE = False
-    nc_file = file_handle[0]
-  else
-    print("wrf_user_ll_to_ij: error: the first argument must be a file or a list of files opened with addfile or addfiles")
-    return
-  end if
+    else if(typeof(file_handle).eq."list") then
+      ISFILE = False
+      nc_file = file_handle[0]
+    else
+      print("wrf_user_ll_to_ij: error: the first argument must be a file or a list of files opened with addfile or addfiles")
+      return
+    end if
   end if
 
   opts = opts_args
@@ -2306,7 +2306,7 @@ end
 
 undef("wrf_user_ij_to_ll")
 function wrf_user_ij_to_ll( file_handle, i:numeric, j:numeric, \
-                            opts_args:logical )
+        opts_args:logical )
 
 begin
 ;
@@ -2316,13 +2316,13 @@ begin
   if(typeof(file_handle).eq."file") then
     ISFILE = True
     nc_file = file_handle
-  else if(typeof(file_handle).eq."list") then
-    ISFILE = False
-    nc_file = file_handle[0]
-  else
-    print("wrf_user_ij_to_ll: error: the first argument must be a file or a list of files opened with addfile or addfiles")
-    return
-  end if
+    else if(typeof(file_handle).eq."list") then
+      ISFILE = False
+      nc_file = file_handle[0]
+    else
+      print("wrf_user_ij_to_ll: error: the first argument must be a file or a list of files opened with addfile or addfiles")
+      return
+    end if
   end if
 
   opts = opts_args
@@ -2392,8 +2392,8 @@ end
 
 undef("write_wrf_debug_info")
 procedure write_wrf_debug_info(wks[1]:graphic,data1,data2, \
-                               debug_file[1]:string, \
-                               wrf_opts,wrf_func_name[1]:string)
+        debug_file[1]:string, \
+        wrf_opts,wrf_func_name[1]:string)
 ;
 ; This procedure writes resources and data variables used to
 ; create a WRF plot to a NetCDF file. This file can be read
@@ -2425,7 +2425,7 @@ begin
 ;
   if(first_time) then
     if(isfilepresent(cdf_debug_file).or.isfilepresent(ncl_debug_file).or.\
-       isfilepresent(res_debug_file)) then
+            isfilepresent(res_debug_file)) then
       print("write_wrf_debug_info: error: debug files '" + cdf_debug_file + "',")
       print("'" + ncl_debug_file + "' and/or " + res_debug_file + " exist.")
       print("Please remove file(s) and start script again.")
@@ -2543,18 +2543,18 @@ procedure delete_attrs(opts:logical)
 
 begin
   list_attrs = (/"MainTitle","MainTitlePos","MainTitlePosF", \
-                 "InitTime","ValidTime","TimePos","TimePosF", \
-                 "NoHeaderFooter","TimeLabel","LevelLabel", \
-                 "FieldTitle","UnitLabel","NumVectors","AspectRatio", \
-                 "SubFieldTitle","PlotOrientation","PlotLevelID", \
-                 "mpNestTime","ContourParameters","FontHeightF","Footer", \
-                 "start_lat","start_lon","end_lat","end_lon", \
-                 "proj","map_proj","stand_lon","truelat1","truelat2","cenlat", \
-                 "pole_lat","pole_lon","ref_lat","ref_lon","ref_x","ref_y", \
-                 "e_we","e_sn","parent_id","parent_grid_ratio", \
-                 "i_parent_start","j_parent_start", \
-                 "dx","dy","max_dom" \
-                 /)
+          "InitTime","ValidTime","TimePos","TimePosF", \
+          "NoHeaderFooter","TimeLabel","LevelLabel", \
+          "FieldTitle","UnitLabel","NumVectors","AspectRatio", \
+          "SubFieldTitle","PlotOrientation","PlotLevelID", \
+          "mpNestTime","ContourParameters","FontHeightF","Footer", \
+          "start_lat","start_lon","end_lat","end_lon", \
+          "proj","map_proj","stand_lon","truelat1","truelat2","cenlat", \
+          "pole_lat","pole_lon","ref_lat","ref_lon","ref_x","ref_y", \
+          "e_we","e_sn","parent_id","parent_grid_ratio", \
+          "i_parent_start","j_parent_start", \
+          "dx","dy","max_dom" \
+          /)
 
   do i=0,dimsizes(list_attrs)-1
     if(isatt(opts,list_attrs(i))) then
@@ -2668,10 +2668,10 @@ begin
 
 ; Somewhat convoluted way to see if a labelbar is not desired.
   if(check_attr(opts,"pmTickMarkDisplayMode","Never",True).or.\
-     check_attr(opts,"pmTickMarkDisplayMode",-1,False).or.\
-     check_attr(opts,"pmTickMarkDisplayMode",0,False).or. \
-     check_attr(opts,"lbLabelBarOn",False,False).or.\
-     check_attr(opts,"lbLabelBarOn",0,False)) then
+          check_attr(opts,"pmTickMarkDisplayMode",-1,False).or.\
+          check_attr(opts,"pmTickMarkDisplayMode",0,False).or. \
+          check_attr(opts,"lbLabelBarOn",False,False).or.\
+          check_attr(opts,"lbLabelBarOn",0,False)) then
     lbar_on = False
   else
     lbar_on = True
@@ -2758,7 +2758,7 @@ begin
   if(isatt(opts,"UnitLabel")) then
     SubTitles = SubTitles + "   (" +  opts@UnitLabel + ")"
   else
-     if(isatt(data,"units") .and. .not.(data@units.eq."")) then
+    if(isatt(data,"units") .and. .not.(data@units.eq."")) then
       SubTitles = SubTitles + "   (" +  data@units + ")"
     end if
   end if
@@ -2766,7 +2766,7 @@ begin
     SubTitles = SubTitles + "     at   " +  opts@PlotLevelID
   else
     if (isatt(data,"PlotLevelID")) then
-       SubTitles = SubTitles + "     at   " +  data@PlotLevelID
+      SubTitles = SubTitles + "     at   " +  data@PlotLevelID
     end if
   end if
   opts@tiMainString = SubTitles
@@ -2783,7 +2783,7 @@ begin
   opts = res
 
   if ( isatt(opts,"vpWidthF") ) then
-  ; num_vectors is used for vcMinDistanceF and vcRefLengthF
+    ; num_vectors is used for vcMinDistanceF and vcRefLengthF
     width = opts@vpWidthF
     num_vectors = get_res_value(opts,"NumVectors",25.0)
     opts@vcMinDistanceF   = get_res_value_keep(opts,"vcMinDistanceF", width/num_vectors)
@@ -2817,53 +2817,53 @@ begin
 ; the RANGS-GSHHS database.  Higher resolutions take longer to
 ; draw.
 
-      opts@mpDataBaseVersion     = get_res_value_keep(opts, "mpDataBaseVersion","MediumRes")
-     ;opts@mpOutlineBoundarySets = get_res_value_keep(opts, "mpOutlineBoundarySets", "AllBoundaries")
-      opts@mpOutlineBoundarySets = get_res_value_keep(opts, "mpOutlineBoundarySets", "GeophysicalAndUSStates")
-      opts@mpPerimLineThicknessF = get_res_value_keep(opts, "mpPerimLineThicknessF", 1.0)
-      opts@tmXBLabelFontHeightF  = get_res_value_keep(opts, "tmXBLabelFontHeightF", 0.01)
-      opts@tmYLLabelFontHeightF  = get_res_value_keep(opts, "tmYLLabelFontHeightF", 0.01)
+  opts@mpDataBaseVersion     = get_res_value_keep(opts, "mpDataBaseVersion","MediumRes")
+  ;opts@mpOutlineBoundarySets = get_res_value_keep(opts, "mpOutlineBoundarySets", "AllBoundaries")
+  opts@mpOutlineBoundarySets = get_res_value_keep(opts, "mpOutlineBoundarySets", "GeophysicalAndUSStates")
+  opts@mpPerimLineThicknessF = get_res_value_keep(opts, "mpPerimLineThicknessF", 1.0)
+  opts@tmXBLabelFontHeightF  = get_res_value_keep(opts, "tmXBLabelFontHeightF", 0.01)
+  opts@tmYLLabelFontHeightF  = get_res_value_keep(opts, "tmYLLabelFontHeightF", 0.01)
 
 ; Select portion of the map to view.
-      opts@mpLimitMode           = get_res_value_keep(opts, "mpLimitMode","Corners")
-      opts@mpLeftCornerLatF      = get_res_value_keep(opts, "mpLeftCornerLatF", opts@start_lat)
-      opts@mpLeftCornerLonF      = get_res_value_keep(opts, "mpLeftCornerLonF", opts@start_lon)
-      opts@mpRightCornerLatF     = get_res_value_keep(opts, "mpRightCornerLatF",opts@end_lat)
-      opts@mpRightCornerLonF     = get_res_value_keep(opts, "mpRightCornerLonF",opts@end_lon)
+  opts@mpLimitMode           = get_res_value_keep(opts, "mpLimitMode","Corners")
+  opts@mpLeftCornerLatF      = get_res_value_keep(opts, "mpLeftCornerLatF", opts@start_lat)
+  opts@mpLeftCornerLonF      = get_res_value_keep(opts, "mpLeftCornerLonF", opts@start_lon)
+  opts@mpRightCornerLatF     = get_res_value_keep(opts, "mpRightCornerLatF",opts@end_lat)
+  opts@mpRightCornerLonF     = get_res_value_keep(opts, "mpRightCornerLonF",opts@end_lon)
 
-      if ( opts@mpRightCornerLonF .lt. 0.0 ) then
-        opts@mpRightCornerLonF  = opts@mpRightCornerLonF + 360.0
-      end if
+  if ( opts@mpRightCornerLonF .lt. 0.0 ) then
+    opts@mpRightCornerLonF  = opts@mpRightCornerLonF + 360.0
+  end if
 
 ; Set some other resources for line colors and grid spacing.
 
-      opts@mpGeophysicalLineColor      = get_res_value_keep(opts, "mpGeophysicalLineColor","Gray")
-      opts@mpGeophysicalLineThicknessF = get_res_value_keep(opts, "mpGeophysicalLineThicknessF",0.5)
-      opts@mpGridLineColor             = get_res_value_keep(opts, "mpGridLineColor","Gray")
-      opts@mpGridLineThicknessF        = get_res_value_keep(opts, "mpGridLineThicknessF",0.5)
-     ;opts@mpGridMaskMode              = get_res_value_keep(opts, "mpGridMaskMode",3)
-      opts@mpGridSpacingF              = get_res_value_keep(opts, "mpGridSpacingF",5)
-      opts@mpLimbLineColor             = get_res_value_keep(opts, "mpLimbLineColor","Gray")
-      opts@mpLimbLineThicknessF        = get_res_value_keep(opts, "mpLimbLineThicknessF",0.5)
-      opts@mpNationalLineColor         = get_res_value_keep(opts, "mpNationalLineColor","Gray")
-      opts@mpNationalLineThicknessF    = get_res_value_keep(opts, "mpNationalLineThicknessF",0.5)
-      opts@mpPerimLineColor            = get_res_value_keep(opts, "mpPerimLineColor","Gray")
-      opts@mpPerimOn                   = get_res_value_keep(opts, "mpPerimOn",True)
-      opts@mpUSStateLineColor          = get_res_value_keep(opts, "mpUSStateLineColor","Gray")
-      opts@mpUSStateLineThicknessF     = get_res_value_keep(opts, "mpUSStateLineThicknessF",0.5)
-      opts@pmTickMarkDisplayMode       = get_res_value_keep(opts, "pmTickMarkDisplayMode","Always")
+  opts@mpGeophysicalLineColor      = get_res_value_keep(opts, "mpGeophysicalLineColor","Gray")
+  opts@mpGeophysicalLineThicknessF = get_res_value_keep(opts, "mpGeophysicalLineThicknessF",0.5)
+  opts@mpGridLineColor             = get_res_value_keep(opts, "mpGridLineColor","Gray")
+  opts@mpGridLineThicknessF        = get_res_value_keep(opts, "mpGridLineThicknessF",0.5)
+  ;opts@mpGridMaskMode              = get_res_value_keep(opts, "mpGridMaskMode",3)
+  opts@mpGridSpacingF              = get_res_value_keep(opts, "mpGridSpacingF",5)
+  opts@mpLimbLineColor             = get_res_value_keep(opts, "mpLimbLineColor","Gray")
+  opts@mpLimbLineThicknessF        = get_res_value_keep(opts, "mpLimbLineThicknessF",0.5)
+  opts@mpNationalLineColor         = get_res_value_keep(opts, "mpNationalLineColor","Gray")
+  opts@mpNationalLineThicknessF    = get_res_value_keep(opts, "mpNationalLineThicknessF",0.5)
+  opts@mpPerimLineColor            = get_res_value_keep(opts, "mpPerimLineColor","Gray")
+  opts@mpPerimOn                   = get_res_value_keep(opts, "mpPerimOn",True)
+  opts@mpUSStateLineColor          = get_res_value_keep(opts, "mpUSStateLineColor","Gray")
+  opts@mpUSStateLineThicknessF     = get_res_value_keep(opts, "mpUSStateLineThicknessF",0.5)
+  opts@pmTickMarkDisplayMode       = get_res_value_keep(opts, "pmTickMarkDisplayMode","Always")
 
 ; Tick mark resources
 
-     ;opts@tmXBMajorLengthF      = get_res_value(opts, "tmXBMajorLengthF",-0.03)
-     ;opts@tmYLMajorLengthF      = get_res_value(opts, "tmYLMajorLengthF",-0.03)
-      opts@tmXTOn                = get_res_value(opts,"tmXTOn",False)
-      opts@tmYROn                = get_res_value(opts,"tmYROn",False)
-      opts@tmYRLabelsOn          = get_res_value(opts,"tmYRLabelsOn",True)
-      opts@tmXBBorderOn          = get_res_value(opts,"tmXBBorderOn",True)
-      opts@tmXTBorderOn          = get_res_value(opts,"tmXTBorderOn",True)
-      opts@tmYLBorderOn          = get_res_value(opts,"tmYLBorderOn",True)
-      opts@tmYRBorderOn          = get_res_value(opts,"tmYRBorderOn",True)
+  ;opts@tmXBMajorLengthF      = get_res_value(opts, "tmXBMajorLengthF",-0.03)
+  ;opts@tmYLMajorLengthF      = get_res_value(opts, "tmYLMajorLengthF",-0.03)
+  opts@tmXTOn                = get_res_value(opts,"tmXTOn",False)
+  opts@tmYROn                = get_res_value(opts,"tmYROn",False)
+  opts@tmYRLabelsOn          = get_res_value(opts,"tmYRLabelsOn",True)
+  opts@tmXBBorderOn          = get_res_value(opts,"tmXBBorderOn",True)
+  opts@tmXTBorderOn          = get_res_value(opts,"tmXTBorderOn",True)
+  opts@tmYLBorderOn          = get_res_value(opts,"tmYLBorderOn",True)
+  opts@tmYRBorderOn          = get_res_value(opts,"tmYRBorderOn",True)
 
   return(opts)
 end
@@ -2947,25 +2947,25 @@ begin
     opts@TimePos  = "CenterLeft"
     opts@TimePosF = 0.0
     if (opts@MainTitlePos .eq. "CenterLeft")
-     MTOPosF = MTOPosF - 0.05
+      MTOPosF = MTOPosF - 0.05
     end if
   end if
   if (opts@TimePos .eq. "Right")
     opts@TimePos  = "CenterRight"
     opts@TimePosF = 1.0
     if (opts@MainTitlePos .eq. "CenterRight")
-     MTOPosF = MTOPosF - 0.05
+      MTOPosF = MTOPosF - 0.05
     end if
   end if
 
   if( isatt(nc_file,"START_DATE") ) then
-     model_start_time = nc_file@START_DATE
+    model_start_time = nc_file@START_DATE
   else
-     if( isatt(nc_file,"SIMULATION_START_DATE") ) then
-       model_start_time = nc_file@SIMULATION_START_DATE
-     else
-       opts@InitTime = False
-     end if
+    if( isatt(nc_file,"SIMULATION_START_DATE") ) then
+      model_start_time = nc_file@SIMULATION_START_DATE
+    else
+      opts@InitTime = False
+    end if
   end if
   if( opts@InitTime ) then
     InitTime = "Init: " + model_start_time
@@ -2986,12 +2986,12 @@ begin
 
   plot_narrow = False
   if((opts).and.(isatt(opts,"vpWidthF")).and.(isatt(opts,"vpHeightF"))) then
-     ph = opts@vpHeightF
-     pw = opts@vpWidthF
-     phw = ph/pw
-     if ( phw .gt. 1.8 ) then
-       plot_narrow = True
-     end if
+    ph = opts@vpHeightF
+    pw = opts@vpWidthF
+    phw = ph/pw
+    if ( phw .gt. 1.8 ) then
+      plot_narrow = True
+    end if
   end if
 
   if( opts@ValidTime .and. isatt(opts,"TimeLabel") ) then
@@ -3023,9 +3023,9 @@ begin
     SN = "SOUTH-NORTH_GRID_DIMENSION"
     BT = "BOTTOM-TOP_GRID_DIMENSION"
     footer2 =  " WE = " + nc_file@$WE$ + \
-               " ; SN = " + nc_file@$SN$ + \
-               " ; Levels = " + nc_file@$BT$ + \
-               " ; Dis = " + dis + "km"
+            " ; SN = " + nc_file@$SN$ + \
+            " ; Levels = " + nc_file@$BT$ + \
+            " ; Dis = " + dis + "km"
     if ( isatt(nc_file,"MP_PHYSICS")) then
       footer2 = footer2 +  " ; Phys Opt = " + nc_file@MP_PHYSICS
     end if
@@ -3036,23 +3036,23 @@ begin
       footer2 = footer2 +  " ; Cu Opt = " + nc_file@CU_PHYSICS
     end if
     Footer = footer1 + "~C~" + footer2
-   else
-     Footer = " "
-   end if
-    txt3 = create "Footer" textItemClass wks
-      "txString"      : Footer
-      "txFontHeightF" : font_height*.9
-    end create
-    anno = NhlAddAnnotation(cn,txt3)
-    setvalues anno
-      "amZone"           : 1
+  else
+    Footer = " "
+  end if
+  txt3 = create "Footer" textItemClass wks
+    "txString"      : Footer
+    "txFontHeightF" : font_height*.9
+  end create
+  anno = NhlAddAnnotation(cn,txt3)
+  setvalues anno
+    "amZone"           : 1
 ;      "amZone"           : 7
-      "amJust"           : "TopLeft"
-      "amSide"           : "Bottom"
-      "amParallelPosF"   : 0.0
-      "amOrthogonalPosF" : -0.55
-      "amResizeNotify"   : False
-    end setvalues
+    "amJust"           : "TopLeft"
+    "amSide"           : "Bottom"
+    "amParallelPosF"   : 0.0
+    "amOrthogonalPosF" : -0.55
+    "amResizeNotify"   : False
+  end setvalues
 
 
 ; Add X-setion information if needed
@@ -3084,7 +3084,7 @@ function set_mp_wrf_map_resources(in_file[1]:file,opt_args[1]:logical)
 
 begin
 ;
-    opts = opt_args      ; Make a copy of the resource list
+  opts = opt_args      ; Make a copy of the resource list
 
 ; Set some resources depending on what kind of map projection is
 ; chosen.
@@ -3095,89 +3095,89 @@ begin
 ;   MAP_PROJ = 3 : "Mercator"
 ;   MAP_PROJ = 6 : "Lat/Lon"
 
-    if(isatt(in_file,"MAP_PROJ"))
+  if(isatt(in_file,"MAP_PROJ"))
 
 ;   CylindricalEquidistant
-      if(in_file@MAP_PROJ .eq. 0)
-        projection          = "CylindricalEquidistant"
-        opts@mpProjection = projection
-        opts@mpGridSpacingF = 45
-        opts@mpCenterLatF   = get_res_value_keep(opts, "mpCenterLatF", 0.0)
-        if(isatt(in_file,"STAND_LON"))
-          opts@mpCenterLonF  = get_res_value_keep(opts, "mpCenterLonF",in_file@STAND_LON)
+    if(in_file@MAP_PROJ .eq. 0)
+      projection          = "CylindricalEquidistant"
+      opts@mpProjection = projection
+      opts@mpGridSpacingF = 45
+      opts@mpCenterLatF   = get_res_value_keep(opts, "mpCenterLatF", 0.0)
+      if(isatt(in_file,"STAND_LON"))
+        opts@mpCenterLonF  = get_res_value_keep(opts, "mpCenterLonF",in_file@STAND_LON)
+      else
+        if(isatt(in_file,"CEN_LON"))
+          opts@mpCenterLonF  = get_res_value_keep(opts, "mpCenterLonF",in_file@CEN_LON)
         else
-          if(isatt(in_file,"CEN_LON"))
-            opts@mpCenterLonF  = get_res_value_keep(opts, "mpCenterLonF",in_file@CEN_LON)
-          else
-           print("ERROR: Found neither STAND_LON or CEN_LON in file")
-          end if
+          print("ERROR: Found neither STAND_LON or CEN_LON in file")
         end if
       end if
+    end if
 
 ;   LambertConformal projection
-      if(in_file@MAP_PROJ .eq. 1)
-        projection               = "LambertConformal"
-        opts@mpProjection = projection
-        opts@mpLambertParallel1F = get_res_value_keep(opts, "mpLambertParallel1F",in_file@TRUELAT1)
-        opts@mpLambertParallel2F = get_res_value_keep(opts, "mpLambertParallel2F",in_file@TRUELAT2)
-        if(isatt(in_file,"STAND_LON"))
-          opts@mpLambertMeridianF  = get_res_value_keep(opts, "mpLambertMeridianF",in_file@STAND_LON)
+    if(in_file@MAP_PROJ .eq. 1)
+      projection               = "LambertConformal"
+      opts@mpProjection = projection
+      opts@mpLambertParallel1F = get_res_value_keep(opts, "mpLambertParallel1F",in_file@TRUELAT1)
+      opts@mpLambertParallel2F = get_res_value_keep(opts, "mpLambertParallel2F",in_file@TRUELAT2)
+      if(isatt(in_file,"STAND_LON"))
+        opts@mpLambertMeridianF  = get_res_value_keep(opts, "mpLambertMeridianF",in_file@STAND_LON)
+      else
+        if(isatt(in_file,"CEN_LON"))
+          opts@mpLambertMeridianF  = get_res_value_keep(opts, "mpLambertMeridianF",in_file@CEN_LON)
         else
-          if(isatt(in_file,"CEN_LON"))
-            opts@mpLambertMeridianF  = get_res_value_keep(opts, "mpLambertMeridianF",in_file@CEN_LON)
-          else
-           print("ERROR: Found neither STAND_LON or CEN_LON in file")
-          end if
+          print("ERROR: Found neither STAND_LON or CEN_LON in file")
         end if
       end if
+    end if
 
 ;   Stereographic projection
-      if(in_file@MAP_PROJ .eq. 2)
-        projection          = "Stereographic"
-        opts@mpProjection = projection
-        opts@mpCenterLatF   = get_res_value_keep(opts, "mpCenterLatF", in_file@CEN_LAT)
-        if(isatt(in_file,"STAND_LON"))
-          opts@mpCenterLonF  = get_res_value_keep(opts, "mpCenterLonF",in_file@STAND_LON)
+    if(in_file@MAP_PROJ .eq. 2)
+      projection          = "Stereographic"
+      opts@mpProjection = projection
+      opts@mpCenterLatF   = get_res_value_keep(opts, "mpCenterLatF", in_file@CEN_LAT)
+      if(isatt(in_file,"STAND_LON"))
+        opts@mpCenterLonF  = get_res_value_keep(opts, "mpCenterLonF",in_file@STAND_LON)
+      else
+        if(isatt(in_file,"CEN_LON"))
+          opts@mpCenterLonF  = get_res_value_keep(opts, "mpCenterLonF",in_file@CEN_LON)
         else
-          if(isatt(in_file,"CEN_LON"))
-            opts@mpCenterLonF  = get_res_value_keep(opts, "mpCenterLonF",in_file@CEN_LON)
-          else
-           print("ERROR: Found neither STAND_LON or CEN_LON in file")
-          end if
+          print("ERROR: Found neither STAND_LON or CEN_LON in file")
         end if
       end if
+    end if
 
 ;   Mercator projection
-      if(in_file@MAP_PROJ .eq. 3)
-        projection          = "Mercator"
-        opts@mpProjection = projection
-        opts@mpCenterLatF   = get_res_value_keep(opts, "mpCenterLatF", 0.0)
-        if(isatt(in_file,"STAND_LON"))
-          opts@mpCenterLonF  = get_res_value_keep(opts, "mpCenterLonF",in_file@STAND_LON)
+    if(in_file@MAP_PROJ .eq. 3)
+      projection          = "Mercator"
+      opts@mpProjection = projection
+      opts@mpCenterLatF   = get_res_value_keep(opts, "mpCenterLatF", 0.0)
+      if(isatt(in_file,"STAND_LON"))
+        opts@mpCenterLonF  = get_res_value_keep(opts, "mpCenterLonF",in_file@STAND_LON)
+      else
+        if(isatt(in_file,"CEN_LON"))
+          opts@mpCenterLonF  = get_res_value_keep(opts, "mpCenterLonF",in_file@CEN_LON)
         else
-          if(isatt(in_file,"CEN_LON"))
-            opts@mpCenterLonF  = get_res_value_keep(opts, "mpCenterLonF",in_file@CEN_LON)
-          else
-           print("ERROR: Found neither STAND_LON or CEN_LON in file")
-          end if
+          print("ERROR: Found neither STAND_LON or CEN_LON in file")
         end if
       end if
+    end if
 
 ;    global WRF CylindricalEquidistant
-      if(in_file@MAP_PROJ .eq. 6)
-        projection          = "CylindricalEquidistant"
-        opts@mpProjection = projection
-        opts@mpGridSpacingF = 45
-        opts@mpCenterLonF  = get_res_value_keep(opts, "mpCenterLonF",in_file@CEN_LON)
-        if( isatt(in_file,"POLE_LAT") ) then
-          opts@mpCenterRotF = get_res_value_keep(opts, "mpCenterRotF", 90.0 - in_file@POLE_LAT)
-          delete(opts@mpCenterLonF)
-          calcen = -190.
-          opts@mpCenterLonF  = get_res_value_keep(opts, "mpCenterLonF", calcen )
-        end if
+    if(in_file@MAP_PROJ .eq. 6)
+      projection          = "CylindricalEquidistant"
+      opts@mpProjection = projection
+      opts@mpGridSpacingF = 45
+      opts@mpCenterLonF  = get_res_value_keep(opts, "mpCenterLonF",in_file@CEN_LON)
+      if( isatt(in_file,"POLE_LAT") ) then
+        opts@mpCenterRotF = get_res_value_keep(opts, "mpCenterRotF", 90.0 - in_file@POLE_LAT)
+        delete(opts@mpCenterLonF)
+        calcen = -190.
+        opts@mpCenterLonF  = get_res_value_keep(opts, "mpCenterLonF", calcen )
       end if
-
     end if
+
+  end if
 
   return(opts)                                     ; Return.
 
@@ -3186,7 +3186,7 @@ end
 
 undef("wrf_contour_ps")
 function wrf_contour_ps(nc_file:file,wks[1]: graphic, data[*][*]:numeric, \
-                     opt_args[1]:logical)
+        opt_args[1]:logical)
 
 begin
 
@@ -3246,13 +3246,13 @@ begin
     frame(wks)
   end if
 
-return (cn)
+  return (cn)
 end
 ;--------------------------------------------------------------------------------
 undef("wrf_vector_ps")
 function wrf_vector_ps(nc_file:file,wks[1]: graphic, \
-                       data_u[*][*]:numeric, data_v[*][*]:numeric, \
-                       opt_args[1]:logical)
+        data_u[*][*]:numeric, data_v[*][*]:numeric, \
+        opt_args[1]:logical)
 
 begin
 
@@ -3289,11 +3289,11 @@ begin
   opts = set_vc_resources(opts)
 
 
- opts@gsnDraw = False
- opts@gsnFrame = False
- opts@gsnMaximize = False
- delete_attrs(opts)
- cn = gsn_csm_vector_map_polar(wks,data_u,data_v,opts)          ; Create the plot.
+  opts@gsnDraw = False
+  opts@gsnFrame = False
+  opts@gsnMaximize = False
+  delete_attrs(opts)
+  cn = gsn_csm_vector_map_polar(wks,data_u,data_v,opts)          ; Create the plot.
 
   draw(cn)
 
@@ -3302,13 +3302,13 @@ begin
     frame(wks)
   end if
 
-return (cn)
+  return (cn)
 end
 ;--------------------------------------------------------------------------------
 
 undef("wrf_contour")
 function wrf_contour(nc_file:file,wks[1]: graphic, data[*][*]:numeric, \
-                     opt_args[1]:logical)
+        opt_args[1]:logical)
 
 ; This function creates a contour plot and adds some titles to it.
 ;
@@ -3428,7 +3428,7 @@ end
 
 undef("wrf_vector")
 function wrf_vector(nc_file:file,wks[1]: graphic, data_u[*][*]:numeric, \
-                    data_v[*][*]:numeric, opt_args[1]:logical)
+        data_v[*][*]:numeric, opt_args[1]:logical)
 ;
 ; This function creates a vector plot and adds some titles to it.
 ;
@@ -3514,7 +3514,7 @@ begin
   opts2@gsnFrame    = get_res_value_keep(opts,"gsnFrame",    False)
   opts2@gsnMaximize = get_res_value_keep(opts,"gsnMaximize", True)
   draw_and_frame(wks,vct,opts2@gsnDraw,opts2@gsnFrame,False, \
-                 opts2@gsnMaximize)
+          opts2@gsnMaximize)
 
   return(vct)                                     ; Return.
 end
@@ -3534,8 +3534,8 @@ begin
 ;   3. Create the map plot, and draw and advance the frame
 ;      (if requested).
 
-    opts = opt_args      ; Make a copy of the resource list
-    opts  = True
+  opts = opt_args      ; Make a copy of the resource list
+  opts  = True
 
 ; Set some resources depending on what kind of map projection is
 ; chosen.
@@ -3547,56 +3547,56 @@ begin
 ;   MAP_PROJ = 6 : "Lat/Lon"
 
 ;   CylindricalEquidistant
-      if(opts@map_proj .eq. 0)
-        projection          = "CylindricalEquidistant"
-        opts@mpGridSpacingF = 45
-        opts@mpCenterLatF   = get_res_value_keep(opts, "mpCenterLatF", 0.0)
-        opts@mpCenterLonF   = get_res_value_keep(opts, "mpCenterLonF",opts@stand_lon)
-      end if
+  if(opts@map_proj .eq. 0)
+    projection          = "CylindricalEquidistant"
+    opts@mpGridSpacingF = 45
+    opts@mpCenterLatF   = get_res_value_keep(opts, "mpCenterLatF", 0.0)
+    opts@mpCenterLonF   = get_res_value_keep(opts, "mpCenterLonF",opts@stand_lon)
+  end if
 
 ;   LambertConformal projection
-      if(opts@map_proj .eq. 1)
-        projection               = "LambertConformal"
-        opts@mpLambertParallel1F = get_res_value_keep(opts, "mpLambertParallel1F",opts@truelat1)
-        opts@mpLambertParallel2F = get_res_value_keep(opts, "mpLambertParallel2F",opts@truelat2)
-        opts@mpLambertMeridianF  = get_res_value_keep(opts, "mpLambertMeridianF",opts@stand_lon)
-      end if
+  if(opts@map_proj .eq. 1)
+    projection               = "LambertConformal"
+    opts@mpLambertParallel1F = get_res_value_keep(opts, "mpLambertParallel1F",opts@truelat1)
+    opts@mpLambertParallel2F = get_res_value_keep(opts, "mpLambertParallel2F",opts@truelat2)
+    opts@mpLambertMeridianF  = get_res_value_keep(opts, "mpLambertMeridianF",opts@stand_lon)
+  end if
 
 ;   Stereographic projection
-      if(opts@map_proj .eq. 2)
-        projection          = "Stereographic"
-        if( isatt(opts,"cenlat") ) then
-          opts@mpCenterLatF  = get_res_value_keep(opts, "mpCenterLatF",opts@cenlat)
-        else
-          opts@mpCenterLatF  = get_res_value_keep(opts, "mpCenterLatF",opts@ref_lat)
-        end if
-        opts@mpCenterLonF   = get_res_value_keep(opts, "mpCenterLonF",opts@stand_lon)
-      end if
+  if(opts@map_proj .eq. 2)
+    projection          = "Stereographic"
+    if( isatt(opts,"cenlat") ) then
+      opts@mpCenterLatF  = get_res_value_keep(opts, "mpCenterLatF",opts@cenlat)
+    else
+      opts@mpCenterLatF  = get_res_value_keep(opts, "mpCenterLatF",opts@ref_lat)
+    end if
+    opts@mpCenterLonF   = get_res_value_keep(opts, "mpCenterLonF",opts@stand_lon)
+  end if
 
 ;   Mercator projection
-      if(opts@map_proj .eq. 3)
-        projection          = "Mercator"
-        opts@mpCenterLatF   = get_res_value_keep(opts, "mpCenterLatF", 0.0)
-        opts@mpCenterLonF   = get_res_value_keep(opts, "mpCenterLonF",opts@stand_lon)
-      end if
+  if(opts@map_proj .eq. 3)
+    projection          = "Mercator"
+    opts@mpCenterLatF   = get_res_value_keep(opts, "mpCenterLatF", 0.0)
+    opts@mpCenterLonF   = get_res_value_keep(opts, "mpCenterLonF",opts@stand_lon)
+  end if
 
 ;    global WRF CylindricalEquidistant
-      if(opts@map_proj .eq. 6)
-        projection          = "CylindricalEquidistant"
-        opts@mpGridSpacingF = 45
-        if( isatt(opts,"cenlon") ) then
-          opts@mpCenterLonF  = get_res_value_keep(opts, "mpCenterLonF",opts@cenlon)
-        else
-          opts@mpCenterLonF  = get_res_value_keep(opts, "mpCenterLonF",opts@ref_lon)
-        end if
-        if( isatt(opts,"pole_lat") ) then
-          delete(opts@mpCenterLonF)
-          opts@mpCenterLonF  = get_res_value_keep(opts, "mpCenterLonF", - 190. )
-          opts@mpCenterRotF = get_res_value_keep(opts, "mpCenterRotF", 90.0 - opts@pole_lat)
-        else
-          opts@mpCenterRotF = get_res_value_keep(opts, "mpCenterRotF", 0.0)
-        end if
-      end if
+  if(opts@map_proj .eq. 6)
+    projection          = "CylindricalEquidistant"
+    opts@mpGridSpacingF = 45
+    if( isatt(opts,"cenlon") ) then
+      opts@mpCenterLonF  = get_res_value_keep(opts, "mpCenterLonF",opts@cenlon)
+    else
+      opts@mpCenterLonF  = get_res_value_keep(opts, "mpCenterLonF",opts@ref_lon)
+    end if
+    if( isatt(opts,"pole_lat") ) then
+      delete(opts@mpCenterLonF)
+      opts@mpCenterLonF  = get_res_value_keep(opts, "mpCenterLonF", - 190. )
+      opts@mpCenterRotF = get_res_value_keep(opts, "mpCenterRotF", 90.0 - opts@pole_lat)
+    else
+      opts@mpCenterRotF = get_res_value_keep(opts, "mpCenterRotF", 0.0)
+    end if
+  end if
 
 ; Set some resources common to all map projections.
   opts = set_mp_resources(opts)
@@ -3698,7 +3698,7 @@ begin
 
     numLineColors = 0
     if ( isatt(lnres,"domLineColors") ) then
-       numLineColors = dimsizes(lnres@domLineColors)
+      numLineColors = dimsizes(lnres@domLineColors)
     end if
 
     do idom = 1,mpres@max_dom-1
@@ -3814,156 +3814,156 @@ begin
 ;   MAP_PROJ = 3 : "Mercator"
 ;   MAP_PROJ = 6 : "Lat/Lon"
 
-    if(isatt(in_file,"MAP_PROJ"))
+  if(isatt(in_file,"MAP_PROJ"))
 
 ;   CylindricalEquidistant
-      if(in_file@MAP_PROJ .eq. 0)
-        map_args@mpProjection          = "CylindricalEquidistant"
-        map_args@mpGridSpacingF = 45
-        map_args@mpCenterLatF   = get_res_value_keep(map_args, "mpCenterLatF", 0.0)
-        if(isatt(in_file,"STAND_LON"))
-          map_args@mpCenterLonF  = get_res_value_keep(map_args, "mpCenterLonF",in_file@STAND_LON)
+    if(in_file@MAP_PROJ .eq. 0)
+      map_args@mpProjection          = "CylindricalEquidistant"
+      map_args@mpGridSpacingF = 45
+      map_args@mpCenterLatF   = get_res_value_keep(map_args, "mpCenterLatF", 0.0)
+      if(isatt(in_file,"STAND_LON"))
+        map_args@mpCenterLonF  = get_res_value_keep(map_args, "mpCenterLonF",in_file@STAND_LON)
+      else
+        if(isatt(in_file,"CEN_LON"))
+          map_args@mpCenterLonF  = get_res_value_keep(map_args, "mpCenterLonF",in_file@CEN_LON)
         else
-          if(isatt(in_file,"CEN_LON"))
-            map_args@mpCenterLonF  = get_res_value_keep(map_args, "mpCenterLonF",in_file@CEN_LON)
-          else
-           print("ERROR: Found neither STAND_LON or CEN_LON in file")
-          end if
+          print("ERROR: Found neither STAND_LON or CEN_LON in file")
         end if
       end if
-
-;   LambertConformal projection
-      if(in_file@MAP_PROJ .eq. 1)
-        map_args@mpProjection               = "LambertConformal"
-        map_args@mpLambertParallel1F = get_res_value_keep(map_args, "mpLambertParallel1F",in_file@TRUELAT1)
-        map_args@mpLambertParallel2F = get_res_value_keep(map_args, "mpLambertParallel2F",in_file@TRUELAT2)
-        if(isatt(in_file,"STAND_LON"))
-          map_args@mpLambertMeridianF  = get_res_value_keep(map_args, "mpLambertMeridianF",in_file@STAND_LON)
-        else
-          if(isatt(in_file,"CEN_LON"))
-            map_args@mpLambertMeridianF  = get_res_value_keep(map_args, "mpLambertMeridianF",in_file@CEN_LON)
-          else
-           print("ERROR: Found neither STAND_LON or CEN_LON in file")
-          end if
-        end if
-      end if
-
-;   Stereographic projection
-      if(in_file@MAP_PROJ .eq. 2)
-        map_args@mpProjection          = "Stereographic"
-        map_args@mpCenterLatF   = get_res_value_keep(map_args, "mpCenterLatF", in_file@CEN_LAT)
-        if(isatt(in_file,"STAND_LON"))
-          map_args@mpCenterLonF  = get_res_value_keep(map_args, "mpCenterLonF",in_file@STAND_LON)
-        else
-          if(isatt(in_file,"CEN_LON"))
-            map_args@mpCenterLonF  = get_res_value_keep(map_args, "mpCenterLonF",in_file@CEN_LON)
-          else
-           print("ERROR: Found neither STAND_LON or CEN_LON in file")
-          end if
-        end if
-      end if
-
-;   Mercator projection
-      if(in_file@MAP_PROJ .eq. 3)
-        map_args@mpProjection          = "Mercator"
-        map_args@mpCenterLatF   = get_res_value_keep(map_args, "mpCenterLatF", 0.0)
-        if(isatt(in_file,"STAND_LON"))
-          map_args@mpCenterLonF  = get_res_value_keep(map_args, "mpCenterLonF",in_file@STAND_LON)
-        else
-          if(isatt(in_file,"CEN_LON"))
-            map_args@mpCenterLonF  = get_res_value_keep(map_args, "mpCenterLonF",in_file@CEN_LON)
-          else
-           print("ERROR: Found neither STAND_LON or CEN_LON in file")
-          end if
-        end if
-      end if
-
-;    global WRF CylindricalEquidistant
-      if(in_file@MAP_PROJ .eq. 6)
-        map_args@mpProjection          = "CylindricalEquidistant"
-        map_args@mpGridSpacingF = 45
-        map_args@mpCenterLonF  = get_res_value_keep(map_args, "mpCenterLonF",in_file@CEN_LON)
-        if( isatt(in_file,"POLE_LAT") ) then
-          map_args@mpCenterRotF = get_res_value_keep(map_args, "mpCenterRotF", 90.0 - in_file@POLE_LAT)
-          delete(map_args@mpCenterLonF)
-          calcen = -190.
-          map_args@mpCenterLonF  = get_res_value_keep(map_args, "mpCenterLonF", calcen )
-        end if
-      end if
-
-    else
-
-      return(map_args)
-
     end if
 
-    map_args@mpNestTime = get_res_value_keep(map_args, "mpNestTime",0)
-
-      if(isfilevar(in_file,"XLAT"))
-        lat = in_file->XLAT(map_args@mpNestTime,:,:)
-        lon = in_file->XLONG(map_args@mpNestTime,:,:)
+;   LambertConformal projection
+    if(in_file@MAP_PROJ .eq. 1)
+      map_args@mpProjection               = "LambertConformal"
+      map_args@mpLambertParallel1F = get_res_value_keep(map_args, "mpLambertParallel1F",in_file@TRUELAT1)
+      map_args@mpLambertParallel2F = get_res_value_keep(map_args, "mpLambertParallel2F",in_file@TRUELAT2)
+      if(isatt(in_file,"STAND_LON"))
+        map_args@mpLambertMeridianF  = get_res_value_keep(map_args, "mpLambertMeridianF",in_file@STAND_LON)
       else
-        lat = in_file->XLAT_M(map_args@mpNestTime,:,:)
-        lon = in_file->XLONG_M(map_args@mpNestTime,:,:)
-      end if
-      dims = dimsizes(lat)
-
-      do ii = 0, dims(0)-1
-      do jj = 0, dims(1)-1
-        if ( lon(ii,jj) .lt. 0.0) then
-          lon(ii,jj) = lon(ii,jj) + 360.
+        if(isatt(in_file,"CEN_LON"))
+          map_args@mpLambertMeridianF  = get_res_value_keep(map_args, "mpLambertMeridianF",in_file@CEN_LON)
+        else
+          print("ERROR: Found neither STAND_LON or CEN_LON in file")
         end if
-      end do
-      end do
+      end if
+    end if
 
-      map_args@start_lat = lat(0,0)
-      map_args@start_lon = lon(0,0)
-      map_args@end_lat   = lat(dims(0)-1,dims(1)-1)
-      map_args@end_lon   = lon(dims(0)-1,dims(1)-1)
+;   Stereographic projection
+    if(in_file@MAP_PROJ .eq. 2)
+      map_args@mpProjection          = "Stereographic"
+      map_args@mpCenterLatF   = get_res_value_keep(map_args, "mpCenterLatF", in_file@CEN_LAT)
+      if(isatt(in_file,"STAND_LON"))
+        map_args@mpCenterLonF  = get_res_value_keep(map_args, "mpCenterLonF",in_file@STAND_LON)
+      else
+        if(isatt(in_file,"CEN_LON"))
+          map_args@mpCenterLonF  = get_res_value_keep(map_args, "mpCenterLonF",in_file@CEN_LON)
+        else
+          print("ERROR: Found neither STAND_LON or CEN_LON in file")
+        end if
+      end if
+    end if
+
+;   Mercator projection
+    if(in_file@MAP_PROJ .eq. 3)
+      map_args@mpProjection          = "Mercator"
+      map_args@mpCenterLatF   = get_res_value_keep(map_args, "mpCenterLatF", 0.0)
+      if(isatt(in_file,"STAND_LON"))
+        map_args@mpCenterLonF  = get_res_value_keep(map_args, "mpCenterLonF",in_file@STAND_LON)
+      else
+        if(isatt(in_file,"CEN_LON"))
+          map_args@mpCenterLonF  = get_res_value_keep(map_args, "mpCenterLonF",in_file@CEN_LON)
+        else
+          print("ERROR: Found neither STAND_LON or CEN_LON in file")
+        end if
+      end if
+    end if
+
+;    global WRF CylindricalEquidistant
+    if(in_file@MAP_PROJ .eq. 6)
+      map_args@mpProjection          = "CylindricalEquidistant"
+      map_args@mpGridSpacingF = 45
+      map_args@mpCenterLonF  = get_res_value_keep(map_args, "mpCenterLonF",in_file@CEN_LON)
+      if( isatt(in_file,"POLE_LAT") ) then
+        map_args@mpCenterRotF = get_res_value_keep(map_args, "mpCenterRotF", 90.0 - in_file@POLE_LAT)
+        delete(map_args@mpCenterLonF)
+        calcen = -190.
+        map_args@mpCenterLonF  = get_res_value_keep(map_args, "mpCenterLonF", calcen )
+      end if
+    end if
+
+  else
+
+    return(map_args)
+
+  end if
+
+  map_args@mpNestTime = get_res_value_keep(map_args, "mpNestTime",0)
+
+  if(isfilevar(in_file,"XLAT"))
+    lat = in_file->XLAT(map_args@mpNestTime,:,:)
+    lon = in_file->XLONG(map_args@mpNestTime,:,:)
+  else
+    lat = in_file->XLAT_M(map_args@mpNestTime,:,:)
+    lon = in_file->XLONG_M(map_args@mpNestTime,:,:)
+  end if
+  dims = dimsizes(lat)
+
+  do ii = 0, dims(0)-1
+    do jj = 0, dims(1)-1
+      if ( lon(ii,jj) .lt. 0.0) then
+        lon(ii,jj) = lon(ii,jj) + 360.
+      end if
+    end do
+  end do
+
+  map_args@start_lat = lat(0,0)
+  map_args@start_lon = lon(0,0)
+  map_args@end_lat   = lat(dims(0)-1,dims(1)-1)
+  map_args@end_lon   = lon(dims(0)-1,dims(1)-1)
 
 
 ; Set some resources common to all map projections.
-      map_args = set_mp_resources(map_args)
+  map_args = set_mp_resources(map_args)
 
-      if ( isatt(map_args,"ZoomIn") .and. map_args@ZoomIn ) then
-        y1 = 0
-        x1 = 0
-        y2 = dims(0)-1
-        x2 = dims(1)-1
-        if ( isatt(map_args,"Ystart") ) then
-          y1 = map_args@Ystart
-          delete(map_args@Ystart)
-        end if
-        if ( isatt(map_args,"Xstart") ) then
-          x1 = map_args@Xstart
-          delete(map_args@Xstart)
-        end if
-        if ( isatt(map_args,"Yend") ) then
-          if ( map_args@Yend .le. y2 ) then
-            y2 = map_args@Yend
-          end if
-          delete(map_args@Yend)
-        end if
-        if ( isatt(map_args,"Xend") ) then
-          if ( map_args@Xend .le. x2 ) then
-            x2 = map_args@Xend
-          end if
-          delete(map_args@Xend)
-        end if
-
-        map_args@mpLeftCornerLatF      = lat(y1,x1)
-        map_args@mpLeftCornerLonF      = lon(y1,x1)
-        map_args@mpRightCornerLatF     = lat(y2,x2)
-        map_args@mpRightCornerLonF     = lon(y2,x2)
-
-        if ( map_args@mpRightCornerLonF .lt. 0.0 ) then
-          map_args@mpRightCornerLonF  = map_args@mpRightCornerLonF + 360.0
-        end if
-
-        delete(map_args@ZoomIn)
+  if ( isatt(map_args,"ZoomIn") .and. map_args@ZoomIn ) then
+    y1 = 0
+    x1 = 0
+    y2 = dims(0)-1
+    x2 = dims(1)-1
+    if ( isatt(map_args,"Ystart") ) then
+      y1 = map_args@Ystart
+      delete(map_args@Ystart)
+    end if
+    if ( isatt(map_args,"Xstart") ) then
+      x1 = map_args@Xstart
+      delete(map_args@Xstart)
+    end if
+    if ( isatt(map_args,"Yend") ) then
+      if ( map_args@Yend .le. y2 ) then
+        y2 = map_args@Yend
       end if
+      delete(map_args@Yend)
+    end if
+    if ( isatt(map_args,"Xend") ) then
+      if ( map_args@Xend .le. x2 ) then
+        x2 = map_args@Xend
+      end if
+      delete(map_args@Xend)
+    end if
 
-      return(map_args)
+    map_args@mpLeftCornerLatF      = lat(y1,x1)
+    map_args@mpLeftCornerLonF      = lon(y1,x1)
+    map_args@mpRightCornerLatF     = lat(y2,x2)
+    map_args@mpRightCornerLonF     = lon(y2,x2)
+
+    if ( map_args@mpRightCornerLonF .lt. 0.0 ) then
+      map_args@mpRightCornerLonF  = map_args@mpRightCornerLonF + 360.0
+    end if
+
+    delete(map_args@ZoomIn)
+  end if
+
+  return(map_args)
 end
 
 ;--------------------------------------------------------------------------------
@@ -3984,21 +3984,21 @@ begin
 ;   3. Create the map plot, and draw and advance the frame
 ;      (if requested).
 
-    if(opt_args.and.isatt(opt_args,"gsnDebugWriteFileName")) then
-      wrf_debug_file = get_res_value(opt_args,"gsnDebugWriteFileName",  "")
-    end if
+  if(opt_args.and.isatt(opt_args,"gsnDebugWriteFileName")) then
+    wrf_debug_file = get_res_value(opt_args,"gsnDebugWriteFileName",  "")
+  end if
 
-    opts = opt_args      ; Make a copy of the resource list
+  opts = opt_args      ; Make a copy of the resource list
 
 ;---Set some map resources based on parameters and variables in input file.
-    opts = wrf_map_resources(in_file,opts)
+  opts = wrf_map_resources(in_file,opts)
 
-    if(.not.isatt(opts,"mpProjection")) then
-      print("wrf_map: Error: no MAP_PROJ attribute in input file")
-      return(new(1,graphic))
-    else
-      projection = opts@mpProjection
-    end if
+  if(.not.isatt(opts,"mpProjection")) then
+    print("wrf_map: Error: no MAP_PROJ attribute in input file")
+    return(new(1,graphic))
+  else
+    projection = opts@mpProjection
+  end if
 
 ; The default is not to draw the plot or advance the frame, and
 ; to maximize the plot in the frame.
@@ -4023,10 +4023,10 @@ end
 
 undef("wrf_map_overlays")
 function wrf_map_overlays(in_file[1]:file, \
-                          wks:graphic, \
-                          plots[*]:graphic, \
-                          opt_arg[1]:logical, \
-                          opt_mp[1]:logical)
+        wks:graphic, \
+        plots[*]:graphic, \
+        opt_arg[1]:logical, \
+        opt_mp[1]:logical)
 
 ; This procedure takes an array of plots and overlays them on a
 ; base plot - map background.
@@ -4069,7 +4069,7 @@ begin
 
   if(opts.and.isatt(opts,"gsnDebugWriteFileName")) then
     opt_mp_2@gsnDebugWriteFileName = get_res_value(opts, \
-                                            "gsnDebugWriteFileName",  "")
+            "gsnDebugWriteFileName",  "")
     wrf_debug_file = opt_mp_2@gsnDebugWriteFileName
   end if
 
@@ -4142,7 +4142,7 @@ begin
     txt = create "map_titles" textItemClass wks
       "txString"      : SubTitles
       "txFontHeightF" : font_height
-     ;"txFontColor"   : font_color
+      ;"txFontColor"   : font_color
     end create
     anno = NhlAddAnnotation(base,txt)
     setvalues anno
@@ -4168,7 +4168,7 @@ begin
   opts@gsnFrame    = get_res_value_keep(opts,"gsnFrame",    call_frame)
 
   draw_and_frame(wks,base,opts@gsnDraw,opts@gsnFrame,False, \
-                 opts@gsnMaximize)
+          opts@gsnMaximize)
 
   if(.not.panel_plot) then
     do i=0,nplots-1
@@ -4192,15 +4192,15 @@ begin
     end if
   end if
 
-return(base)
+  return(base)
 end
 
 ;--------------------------------------------------------------------------------
 
 undef("wrf_overlays")
 function wrf_overlays(in_file[1]:file, \
-                     wks:graphic, plots[*]:graphic, \
-                     opt_arg[1]:logical)
+        wks:graphic, plots[*]:graphic, \
+        opt_arg[1]:logical)
 
 ; This procedure takes an array of plots and overlays them.
 ;
@@ -4349,7 +4349,7 @@ begin
   opts@gsnMaximize = get_res_value_keep(opts,"gsnMaximize", True)
 
   draw_and_frame(wks,base,opts@gsnDraw,opts@gsnFrame,False, \
-                 opts@gsnMaximize)
+          opts@gsnMaximize)
 
   if(.not.no_titles.and..not.panel_plot) then
     NhlRemoveAnnotation(base,base@map_titles)
@@ -4369,14 +4369,14 @@ begin
     end if
   end if
 
-return(base)
+  return(base)
 end
 
 ;--------------------------------------------------------------------------------
 
 undef("wrf_map_zoom")
 function wrf_map_zoom(wks[1]:graphic,in_file[1]:file,opt_args[1]:logical, \
-                      y1:integer,y2:integer,x1:integer,x2:integer)
+        y1:integer,y2:integer,x1:integer,x2:integer)
 
 ; As of version 5.0.1, this routine is redundant. Use the special "ZoomIn"
 ; resource in wrf_map to accomplish the same thing. This function is
@@ -4385,31 +4385,31 @@ function wrf_map_zoom(wks[1]:graphic,in_file[1]:file,opt_args[1]:logical, \
 ; possibly to fix bugs.
 ;
 begin
-      print("wrf_map_zoom: Warning: This function is obsolete. Consider using")
-      print("                       the 'ZoomIn' resource in wrf_map instead.")
-      if(isfilevar(in_file,"XLAT"))
-        lat = in_file->XLAT(0,:,:)
-        lon = in_file->XLONG(0,:,:)
-      else
-        lat = in_file->XLAT_M(0,:,:)
-        lon = in_file->XLONG_M(0,:,:)
-      end if
-      opts  = opt_args      ; Make a copy of the resource list
-      opts  = True
-      opts@mpLeftCornerLatF      = lat(y1,x1)
-      opts@mpLeftCornerLonF      = lon(y1,x1)
-      opts@mpRightCornerLatF     = lat(y2,x2)
-      opts@mpRightCornerLonF     = lon(y2,x2)
-      mz = wrf_map(wks,in_file,opts)
-      return(mz)
+  print("wrf_map_zoom: Warning: This function is obsolete. Consider using")
+  print("                       the 'ZoomIn' resource in wrf_map instead.")
+  if(isfilevar(in_file,"XLAT"))
+    lat = in_file->XLAT(0,:,:)
+    lon = in_file->XLONG(0,:,:)
+  else
+    lat = in_file->XLAT_M(0,:,:)
+    lon = in_file->XLONG_M(0,:,:)
+  end if
+  opts  = opt_args      ; Make a copy of the resource list
+  opts  = True
+  opts@mpLeftCornerLatF      = lat(y1,x1)
+  opts@mpLeftCornerLonF      = lon(y1,x1)
+  opts@mpRightCornerLatF     = lat(y2,x2)
+  opts@mpRightCornerLonF     = lon(y2,x2)
+  mz = wrf_map(wks,in_file,opts)
+  return(mz)
 end
 
 ;--------------------------------------------------------------------------------
 
 undef("wrf_map_overlay")
 procedure wrf_map_overlay(wks:graphic,base[1]:graphic, \
-                          plots[*]:graphic, \
-                          opt_arg[1]:logical)
+        plots[*]:graphic, \
+        opt_arg[1]:logical)
 
 ; As of version 5.0.1, this procedure is obsolete. Use wrf_map_overlays
 ; instead. It is being kept for backwards capability. Do not make any
@@ -4479,18 +4479,18 @@ begin
           SubTitles = SubTitles + "~C~" + SubTitle
         end if
         if(.not.latlon_overlay) then
-    	  setvalues plots(i)
+          setvalues plots(i)
             "tfDoNDCOverlay" : True
             "tiMainOn"       : False
           end setvalues
         else
-    	  setvalues plots(i)
+          setvalues plots(i)
             "tiMainOn"       : False
           end setvalues
         end if
       else
         if(.not.latlon_overlay) then
-  	  setvalues plots(i)
+          setvalues plots(i)
             "tfDoNDCOverlay" : True
           end setvalues
         end if
@@ -4506,7 +4506,7 @@ begin
     txt = create "map_titles" textItemClass wks
       "txString"      : SubTitles
       "txFontHeightF" : font_height
-     ;"txFontColor"   : font_color
+      ;"txFontColor"   : font_color
     end create
     anno = NhlAddAnnotation(base,txt)
     setvalues anno
@@ -4538,7 +4538,7 @@ begin
   opts@gsnMaximize = get_res_value_keep(opts,"gsnMaximize", True)
 
   draw_and_frame(wks,base,opts@gsnDraw,opts@gsnFrame,False, \
-                 opts@gsnMaximize)
+          opts@gsnMaximize)
 
   if(.not.panel_plot) then
     do i=0,nplots-1
@@ -4563,7 +4563,7 @@ end
 
 undef("wrf_overlay")
 procedure wrf_overlay(wks:graphic, plots[*]:graphic, \
-                          opt_arg[1]:logical)
+        opt_arg[1]:logical)
 
 ; As of version 5.0.1, this procedure is obsolete. Use wrf_overlays
 ; instead. It is being kept for backwards capability. Do not make any
@@ -4709,7 +4709,7 @@ begin
   opts@gsnMaximize = get_res_value_keep(opts,"gsnMaximize", True)
 
   draw_and_frame(wks,base,opts@gsnDraw,opts@gsnFrame,False, \
-                 opts@gsnMaximize)
+          opts@gsnMaximize)
 
   if(.not.no_titles.and..not.panel_plot) then
     NhlRemoveAnnotation(base,base@map_titles)
@@ -4782,7 +4782,7 @@ begin
 ; Use add_white_space to make sure all the equal signs line up.
 ;
     tmp_str = "    " + varatts(i) + \
-              add_white_space(varatts(i),cmaxlen) + " = "
+            add_white_space(varatts(i),cmaxlen) + " = "
 ;
 ; Check if attribute is an array.
 ;
@@ -4800,7 +4800,8 @@ begin
           tmp_str = tmp_str + "/)"
         end if
       end do
-    else      if(typeof(x).eq."string") then
+
+      else      if(typeof(x).eq."string") then
         tmp_str = tmp_str + "'" + x + "'"
       else
         tmp_str = tmp_str + x
