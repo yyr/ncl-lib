@@ -317,6 +317,7 @@ begin
   opt_args = wrf_map_resources(nc_file,opt_args)
   opt_args@mpGridLineColor       =  1       ; Turn off grid lat/lon lines
   opt_args@mpGridAndLimbOn       =  True
+  opt_args@pmLabelBarHeightF = 0.1
 
   opt_args@tiMainString = "Model Domain"
 
