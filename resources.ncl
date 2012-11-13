@@ -30,6 +30,30 @@ begin
 end
 
 ;_____________________________________________________________________________
+; Fuction: set_wrf_no_headers
+; Doc:
+;
+;_____________________________________________________________________________
+undef("set_wrf_no_headers")
+function set_wrf_no_headers(res_in:logical)
+local res_in, res_out
+
+begin
+
+  res_out          = res_in
+  res_out@InitTime = False
+  res_out@NoHeaderFooter  = True
+  res_out@NoTitles = True
+  res_out@ValidTime = False              ; Do not draw plot
+  res_out@PanelPlot = True
+  res_out@FramePlot = False
+  res_out@MainTitlePos= False
+
+  return(res_out)
+end
+
+
+;_____________________________________________________________________________
 ; Fuction: set_high_res_coast
 ; Doc:
 ;
