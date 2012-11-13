@@ -353,7 +353,7 @@ end
 ;_____________________________________________________________________________
 undef("wrf_line_coords_between_pts")
 function wrf_line_coords_between_pts(in_file:file,pts:numeric)
-local xy, x, y
+local xlat,xlon, lon,lat
 
 begin
   xlat = in_file->XLAT(0,:,:)
@@ -363,12 +363,10 @@ begin
     announce("fatal:points should be 4 values")
     return
   end if
-  x = wrf_user_intrp2d(xlat,pts,0.,True)
-  y = wrf_user_intrp2d(xlon,pts,0.,True)
+  lat = wrf_user_intrp2d(xlat,pts,0.,True)
+  lon = wrf_user_intrp2d(xlon,pts,0.,True)
 
-  xy = (/y,x/)
-
-  return(xy)
+  return((/lon,lat/))
 end
 
 
