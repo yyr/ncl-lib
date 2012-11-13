@@ -10,8 +10,7 @@
 load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_code.ncl"
 ;_____________________________________________________________________________
 ; Fuction: set_no_frame_res
-; Doc:
-;
+; Doc: add gsnDraw and gsnFrame to false and maxmize plot to True and return it
 ;_____________________________________________________________________________
 undef("set_no_frame_res")
 function set_no_frame_res(res_in:logical)
@@ -28,6 +27,26 @@ begin
   return(res_out)
 
 end
+
+
+;_____________________________________________________________________________
+; Fuction: set_tm_size_res
+; Doc: set tickmark size bit visible, useful escipially in the panel plot
+;_____________________________________________________________________________
+undef("set_tm_size_res")
+function set_tm_size_res(res_in:logical)
+local res_in, res_out
+
+begin
+
+  res_out          = res_in
+  res_out@tmXBLabelFontHeightF = 0.014
+  res_out@tmYLLabelFontHeightF = 0.014
+
+  return(res_out)
+end
+
+
 
 ;_____________________________________________________________________________
 ; Fuction: set_wrf_no_headers
@@ -82,9 +101,11 @@ local opts_out
 
 begin
   opts_out = opts_in
+  opts_out@cnFillColor = True
   opts_out@gsnSpreadColors = True
   opts_out@cnFillOn = True
-  opts_out@cnLinesOn = True
+  opts_out@cnInfoLabelOn = False
+
   return(opts_out)
 end
 
