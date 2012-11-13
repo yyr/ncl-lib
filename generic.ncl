@@ -10,7 +10,7 @@ arg_error = 4
 resource_error = 8
 
 ;_____________________________________________________________________________
-; Fuction: announce
+; procedure: announce
 ; Doc: just announces stdout what ever given with print statement. This uses
 ;      system function "echo".
 ;_____________________________________________________________________________

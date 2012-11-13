@@ -204,7 +204,6 @@ begin
   dim = dim_in
 
   if ( typeof(fh_in) .eq. "file" ) then
-    ISFILE = True
     fh = fh_in
   else
     print("last: first argument is not a file handle")
@@ -230,7 +229,6 @@ local fh,opt,loc
 begin
 
   if ( typeof(fh_in) .eq. "file" ) then
-    ISFILE = True
     fh = fh_in
   else
     print("fatal: last argument is not a file handle")
@@ -347,5 +345,31 @@ begin
 
   return
 end
+
+;_____________________________________________________________________________
+; Fuction: wrf_line_coords_between_pts
+; Doc:
+;
+;_____________________________________________________________________________
+undef("wrf_line_coords_between_pts")
+function wrf_line_coords_between_pts(in_file:file,pts:numeric)
+local xy, x, y
+
+begin
+  xlat = in_file->XLAT(0,:,:)
+  xlon = in_file->XLONG(0,:,:)
+
+  if ( dim_len0(pts) .ne. 4 ) then
+    announce("fatal:points should be 4 values")
+    return
+  end if
+  x = wrf_user_intrp2d(xlat,pts,0.,True)
+  y = wrf_user_intrp2d(xlon,pts,0.,True)
+
+  xy = (/y,x/)
+
+  return(xy)
+end
+
 
 ;;; wrf.ncl ends here
