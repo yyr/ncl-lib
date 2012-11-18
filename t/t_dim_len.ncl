@@ -1,4 +1,5 @@
-load "$nsc/yagUtils.ncl"
+load "$nsc/t/run_test.ncl"
+load "$nsc/generic.ncl"
 
 begin
 
@@ -9,5 +10,9 @@ begin
   print(dim_len(var,2))
   print(dim_len(var,3))
   print(dim_len(var,4))         ; this should be fatal
+
+  print(dim_len0(var))
+  print(dim_len1(var))
+  print(dim_len2(var))
 
 end

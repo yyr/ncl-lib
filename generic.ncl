@@ -61,14 +61,34 @@ end
 
 ;_____________________________________________________________________________
 ; Fuction: dim_len0
-; Doc:
-;
+; Doc: return zeroth dimesion lenth of variable
 ;_____________________________________________________________________________
 undef("dim_len0")
 function dim_len0(var)
 begin
   return(dim_len(var,0))
 end
+
+;_____________________________________________________________________________
+; Fuction: dim_len1
+; Doc: return first dimesion lenth of variable
+;_____________________________________________________________________________
+undef("dim_len1")
+function dim_len1(var)
+begin
+  return(dim_len(var,1))
+end
+
+;_____________________________________________________________________________
+; Fuction: dim_len2
+; Doc: return first dimesion lenth of variable
+;_____________________________________________________________________________
+undef("dim_len2")
+function dim_len2(var)
+begin
+  return(dim_len(var,2))
+end
+
 ;_____________________________________________________________________________
 ; Fuction: rank_of_file_var
 ; Doc: returns rank of a file variable.
