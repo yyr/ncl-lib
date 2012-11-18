@@ -26,7 +26,7 @@ begin
 end
 
 ;_____________________________________________________________________________
-; Fuction: rank_of
+; Function: rank_of
 ; Doc: return number of dimensions of a given variable.
 ;
 ;_____________________________________________________________________________
@@ -39,7 +39,7 @@ begin
 end
 
 ;_____________________________________________________________________________
-; Fuction: dim_len
+; Function: dim_len
 ; Doc: give the length in a given dimension(dim) of given variable.
 ;
 ;_____________________________________________________________________________
@@ -60,7 +60,7 @@ begin
 end
 
 ;_____________________________________________________________________________
-; Fuction: dim_len0
+; Function: dim_len0
 ; Doc: return zeroth dimesion lenth of variable
 ;_____________________________________________________________________________
 undef("dim_len0")
@@ -70,7 +70,7 @@ begin
 end
 
 ;_____________________________________________________________________________
-; Fuction: dim_len1
+; Function: dim_len1
 ; Doc: return first dimesion lenth of variable
 ;_____________________________________________________________________________
 undef("dim_len1")
@@ -80,7 +80,7 @@ begin
 end
 
 ;_____________________________________________________________________________
-; Fuction: dim_len2
+; Function: dim_len2
 ; Doc: return first dimesion lenth of variable
 ;_____________________________________________________________________________
 undef("dim_len2")
@@ -90,7 +90,7 @@ begin
 end
 
 ;_____________________________________________________________________________
-; Fuction: rank_of_file_var
+; Function: rank_of_file_var
 ; Doc: returns rank of a file variable.
 ;
 ;_____________________________________________________________________________
@@ -117,7 +117,7 @@ begin
 end
 
 ;_____________________________________________________________________________
-; Fuction: angle_with_horizontal
+; Function: angle_with_horizontal
 ; Doc: find angle between horizontal axis and line joining with given points in
 ;      the domain.
 ;_____________________________________________________________________________
@@ -140,6 +140,5 @@ begin
 
   return(ang)
 end
-
 
 ;;; generic.ncl ends here

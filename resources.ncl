@@ -9,7 +9,7 @@
 
 load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_code.ncl"
 ;_____________________________________________________________________________
-; Fuction: set_no_frame_res
+; Function: set_no_frame_res
 ; Doc: add gsnDraw and gsnFrame to false and maxmize plot to True and return it
 ;_____________________________________________________________________________
 undef("set_no_frame_res")
@@ -30,7 +30,7 @@ end
 
 
 ;_____________________________________________________________________________
-; Fuction: set_tm_size_res
+; Function: set_tm_size_res
 ; Doc: set tickmark size bit visible, useful escipially in the panel plot
 ;_____________________________________________________________________________
 undef("set_tm_size_res")
@@ -73,7 +73,7 @@ end
 
 
 ;_____________________________________________________________________________
-; Fuction: set_high_res_coast
+; Function: set_high_res_coast
 ; Doc:
 ;
 ;_____________________________________________________________________________
@@ -91,7 +91,7 @@ end
 
 
 ;_____________________________________________________________________________
-; Fuction: set_cn_resorces
+; Function: set_cn_resorces
 ; Doc:
 ;
 ;_____________________________________________________________________________
@@ -110,7 +110,7 @@ begin
 end
 
 ;_____________________________________________________________________________
-; Fuction: set_colormap
+; procedure: set_colormap
 ; Doc: set colormap based on the HGT, these are personal choice, one should be
 ;  over ride these from the configuration file
 ;_____________________________________________________________________________
@@ -132,7 +132,7 @@ begin
 end
 
 ;_____________________________________________________________________________
-; Fuction: set_vc_res
+; Function: set_vc_res
 ; Doc: set some common vector resources. (fair defaults)
 ;
 ;_____________________________________________________________________________

@@ -3,7 +3,7 @@
 load "$nsc/generic.ncl"
 
 ;_____________________________________________________________________________
-; Fuction: wrf_input_file
+; Function: wrf_input_file
 ; Doc: look environment varible for wrf input file and return edited file
 ;_____________________________________________________________________________
 undef("wrf_input_file")
