@@ -369,4 +369,47 @@ begin
 end
 
 
+;_____________________________________________________________________________
+; Function: wrf_div
+; Doc: calculate and return divergence
+;_____________________________________________________________________________
+undef("wrf_div")
+function wrf_div(u:numeric,v:numeric,dx:numeric,dy:numeric, \
+        msft:numeric)
+local div, dx ,dy, m2, i, j, nx, ny, dux, duy, dudx, dudy
+
+begin
+
+  ; divergence: m^2 * [ d/dx(A/m) + d/dy(B/m) ]
+  ; curl: m^2 * [ d/dx(B/m) - d/dy(A/m) ],
+  ; m = map factor,
+  ; A, B components of vector field.
+
+  ny = dim_len0(u)
+  nx = dim_len1(u)
+
+  div = new((/ny,nx/),float)
+
+  do j = 0, ny - 1, 1
+    jp1 = min((/j+1,ny-1/))
+    jm1 = max((/j-1,0/))
+    do i = 0, dim_len1(u) - 1 , 1
+      ip1 = min((/i+1,nx - 1/))
+      im1 = max((/i-1,0/))
+
+      dsx = (ip1-im1)*dx
+      dsy = (jp1-jm1)*dy
+      mm = msft(j,i) * msft(j,i)
+
+      dudx = (u(j,i)/msft(j,ip1) - u(j,im1)/msft(j,im1)) / dsx*mm
+      dudy = (v(jp1,i)/msft(jp1,i) - u(jm1,i)/msft(jm1,i)) / dsy*mm
+
+      div(j,i) = dudx + dudy
+
+    end do
+  end do
+
+  return(div)
+end
+
 ;;; wrf.ncl ends here
