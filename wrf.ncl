@@ -161,17 +161,19 @@ end
 ;
 ;---------------------------------------------------------------------
 undef("set_inputfile")
-function set_inputfile(env_in)
+function set_inputfile()
 local env,fh
 begin
-  env=env_in
-  if ( (env_in) ) then
-    env = env_in
-  else
-    env = "NCL_FIN"
-  end if
+  env = "NCL_FIN"
   fname = getenv(env)
-  fh = addfile(fname,"r")
+  print(fname)
+  if ( .not. ismissing(fname) ) then
+    fh = addfile(fname,"r")
+    else
+      print_fatal("NCL_FIN environment is not set.")
+     exit
+  end if
+
   return fh
 end
 

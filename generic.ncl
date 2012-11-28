@@ -26,6 +26,22 @@ begin
 end
 
 ;_____________________________________________________________________________
+; procedure: print_fatal
+; Doc:
+;_____________________________________________________________________________
+undef("print_fatal")
+procedure print_fatal(ferror)
+local ferror
+
+begin
+  system("echo ")
+  system("echo " + "*FATAL: " + ferror)
+  system("echo ")
+  return
+end
+
+
+;_____________________________________________________________________________
 ; Function: rank_of
 ; Doc: return number of dimensions of a given variable.
 ;
