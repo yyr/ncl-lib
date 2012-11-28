@@ -156,3 +156,25 @@ begin
 
   return(res_out)
 end
+
+;_____________________________________________________________________________
+; Function: set_map_latlon_res
+; Doc: set zoom resources in of a plot
+;_____________________________________________________________________________
+undef("set_map_latlon_res")
+function set_map_latlon_res(res_in:logical,lonL:float,lonR:float, \
+        latB:float,latU:float)
+local res_in,res_out
+
+begin
+  res_out  = res_in
+
+  res_out@mpLimitMode = "Corners"
+
+  res_out@mpLeftCornerLatF      = latB
+  res_out@mpRightCornerLatF     = latU
+  res_out@mpLeftCornerLonF      = lonL
+  res_out@mpRightCornerLonF     = lonR
+
+  return(res_out)
+end
