@@ -15,6 +15,7 @@ load "$nsc/WRFUserARW.ncl"
 
 load "$nsc/generic.ncl"
 load "$nsc/resources.ncl"
+load "$nsc/anno.ncl"
 
 load "$nsc/wps.ncl"
 load "$nsc/wrf.ncl"
