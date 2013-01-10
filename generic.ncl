@@ -157,4 +157,25 @@ begin
   return(ang)
 end
 
+;---------------------------------------------------------------------
+; Function: set_inputfile
+; Doc:
+;
+;---------------------------------------------------------------------
+undef("set_inputfile")
+function set_inputfile()
+local env,fh
+begin
+  env = "NCL_FIN"
+  fname = getenv(env)
+  if ( .not. ismissing(fname) ) then
+    fh = addfile(fname,"r")
+    else
+      print_fatal("NCL_FIN environment is not set.")
+     exit
+  end if
+
+  return fh
+end
+
 ;;; generic.ncl ends here

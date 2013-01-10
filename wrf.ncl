@@ -1,27 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; I/O ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;_____________________________________________________________________________
-; Function: wrf_input_file
-; Doc:
-;
-;_____________________________________________________________________________
-undef("wrf_input_file")
-function wrf_input_file(env_name:string)
-local infile_name,wrf_in
-
-begin
-  infile_name = getenv(env_name)
-
-  if ( isstring(infile_name) ) then
-    wrf_in = addfile(infile_name, "r")
-  else
-    announce("Fatal: wrfout environment variable is not set ")
-    exit
-  end if
-  return(wrf_in)
-end
-
-;_____________________________________________________________________________
 ; Function: no_of_levels
 ;      Doc: Spitsout number of levels in varailbe
 ;_____________________________________________________________________________
@@ -155,27 +134,6 @@ begin
 
 end
 
-;---------------------------------------------------------------------
-; Function: set_inputfile
-; Doc:
-;
-;---------------------------------------------------------------------
-undef("set_inputfile")
-function set_inputfile()
-local env,fh
-begin
-  env = "NCL_FIN"
-  fname = getenv(env)
-  print(fname)
-  if ( .not. ismissing(fname) ) then
-    fh = addfile(fname,"r")
-    else
-      print_fatal("NCL_FIN environment is not set.")
-     exit
-  end if
-
-  return fh
-end
 
 ;---------------------------------------------------------------------
 ; Function: draw_cs_line
