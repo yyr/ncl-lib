@@ -147,9 +147,9 @@ begin
   res_out@vcMonoLineArrowColor = True
   res_out@vcGlyphStyle        = "CurlyVector"    ; turn on curly vectors
   res_out@vcMinDistanceF = 0.03
-
-  res_out@vcRefMagnitudeF = 20.
+  res_out@vcRefMagnitudeF = 10.
   res_out@vcRefLengthF = 0.02
+  res_out@vcLineArrowThicknessF = 2.5
   res_out@vcRefAnnoOrthogonalPosF   = -1    ; Move reference into plot.
   res_out@vcRefAnnoArrowUseVecColor = False    ; Allow us to change ref vec color
   res_out@vcRefAnnoArrowLineColor   = "black"  ; Black ref vector
