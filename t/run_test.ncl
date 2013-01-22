@@ -22,5 +22,32 @@ begin
   return(wrf_in)
 end
 
+;_____________________________________________________________________________
+; procedure: pass
+; Doc: similar to python pass function, should just pass/exit the scope
+;_____________________________________________________________________________
+undef("pass")
+procedure pass(a)
+local a
+
+begin
+
+  return
+end
+
+;_____________________________________________________________________________
+; Function: ncl_deftest
+; Doc: primitive function for test definition.
+;      execute the body line by line and returns success.
+;      body may use one or more of the funciton `should',
+;      `should-not', `should-error'.
+;_____________________________________________________________________________
+undef("ncl_deftest")
+function ncl_deftest(name:string,fun:string)
+
+begin
+  pass("a")
+  return
+end
 
 ;;; run_test.ncl ends here
