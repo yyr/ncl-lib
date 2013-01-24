@@ -58,20 +58,19 @@ begin
   noflevels = 32
   do z = 0, noflevels, 1   ; z level
 
-    lay_var = (var(z+1,:,:) + var(z,:,:)) ; interpolation of the variable
+    lay_var = (var(z+1,:,:) + var(z,:,:)) / 2. ; mean var
     lay_var = lay_var/2.
 
-    dgh = gh(z+1,:,:) - gh(z,:,:) ; gh difference bw two layers
-    dp = pres(z+1,:,:) - pres(z,:,:) ; pressure difference bw two layers
+    dgh = gh(z+1,:,:) - gh(z,:,:) ; 𝑑𝑧
+    dp = pres(z+1,:,:) - pres(z,:,:) ; 𝑑𝑝
 
-    lay_wgt = (dp/dgh)
-    lay_wgt = lay_wgt * g     ;
+    lay_wgt = -1 * (dp/dgh)     ;  𝑑𝑝/𝑑𝑧 = -𝜚𝑔
+    lay_wgt = lay_wgt * g
     lay_wgt_var = lay_var * lay_wgt
 
-    wgt_var = wgt_var + lay_wgt_var ;* 1/mean_levels)
+    wgt_var = wgt_var + lay_wgt_var
 
   end do
-  wgt_var = wgt_var * -1
 
   return(wgt_var)
 
