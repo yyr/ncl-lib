@@ -59,7 +59,6 @@ begin
   do z = 0, noflevels, 1   ; z level
 
     lay_var = (var(z+1,:,:) + var(z,:,:)) / 2. ; mean var
-    lay_var = lay_var/2.
 
     dgh = gh(z+1,:,:) - gh(z,:,:) ; 𝑑𝑧
     dp = pres(z+1,:,:) - pres(z,:,:) ; 𝑑𝑝
