@@ -62,9 +62,8 @@ begin
 
     dgh = gh(z+1,:,:) - gh(z,:,:) ; 𝑑𝑧
     dp = pres(z+1,:,:) - pres(z,:,:) ; 𝑑𝑝
+    lay_wgt = -1 * (dp/dgh) / g    ;  𝜚 = - 𝑑𝑝/𝑑𝑧 / 𝑔
 
-    lay_wgt = -1 * (dp/dgh)     ;  𝑑𝑝/𝑑𝑧 = -𝜚𝑔
-    lay_wgt = lay_wgt * g
     lay_wgt_var = lay_var * lay_wgt
 
     wgt_var = wgt_var + lay_wgt_var
