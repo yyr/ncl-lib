@@ -44,7 +44,6 @@ end
 ;_____________________________________________________________________________
 ; Function: rank_of
 ; Doc: return number of dimensions of a given variable.
-;
 ;_____________________________________________________________________________
 undef("rank_of")
 function rank_of(var)
@@ -56,8 +55,7 @@ end
 
 ;_____________________________________________________________________________
 ; Function: dim_len
-; Doc: give the length in a given dimension(dim) of given variable.
-;
+; Doc: return the length of a given dimension(dim) of a variable.
 ;_____________________________________________________________________________
 undef("dim_len")
 function dim_len(var,dim)
@@ -176,6 +174,37 @@ begin
   end if
 
   return fh
+end
+
+;_____________________________________________________________________________
+; function: find_edge
+; Doc: find next index of fillvalue/nonfillvalue
+;_____________________________________________________________________________
+undef("find_edge")
+function find_edge(arr:logical,strt:integer,fin:integer)
+local i,arr_t,truth_val
+begin
+  edge = strt
+  truth_val = arr(strt)
+
+  if ( truth_val  ) then
+    arr_t = arr
+  else
+    arr_t = .not.(arr)
+  end if
+
+  if ( strt .eq. fin ) then     ; reached to end?
+    return strt
+  end if
+
+  do i = strt+1 , fin, 1
+    if ( arr_t(i) ) then
+      continue
+    else
+      return i - 1
+    end if
+  end do
+  return fin
 end
 
 ;;; generic.ncl ends here
