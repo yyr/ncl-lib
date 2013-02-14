@@ -58,3 +58,17 @@ begin
     return(True)
   end if
 end
+
+;_____________________________________________________________________________
+; Function: islogicalstring
+; Doc: return True if given string either "True" or "False"
+;_____________________________________________________________________________
+undef("islogicalstring")
+function islogicalstring(str:string)
+begin
+  if ( str .eq. "True" .or. str .eq. "False" ) then
+    return(True)
+  else
+    return(False)
+  end if
+end
