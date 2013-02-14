@@ -29,3 +29,32 @@ function iseven(number:integer)
 begin
   return(.not.isodd(number))
 end
+
+;_____________________________________________________________________________
+; Function: isnumstring
+; Doc: return True if given string can be converted to numeric type.
+; Examples: isnumstring("abc") => false
+;     ncl 15> print("" + isnumstring("abc"))
+;     (0)	False
+;     ncl 16> print("" + isnumstring("123"))
+;     (0)	True
+;     ncl 17> print("" + isnumstring("12a"))
+;     (0)	False
+;     ncl 18> print("" + isnumstring("12.4"))
+;     (0)	True
+;_____________________________________________________________________________
+undef("isnumstring")
+function isnumstring(s:string)
+local s, str_c , str_i
+begin
+  str_c = stringtochar(s)
+  str_i = new(dimsizes(str_c) - 1,logical)
+  do it = 0, dimsizes(str_i) - 1, 1
+    str_i(it) = str_index_of_substr("0123456789.",chartostring(str_c(it)),0)
+  end do
+  if (any(ismissing(str_i))) then
+    return(False)
+  else
+    return(True)
+  end if
+end
