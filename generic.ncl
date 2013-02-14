@@ -208,6 +208,21 @@ begin
 end
 
 ;_____________________________________________________________________________
+; Function: string2logical
+; Doc: return logical False if given string "False", otherwise return True.
+;    CAUTION: Check whether or not input string is either "True" or "False".
+;_____________________________________________________________________________
+undef("string2logical")
+function string2logical(str:string)
+begin
+  if ( str .eq. "False" ) then
+    return(False)
+  else
+    return(True)
+  end if
+end
+
+;_____________________________________________________________________________
 ; Function: string2int_or_float
 ; Doc: check string has any "."s in it, if it does convert into float, else
 ;      convert to integer
