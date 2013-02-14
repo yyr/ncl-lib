@@ -14,10 +14,11 @@ load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/shea_util.ncl"
 load "$NCARG_ROOT/lib/ncarg/nclscripts/wrf/WRF_contributed.ncl"
 load "$nsc/WRFUserARW.ncl"
 
+load "$nsc/is.ncl"
 load "$nsc/generic.ncl"
 load "$nsc/resources.ncl"
 load "$nsc/anno.ncl"
-
 load "$nsc/plot.ncl"
+
 load "$nsc/wps.ncl"
 load "$nsc/wrf.ncl"
