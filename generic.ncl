@@ -207,4 +207,40 @@ begin
   return fin
 end
 
+;_____________________________________________________________________________
+; Function : set_res_value_keep
+;                res:logical
+;                att_list
+; Doc: Mass version of inbuilt get_res_value_keep. TODO: mixed type
+;_____________________________________________________________________________
+undef("set_res_value_keep")
+function set_res_value_keep(res:logical,att_list)
+begin
+  do it = 0, dimsizes(att_list) -1 ,  2
+    res@$att_list(it)$ = get_res_value_keep(res,att_list(it),att_list(it+1))
+  end do
+  return(res)
+end
+
+;_____________________________________________________________________________
+; procedure: print_res_att
+; Doc: print res attributes
+;_____________________________________________________________________________
+undef("print_res_att")
+procedure print_res_att(res:logical)
+local attr
+begin
+  attr = getvaratts(res)
+  print ("START Printing attributes ===>")
+  do it = 0 ,dim_len0(attr) - 1
+    if ( isnumstring(res@$attr(it)$ ) ) then
+      print(attr(it) + " => " + stringtofloat_or_int(res@$attr(it)$))
+    else
+      print(attr(it) + " => " + res@$attr(it)$)
+    end if
+  end do
+  print ("<=== END")
+  return
+end
+
 ;;; generic.ncl ends here
