@@ -269,19 +269,14 @@ end
 ;_____________________________________________________________________________
 undef("print_res_att")
 procedure print_res_att(res:logical)
-local attr
+local attr,res,it
 begin
   attr = getvaratts(res)
   print ("START Printing attributes ===>")
   do it = 0 ,dim_len0(attr) - 1
-    if ( isnumstring(res@$attr(it)$ ) ) then
-      print(attr(it) + " => " + stringtofloat_or_int(res@$attr(it)$))
-    else
-      print(attr(it) + " => " + res@$attr(it)$)
-    end if
+    print(attr(it) + " => " + res@$attr(it)$)
   end do
   print ("<=== END")
   return
 end
-
 ;;; generic.ncl ends here
