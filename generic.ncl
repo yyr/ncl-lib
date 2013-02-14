@@ -168,9 +168,9 @@ begin
   fname = getenv(env)
   if ( .not. ismissing(fname) ) then
     fh = addfile(fname,"r")
-    else
-      print_fatal("NCL_FIN environment is not set.")
-     exit
+  else
+    print_fatal("NCL_FIN environment is not set.")
+    exit
   end if
 
   return fh
