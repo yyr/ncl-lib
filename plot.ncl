@@ -4,17 +4,18 @@
 ;_____________________________________________________________________________
 undef("panelize")
 procedure panelize(wks:graphic,plot:graphic,view_port_dim:integer,pres:logical)
+local res_attr
 
 begin
-  pres@lbLabelStride  = 3                 ; skip every other label
-  pres@gsnPanelBottom = 0.05              ; add some space at bottom
-  pres@gsnPanelLabelBar = True            ; add common colorbar
-  pres@gsnMaximize = True
-
+  res_attr = (/ "lbLabelStride" , "3", \
+          "gsnPanelBottom", "0.05",    \
+          "gsnPanelLabelBar" , "True",   \
+          "gsnMaximize", "True"          \
+          /)
+  pres = set_res_value_keep(pres,res_attr)
   gsn_panel(wks,plot,view_port_dim,pres)
   return
 end
-
 
 ; this takes plots and arranges as panels
 undef("panelize_2col")
