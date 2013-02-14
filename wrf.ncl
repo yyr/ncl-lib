@@ -48,13 +48,11 @@ begin
   phb = wrf_user_getvar(nc_file,"PHB",time)
   pres = wrf_user_getvar(nc_file,"pressure",time)
   gh = ph + phb               ;geo potential height
-;  print(gh)
 
   dim = dimsizes(var)
   wgt_var = new((/ dim(1),dim(2) /),typeof(var))
 
   wgt_var = 0                   ;intialize
-
   noflevels = 32
   do z = 0, noflevels, 1   ; z level
 
@@ -63,15 +61,10 @@ begin
     dgh = gh(z+1,:,:) - gh(z,:,:) ; 𝑑𝑧
     dp = pres(z+1,:,:) - pres(z,:,:) ; 𝑑𝑝
     lay_wgt = -1 * (dp/dgh) / g    ;  𝜚 = - 𝑑𝑝/𝑑𝑧 / 𝑔
-
     lay_wgt_var = lay_var * lay_wgt
-
     wgt_var = wgt_var + lay_wgt_var
-
   end do
-
   return(wgt_var)
-
 end
 
 ;_____________________________________________________________________________
@@ -85,7 +78,6 @@ function wrf_my_getvar(file_handle:file,var_in:string,t_in:integer)
 local test,fh,var,T,tin,qv,ql,my_get_vars
 
 begin
-
   my_get_vars = (/"th_v", "tc"/)
 
   fh = file_handle
@@ -126,11 +118,8 @@ begin
     end if
 
   end if                        ; outer if
-
   return
-
 end
-
 
 ;---------------------------------------------------------------------
 ; Function: draw_cs_line
@@ -143,10 +132,8 @@ local t
 
 begin
 
-
   return False
 end
-;- |draw_cs_line| ends here --
 
 ;---------------------------------------------------------------------
 ; Function: last
@@ -172,7 +159,6 @@ begin
   return last_ind
 
 end
-;- |last| ends here --
 
 ;---------------------------------------------------------------------
 ; Function: wv_wrf_ll_to_ij
@@ -290,7 +276,6 @@ function wrf_attach_coords(in_file:file,arg_in:logical)
 local arg_in
 
 begin
-
 
 
   return(arg_out)
@@ -426,6 +411,5 @@ begin
 
   return(div)
 end
-
 
 ;;; wrf.ncl ends here
