@@ -50,7 +50,7 @@ begin
   str_c = stringtochar(s)
   str_i = new(dimsizes(str_c) - 1,logical)
   do it = 0, dimsizes(str_i) - 1, 1
-    str_i(it) = str_index_of_substr("0123456789.",chartostring(str_c(it)),0)
+    str_i(it) = str_index_of_substr("0123456789.-",chartostring(str_c(it)),0)
   end do
   if (any(ismissing(str_i))) then
     return(False)
