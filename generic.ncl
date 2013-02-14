@@ -243,13 +243,22 @@ end
 ; Function : set_res_value_keep
 ;                res:logical
 ;                att_list
-; Doc: Mass version of inbuilt get_res_value_keep. TODO: mixed type
+; Doc: Mass version of inbuilt get_res_value_keep. This function converts the type
+;      if a string looks like a number.
+;     CAVEAT: this routine cannot process multidimensional input.
 ;_____________________________________________________________________________
 undef("set_res_value_keep")
 function set_res_value_keep(res:logical,att_list)
 begin
   do it = 0, dimsizes(att_list) -1 ,  2
-    res@$att_list(it)$ = get_res_value_keep(res,att_list(it),att_list(it+1))
+    if ( islogicalstring(att_list(it+1)) ) then
+      res@$att_list(it)$ = get_res_value_keep(res,att_list(it),string2logical(att_list(it+1)))
+      else if ( isnumstring(att_list(it+1))) then
+        res@$att_list(it)$ = get_res_value_keep(res,att_list(it),string2int_or_float(att_list(it+1)))
+      else
+        res@$att_list(it)$ = get_res_value_keep(res,att_list(it),att_list(it+1)) ; no conversions
+      end if
+    end if
   end do
   return(res)
 end
