@@ -208,6 +208,23 @@ begin
 end
 
 ;_____________________________________________________________________________
+; Function: string2int_or_float
+; Doc: check string has any "."s in it, if it does convert into float, else
+;      convert to integer
+;_____________________________________________________________________________
+undef("string2int_or_float")
+function string2int_or_float(str:string)
+local str,deci
+begin
+  deci = str_index_of_substr(str,".",0) ; does string has any "." in it
+  if ( .not. ismissing(deci)) then
+    return(stringtofloat(str))
+  else
+    return(stringtoint(str))
+  end if
+end
+
+;_____________________________________________________________________________
 ; Function : set_res_value_keep
 ;                res:logical
 ;                att_list
