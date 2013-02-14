@@ -35,13 +35,13 @@ end
 ; Doc: return True if given string can be converted to numeric type.
 ; Examples: isnumstring("abc") => false
 ;     ncl 15> print("" + isnumstring("abc"))
-;     (0)	False
+;     (0)   False
 ;     ncl 16> print("" + isnumstring("123"))
-;     (0)	True
+;     (0)   True
 ;     ncl 17> print("" + isnumstring("12a"))
-;     (0)	False
+;     (0)   False
 ;     ncl 18> print("" + isnumstring("12.4"))
-;     (0)	True
+;     (0)   True
 ;_____________________________________________________________________________
 undef("isnumstring")
 function isnumstring(s:string)
