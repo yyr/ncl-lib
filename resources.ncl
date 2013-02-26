@@ -49,10 +49,10 @@ function set_wrf_no_headers(res_in:logical)
 local res_in, res_attr
 
 begin
-  res_attr = (/ "InitTime" , "False",  \
+  res_attr = (/ "InitTime" , "False", \
           "NoHeaderFooter" , "True",  \
           "NoTitles"       , "True",  \
-          "ValidTime"      , "False"  \
+          "ValidTime"      , "False", \
           "FramePlot"      , "False", \
           "PanelPlot"      , "False", \
           "MainTitlePos"   , "False"  \
