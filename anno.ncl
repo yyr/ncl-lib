@@ -5,7 +5,6 @@
 ; Description:
 ; Annotation library.
 
-
 ;_____________________________________________________________________________
 ; procedure: anno_top_left
 ; Doc:

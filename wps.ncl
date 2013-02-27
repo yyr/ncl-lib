@@ -1,6 +1,9 @@
 ;    File: wps.ncl
 ; Created: 月曜日, 8月 20 2012
 
+import("WRFUserARW")
+
+
 ;_____________________________________________________________________________
 ; Function: wps_parse_namelist_for_domain
 ; Doc: parse namelist.wps and set domain specific resources.
@@ -279,9 +282,6 @@ begin
     end do
 
   end if
-
   return(mp)
-
 end
-
 ;;; wps.ncl ends here
