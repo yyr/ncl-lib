@@ -4,6 +4,9 @@
 ; License: GPL v3 or later. <http://www.gnu.org/licenses/gpl.html>
 ;
 
+import("is")
+import("gsn_code")
+
 ;; define exit_codes
 coerce_error = 2
 arg_error = 4
