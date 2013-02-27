@@ -62,7 +62,7 @@ load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/contributed.ncl"
 ;--------------------------------------------------------------------------------
 undef("wrf_user_set_xy")
 function wrf_user_set_xy( var:numeric, xp:numeric, yp:numeric, x1:numeric, \
-        y1:numeric, angle:numeric, opts )
+                          y1:numeric, angle:numeric, opts )
 
 ;  mass coordinate version of ncl user routines
 
@@ -79,7 +79,7 @@ begin
     ; the cross section
 
     if ((angle .gt. 315.) .or. (angle .lt. 45.) .or. \
-            ((angle .gt. 135.) .and. (angle .lt. 225.)) )  then
+        ((angle .gt. 135.) .and. (angle .lt. 225.)) )  then
 
 ;  x = y*slope + intercept
 
@@ -196,8 +196,8 @@ end
 
 undef("wrf_user_intrp3d")
 function wrf_user_intrp3d( var3d:numeric, z_in:numeric, \
-        plot_type:string, \
-        loc_param:numeric, angle:numeric, opts:logical )
+                           plot_type:string, \
+                           loc_param:numeric, angle:numeric, opts:logical )
 
 ; var3d      - 3d field to interpolate (all input fields must be unstaggered)
 ; z_in       - interpolate to this field (either p/z)
@@ -354,11 +354,11 @@ begin
 ; set vertical cross section
     if (opts) then
       xy = wrf_user_set_xy( z, loc_param(0)-1, loc_param(2)-1, \    ; the -1 is for NCL dimensions
-              loc_param(1)-1, loc_param(3)-1, \
-              angle, opts )
+                            loc_param(1)-1, loc_param(3)-1, \
+                            angle, opts )
     else
       xy = wrf_user_set_xy( z, loc_param(0), loc_param(1), \
-              0.0, 0.0, angle, opts )
+                            0.0, 0.0, angle, opts )
     end if
     xp = dimsizes(xy)
 
@@ -419,14 +419,14 @@ begin
     ed_y = tointeger(xy(xp(0)-1,1)) + 1
     if (opts) then
       var2d@Orientation = "Cross-Section: (" + \
-              st_x + "," + st_y + ") to (" + \
-              ed_x + "," + ed_y + ")"
+                          st_x + "," + st_y + ") to (" + \
+                          ed_x + "," + ed_y + ")"
     else
       var2d@Orientation = "Cross-Section: (" + \
-              st_x + "," + st_y + ") to (" + \
-              ed_x + "," + ed_y + ") ; center=(" + \
-              loc_param(0) + "," + loc_param(1) + \
-              ") ; angle=" + angle
+                          st_x + "," + st_y + ") to (" + \
+                          ed_x + "," + ed_y + ") ; center=(" + \
+                          loc_param(0) + "," + loc_param(1) + \
+                          ") ; angle=" + angle
     end if
 
     return(var2d)
@@ -440,7 +440,7 @@ end
 
 undef("wrf_user_intrp2d")
 function wrf_user_intrp2d( var2d:numeric, \
-        loc_param:numeric, angle:numeric, opts:logical )
+                           loc_param:numeric, angle:numeric, opts:logical )
 
 ; var2d      - 2d field to interpolate
 ; loc_param  - plane for vertical plots (2 values representing an xy point
@@ -471,13 +471,13 @@ begin
   end if
   if (opts) then
     xy = wrf_user_set_xy( var2dtmp, \
-            loc_param(0)-1, loc_param(2)-1, \    ; the -1 is for NCL dimensions
-            loc_param(1)-1, loc_param(3)-1, \
-            angle, opts )
+                          loc_param(0)-1, loc_param(2)-1, \    ; the -1 is for NCL dimensions
+                          loc_param(1)-1, loc_param(3)-1, \
+                          angle, opts )
   else
     xy = wrf_user_set_xy( var2dtmp, \
-            loc_param(0), loc_param(1), \
-            0.0, 0.0, angle, opts )
+                          loc_param(0), loc_param(1), \
+                          0.0, 0.0, angle, opts )
   end if
   xp = dimsizes(xy)
 
@@ -595,7 +595,7 @@ end
 undef("wrf_user_getvar")
 function wrf_user_getvar( file_handle, varin[*]:string, time_in:integer )
 local variable, time, var, u, v, u_in, v_in, pii, radians_per_degree, \
-        dims, nd, latitude, longitude, rank
+dims, nd, latitude, longitude, rank
 begin
 
 ;---As of NCL V6.0.0, wrf_user_getvar can now handle a file or a list of files.
@@ -776,11 +776,11 @@ begin
       cone = 1.
       if( map_projection .eq. 1) then    ; Lambert Conformal mapping
         if( (fabs(true_lat1 - true_lat2) .gt. 0.1) .and.  \
-                (fabs(true_lat2 - 90. )      .gt. 0.1)       ) then
+            (fabs(true_lat2 - 90. )      .gt. 0.1)       ) then
           cone = log(cos(true_lat1*radians_per_degree)) \
-                  -log(cos(true_lat2*radians_per_degree))
+                     -log(cos(true_lat2*radians_per_degree))
           cone = cone/( log(tan(( 45. -fabs(true_lat1/2.))*radians_per_degree)) - \
-                  log(tan((45. -fabs(true_lat2/2.))*radians_per_degree)) )
+                 log(tan((45. -fabs(true_lat2/2.))*radians_per_degree)) )
         else
           cone = sin(fabs(true_lat1)*radians_per_degree)
         end if
@@ -2191,7 +2191,7 @@ end
 
 undef("wrf_user_latlon_to_ij")
 function wrf_user_latlon_to_ij( nc_file:file, latitude:numeric, \
-        longitude:numeric )
+                                longitude:numeric )
 
 begin
   WE       = "WEST-EAST_GRID_DIMENSION"
@@ -2218,7 +2218,7 @@ end
 
 undef("wrf_user_ll_to_ij")
 function wrf_user_ll_to_ij( file_handle, longitude:numeric, latitude:numeric, \
-        opts_args:logical )
+                            opts_args:logical )
 
 begin
 ;
@@ -2311,7 +2311,7 @@ end
 
 undef("wrf_user_ij_to_ll")
 function wrf_user_ij_to_ll( file_handle, i:numeric, j:numeric, \
-        opts_args:logical )
+                            opts_args:logical )
 
 begin
 ;
@@ -2397,8 +2397,8 @@ end
 
 undef("write_wrf_debug_info")
 procedure write_wrf_debug_info(wks[1]:graphic,data1,data2, \
-        debug_file[1]:string, \
-        wrf_opts,wrf_func_name[1]:string)
+                               debug_file[1]:string, \
+                               wrf_opts,wrf_func_name[1]:string)
 ;
 ; This procedure writes resources and data variables used to
 ; create a WRF plot to a NetCDF file. This file can be read
@@ -2430,7 +2430,7 @@ begin
 ;
   if(first_time) then
     if(isfilepresent(cdf_debug_file).or.isfilepresent(ncl_debug_file).or.\
-            isfilepresent(res_debug_file)) then
+       isfilepresent(res_debug_file)) then
       print("write_wrf_debug_info: error: debug files '" + cdf_debug_file + "',")
       print("'" + ncl_debug_file + "' and/or " + res_debug_file + " exist.")
       print("Please remove file(s) and start script again.")
@@ -2548,18 +2548,18 @@ procedure delete_attrs(opts:logical)
 
 begin
   list_attrs = (/"MainTitle","MainTitlePos","MainTitlePosF", \
-          "InitTime","ValidTime","TimePos","TimePosF", \
-          "NoHeaderFooter","TimeLabel","LevelLabel", \
-          "FieldTitle","UnitLabel","NumVectors","AspectRatio", \
-          "SubFieldTitle","PlotOrientation","PlotLevelID", \
-          "mpNestTime","ContourParameters","FontHeightF","Footer", \
-          "start_lat","start_lon","end_lat","end_lon", \
-          "proj","map_proj","stand_lon","truelat1","truelat2","cenlat", \
-          "pole_lat","pole_lon","ref_lat","ref_lon","ref_x","ref_y", \
-          "e_we","e_sn","parent_id","parent_grid_ratio", \
-          "i_parent_start","j_parent_start", \
-          "dx","dy","max_dom" \
-          /)
+                 "InitTime","ValidTime","TimePos","TimePosF", \
+                 "NoHeaderFooter","TimeLabel","LevelLabel", \
+                 "FieldTitle","UnitLabel","NumVectors","AspectRatio", \
+                 "SubFieldTitle","PlotOrientation","PlotLevelID", \
+                 "mpNestTime","ContourParameters","FontHeightF","Footer", \
+                 "start_lat","start_lon","end_lat","end_lon", \
+                 "proj","map_proj","stand_lon","truelat1","truelat2","cenlat", \
+                 "pole_lat","pole_lon","ref_lat","ref_lon","ref_x","ref_y", \
+                 "e_we","e_sn","parent_id","parent_grid_ratio", \
+                 "i_parent_start","j_parent_start", \
+                 "dx","dy","max_dom" \
+                 /)
 
   do i=0,dimsizes(list_attrs)-1
     if(isatt(opts,list_attrs(i))) then
@@ -2673,10 +2673,10 @@ begin
 
 ; Somewhat convoluted way to see if a labelbar is not desired.
   if(check_attr(opts,"pmTickMarkDisplayMode","Never",True).or.\
-          check_attr(opts,"pmTickMarkDisplayMode",-1,False).or.\
-          check_attr(opts,"pmTickMarkDisplayMode",0,False).or. \
-          check_attr(opts,"lbLabelBarOn",False,False).or.\
-          check_attr(opts,"lbLabelBarOn",0,False)) then
+     check_attr(opts,"pmTickMarkDisplayMode",-1,False).or.\
+     check_attr(opts,"pmTickMarkDisplayMode",0,False).or. \
+     check_attr(opts,"lbLabelBarOn",False,False).or.\
+     check_attr(opts,"lbLabelBarOn",0,False)) then
     lbar_on = False
   else
     lbar_on = True
@@ -3031,9 +3031,9 @@ begin
     SN = "SOUTH-NORTH_GRID_DIMENSION"
     BT = "BOTTOM-TOP_GRID_DIMENSION"
     footer2 =  " WE = " + nc_file@$WE$ + \
-            " ; SN = " + nc_file@$SN$ + \
-            " ; Levels = " + nc_file@$BT$ + \
-            " ; Dis = " + dis + "km"
+               " ; SN = " + nc_file@$SN$ + \
+               " ; Levels = " + nc_file@$BT$ + \
+               " ; Dis = " + dis + "km"
     if ( isatt(nc_file,"MP_PHYSICS")) then
       footer2 = footer2 +  " ; Phys Opt = " + nc_file@MP_PHYSICS
     end if
@@ -3194,7 +3194,7 @@ end
 
 undef("wrf_contour_ps")
 function wrf_contour_ps(nc_file:file,wks[1]: graphic, data[*][*]:numeric, \
-        opt_args[1]:logical)
+                        opt_args[1]:logical)
 
 begin
 
@@ -3259,8 +3259,8 @@ end
 ;--------------------------------------------------------------------------------
 undef("wrf_vector_ps")
 function wrf_vector_ps(nc_file:file,wks[1]: graphic, \
-        data_u[*][*]:numeric, data_v[*][*]:numeric, \
-        opt_args[1]:logical)
+                       data_u[*][*]:numeric, data_v[*][*]:numeric, \
+                       opt_args[1]:logical)
 
 begin
 
@@ -3316,7 +3316,7 @@ end
 
 undef("wrf_contour")
 function wrf_contour(nc_file:file,wks[1]: graphic, data[*][*]:numeric, \
-        opt_args[1]:logical)
+                     opt_args[1]:logical)
 
 ; This function creates a contour plot and adds some titles to it.
 ;
@@ -3436,7 +3436,7 @@ end
 
 undef("wrf_vector")
 function wrf_vector(nc_file:file,wks[1]: graphic, data_u[*][*]:numeric, \
-        data_v[*][*]:numeric, opt_args[1]:logical)
+                    data_v[*][*]:numeric, opt_args[1]:logical)
 ;
 ; This function creates a vector plot and adds some titles to it.
 ;
@@ -3522,7 +3522,7 @@ begin
   opts2@gsnFrame    = get_res_value_keep(opts2,"gsnFrame",    False)
   opts2@gsnMaximize = get_res_value_keep(opts2,"gsnMaximize", True)
   draw_and_frame(wks,vct,opts2@gsnDraw,opts2@gsnFrame,False, \
-          opts2@gsnMaximize)
+                 opts2@gsnMaximize)
 
   return(vct)                                     ; Return.
 end
@@ -4140,10 +4140,10 @@ end
 
 undef("wrf_map_overlays")
 function wrf_map_overlays(in_file[1]:file, \
-        wks:graphic, \
-        plots[*]:graphic, \
-        opt_arg[1]:logical, \
-        opt_mp[1]:logical)
+                          wks:graphic, \
+                          plots[*]:graphic, \
+                          opt_arg[1]:logical, \
+                          opt_mp[1]:logical)
 
 ; This procedure takes an array of plots and overlays them on a
 ; base plot - map background.
@@ -4186,7 +4186,7 @@ begin
 
   if(opts.and.isatt(opts,"gsnDebugWriteFileName")) then
     opt_mp_2@gsnDebugWriteFileName = get_res_value(opts, \
-            "gsnDebugWriteFileName",  "")
+                                                   "gsnDebugWriteFileName",  "")
     wrf_debug_file = opt_mp_2@gsnDebugWriteFileName
   end if
 
@@ -4285,7 +4285,7 @@ begin
   opts@gsnFrame    = get_res_value_keep(opts,"gsnFrame",    call_frame)
 
   draw_and_frame(wks,base,opts@gsnDraw,opts@gsnFrame,False, \
-          opts@gsnMaximize)
+                 opts@gsnMaximize)
 
   if(.not.panel_plot) then
     do i=0,nplots-1
@@ -4316,8 +4316,8 @@ end
 
 undef("wrf_overlays")
 function wrf_overlays(in_file[1]:file, \
-        wks:graphic, plots[*]:graphic, \
-        opt_arg[1]:logical)
+                      wks:graphic, plots[*]:graphic, \
+                      opt_arg[1]:logical)
 
 ; This procedure takes an array of plots and overlays them.
 ;
@@ -4466,7 +4466,7 @@ begin
   opts@gsnMaximize = get_res_value_keep(opts,"gsnMaximize", True)
 
   draw_and_frame(wks,base,opts@gsnDraw,opts@gsnFrame,False, \
-          opts@gsnMaximize)
+                 opts@gsnMaximize)
 
   if(.not.no_titles.and..not.panel_plot) then
     NhlRemoveAnnotation(base,base@map_titles)
@@ -4493,7 +4493,7 @@ end
 
 undef("wrf_map_zoom")
 function wrf_map_zoom(wks[1]:graphic,in_file[1]:file,opt_args[1]:logical, \
-        y1:integer,y2:integer,x1:integer,x2:integer)
+                      y1:integer,y2:integer,x1:integer,x2:integer)
 
 ; As of version 5.0.1, this routine is redundant. Use the special "ZoomIn"
 ; resource in wrf_map to accomplish the same thing. This function is
@@ -4525,8 +4525,8 @@ end
 
 undef("wrf_map_overlay")
 procedure wrf_map_overlay(wks:graphic,base[1]:graphic, \
-        plots[*]:graphic, \
-        opt_arg[1]:logical)
+                          plots[*]:graphic, \
+                          opt_arg[1]:logical)
 
 ; As of version 5.0.1, this procedure is obsolete. Use wrf_map_overlays
 ; instead. It is being kept for backwards capability. Do not make any
@@ -4655,7 +4655,7 @@ begin
   opts@gsnMaximize = get_res_value_keep(opts,"gsnMaximize", True)
 
   draw_and_frame(wks,base,opts@gsnDraw,opts@gsnFrame,False, \
-          opts@gsnMaximize)
+                 opts@gsnMaximize)
 
   if(.not.panel_plot) then
     do i=0,nplots-1
@@ -4680,7 +4680,7 @@ end
 
 undef("wrf_overlay")
 procedure wrf_overlay(wks:graphic, plots[*]:graphic, \
-        opt_arg[1]:logical)
+                      opt_arg[1]:logical)
 
 ; As of version 5.0.1, this procedure is obsolete. Use wrf_overlays
 ; instead. It is being kept for backwards capability. Do not make any
@@ -4826,7 +4826,7 @@ begin
   opts@gsnMaximize = get_res_value_keep(opts,"gsnMaximize", True)
 
   draw_and_frame(wks,base,opts@gsnDraw,opts@gsnFrame,False, \
-          opts@gsnMaximize)
+                 opts@gsnMaximize)
 
   if(.not.no_titles.and..not.panel_plot) then
     NhlRemoveAnnotation(base,base@map_titles)
@@ -4899,7 +4899,7 @@ begin
 ; Use add_white_space to make sure all the equal signs line up.
 ;
     tmp_str = "    " + varatts(i) + \
-            add_white_space(varatts(i),cmaxlen) + " = "
+              add_white_space(varatts(i),cmaxlen) + " = "
 ;
 ; Check if attribute is an array.
 ;
