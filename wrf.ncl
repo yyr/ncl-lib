@@ -25,12 +25,13 @@ end
 ;          hydrostatic equation.
 ;_____________________________________________________________________________
 undef("wrf_user_getvar_weighted_sum")
-function wrf_user_getvar_weighted_sum(file_handle,var_in:string,time_in:integer)
-local var,varname, var, ph,phb,pres,gh,dim, wgt_var, noflevels, \
+function wrf_user_getvar_weighted_sum(file_handle,var_in:string, time:integer)
+local var, var, ph,phb,pres,gh,dim, wgt_var, noflevels, \
         lay_var,dgh,dp, lay_wgt, lay_wgt_var, wgt_var,time,g
 
 begin
   g = 9.8                       ; gravity
+  noflevels = 14
 
 ; check the file handle is okay
   if(typeof(file_handle).eq."file") then
@@ -42,10 +43,15 @@ begin
   end if
 
 ; get var we need to return
-  varname=var_in(0)
-  time = time_in(0)
+  if ( dim_len0(var_in) .eq. 1) then
+    var = wrf_user_getvar(nc_file,var_in,time)
+  else
+    var = wrf_user_getvar(nc_file,var_in(0),time)
+    do it = 1, dim_len0(var_in) - 1, 1
+      var = var + wrf_user_getvar(nc_file,var_in(0),time)
+    end do
+  end if
 
-  var = wrf_user_getvar(nc_file,varname,time)
   ph = wrf_user_getvar(nc_file,"PH",time)
   phb = wrf_user_getvar(nc_file,"PHB",time)
   pres = wrf_user_getvar(nc_file,"pressure",time)
@@ -55,9 +61,7 @@ begin
   wgt_var = new((/ dim(1),dim(2) /),typeof(var))
 
   wgt_var = 0                   ;intialize
-  noflevels = 32
   do z = 0, noflevels, 1   ; z level
-
     lay_var = (var(z+1,:,:) + var(z,:,:)) / 2. ; mean var
 
     dgh = gh(z+1,:,:) - gh(z,:,:) ; 𝑑𝑧
