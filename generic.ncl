@@ -28,21 +28,26 @@ begin
   system("echo ")
 end
 
+
 ;_____________________________________________________________________________
-; procedure: print_fatal
+; procedure: print_info
 ; Doc:
 ;_____________________________________________________________________________
-undef("print_fatal")
-procedure print_fatal(ferror)
-local ferror
-
+undef("print_info")
+procedure print_info(mess:string, typ:string)
+local mess, typ
 begin
   system("echo ")
-  system("echo " + "*FATAL: " + ferror)
-  system("echo ")
+  if ( typ .eq. "fatal" ) then
+    system("echo " + "*FATAL: " + mess)
+    else if ( typ .eq. "warn"  ) then
+      system("echo " + "warning: " + mess)
+    else
+      system("echo " + "note: " + mess)
+    end if
+  end if
   return
 end
-
 
 ;_____________________________________________________________________________
 ; Function: rank_of
