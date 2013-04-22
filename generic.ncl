@@ -35,14 +35,15 @@ end
 ;_____________________________________________________________________________
 undef("print_info")
 procedure print_info(mess:string, typ:string)
-local mess, typ
+local mess, typ, sf
 begin
+  sf = " ==> "
   if ( typ .eq. "fatal" ) then
-    system("echo " + "*FATAL: " + mess)
+    print(sf + "FATAL: " + mess)
     else if ( typ .eq. "warn"  ) then
-      system("echo " + "WARNING: " + mess)
+      print(sf + "WARNING: " + mess)
     else
-      system("echo " + "NOTE: " + mess)
+      print(sf + "NOTE: " + mess)
     end if
   end if
   return
@@ -184,8 +185,8 @@ begin
       print_info("input file is set to: " + fname , "note")
       fh = addfile(fname,"r")
     else
-    print_info("Forgot to set NCL_FIN !!!","fatal")
-    exit
+      print_info("Forgot to set NCL_FIN !!!","fatal")
+      exit
     end if
   end if
   return fh
