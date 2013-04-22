@@ -73,7 +73,7 @@ begin
   dims = dimsizes(var)
 
   if ( dim + 1  .gt. rank_of(var) )  then
-    print("Fatal: Given variable has less dimesions than query!")
+    print_info("Given variable has less dimesions than query!", "fatal")
     return
   end if
 
@@ -177,10 +177,18 @@ begin
   if ( .not. ismissing(fname) ) then
     fh = addfile(fname,"r")
   else
-    print_fatal("NCL_FIN environment is not set.")
+    delete(fname)
+    fname = systemfunc("ls wrfout*")
+    print_info("NCL_FIN environment is not set. " + \
+               "Trying to search wrfout in current directory","warn")
+    if ( .not. ismissing(fname) ) then
+      print_info("input file is set to: " + fname , "note")
+      fh = addfile(fname,"r")
+    else
+    print_info("Forgot to set NCL_FIN !!!","fatal")
     exit
+    end if
   end if
-
   return fh
 end
 
