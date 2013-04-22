@@ -38,7 +38,8 @@ begin
     ISFILE = True
     nc_file = file_handle
   else
-    print("wrf_user_getvar: error: the first argument must be a file or a list of files opened with addfile or addfiles")
+    print("wrf_user_getvar: error: the first argument must be" + \
+          "a file or a list of files opened with addfile or addfiles")
     return
   end if
 
