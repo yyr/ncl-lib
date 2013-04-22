@@ -37,13 +37,12 @@ undef("print_info")
 procedure print_info(mess:string, typ:string)
 local mess, typ
 begin
-  system("echo ")
   if ( typ .eq. "fatal" ) then
     system("echo " + "*FATAL: " + mess)
     else if ( typ .eq. "warn"  ) then
-      system("echo " + "warning: " + mess)
+      system("echo " + "WARNING: " + mess)
     else
-      system("echo " + "note: " + mess)
+      system("echo " + "NOTE: " + mess)
     end if
   end if
   return
