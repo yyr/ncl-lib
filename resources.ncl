@@ -100,15 +100,12 @@ end
 ;_____________________________________________________________________________
 undef("set_cn_limits")
 procedure set_cn_limits(res_in:logical,minn:numeric,maxx:numeric,interval:numeric)
-local res_in, res_attr
-
+local res_in
 begin
-  res_attr = (/"cnLevelSelectionMode" , "ManualLevels", \
-               "cnMinLevelValF"       ,  minn , \
-               "cnMaxLevelValF"       ,  maxx , \
-               "cnLevelSpacingF"      , interval \
-               /)
-  res_in=set_res_value_keep(res_in,res_attr)
+  res_in@cnLevelSelectionMode = "ManualLevels"
+  res_in@cnMinLevelValF = minn
+  res_in@cnMaxLevelValF = maxx
+  res_in@cnLevelSpacingF = interval
   return
 end
 
