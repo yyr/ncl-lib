@@ -95,6 +95,25 @@ begin
 end
 
 ;_____________________________________________________________________________
+; procedure: set_cn_limits
+; Doc: self descriptive
+;_____________________________________________________________________________
+undef("set_cn_limits")
+procedure set_cn_limits(res_in:logical,minn:numeric,maxx:numeric,interval:numeric)
+local res_in, res_attr
+
+begin
+  res_attr = (/"cnLevelSelectionMode" , "ManualLevels", \
+               "cnMinLevelValF"       ,  minn , \
+               "cnMaxLevelValF"       ,  maxx , \
+               "cnLevelSpacingF"      , interval \
+               /)
+  res_in=set_res_value_keep(res_in,res_attr)
+  return
+end
+
+
+;_____________________________________________________________________________
 ; procedure: set_colormap
 ; Doc: set colormap based on the HGT, these are personal choice, one should be
 ;  over ride these from the configuration file
