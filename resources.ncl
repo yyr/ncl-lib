@@ -17,10 +17,10 @@ function set_no_frame_res(res_in:logical)
 local res_in, res_attr
 begin
   res_attr = (/ "gsnMaximize" , "True", \
-          "gsnPaperMargin", "0.0",      \ ; no margins
-          "gsnDraw" , "False",          \ ; Do not draw plot
-          "gsnFrame", "False"           \ ; Do not advance frame
-          /)
+               "gsnPaperMargin", "0.0",      \ ; no margins
+               "gsnDraw" , "False",          \ ; Do not draw plot
+               "gsnFrame", "False"           \ ; Do not advance frame
+               /)
 
   return(set_res_value_keep(res_in,res_attr))
 end
@@ -35,8 +35,8 @@ local res_in, res_attr
 
 begin
   res_attr = (/ "tmXBLabelFontHeightF" , "0.014", \
-          "tmYLLabelFontHeightF", "0.014"      \
-          /)
+               "tmYLLabelFontHeightF", "0.014"      \
+               /)
   return(set_res_value_keep(res_in,res_attr))
 end
 
@@ -50,13 +50,13 @@ local res_in, res_attr
 
 begin
   res_attr = (/ "InitTime" , "False", \
-          "NoHeaderFooter" , "True",  \
-          "NoTitles"       , "True",  \
-          "ValidTime"      , "False", \
-          "FramePlot"      , "False", \
-          "PanelPlot"      , "False", \
-          "MainTitlePos"   , "False"  \
-          /)
+               "NoHeaderFooter" , "True",  \
+               "NoTitles"       , "True",  \
+               "ValidTime"      , "False", \
+               "FramePlot"      , "False", \
+               "PanelPlot"      , "False", \
+               "MainTitlePos"   , "False"  \
+               /)
 
   return(set_res_value_keep(res_in,res_attr))
 end
@@ -71,9 +71,9 @@ local res_in, res_attr
 
 begin
   res_attr = (/ "mpDataBaseVersion"     , "HighRes", \
-          "mpGeophysicalLineColor"      , "Black",   \
-          "mpGeophysicalLineThicknessF" , "1.5"      \
-          /)
+               "mpGeophysicalLineColor"      , "Black",   \
+               "mpGeophysicalLineThicknessF" , "1.5"      \
+               /)
   return(set_res_value_keep(res_in,res_attr))
 end
 
@@ -84,13 +84,12 @@ end
 undef("set_cn_resorces")
 function set_cn_resorces(res_in:logical)
 local res_in, res_attr
-
 begin
   res_attr = (/ "cnFillColor" , "True",  \
-          "gsnSpreadColors"   , "True",  \
-          "cnFillOn"          , "True",  \
-          "cnInfoLabelOn"     , "False"  \
-          /)
+               "gsnSpreadColors"   , "True",  \
+               "cnFillOn"          , "True",  \
+               "cnInfoLabelOn"     , "False"  \
+               /)
   return(set_res_value_keep(res_in,res_attr))
 end
 
@@ -140,15 +139,15 @@ local res_in, res_attr
 
 begin
   res_attr = (/ "vcMonoLineArrowColor" , "True" ,        \
-          "vcGlyphStyle"               , "CurlyVector" , \ ; turn on curly vectors
-          "vcMinDistanceF"             , "0.03" ,        \
-          "vcRefMagnitudeF"            , "10." ,         \
-          "vcRefLengthF"               , "0.02" ,        \
-          "vcLineArrowThicknessF"      , "2.5" ,         \
-          "vcRefAnnoOrthogonalPosF"    , "-1"  ,         \ ; Move reference into plot.
-          "vcRefAnnoArrowUseVecColor"  , "False" ,       \ ; Allow us to change ref vec color
-          "vcRefAnnoArrowLineColor"    , "Black"         \ ; Black ref vector
-          /)
+               "vcGlyphStyle"               , "CurlyVector" , \ ; turn on curly vectors
+               "vcMinDistanceF"             , "0.03" ,        \
+               "vcRefMagnitudeF"            , "10." ,         \
+               "vcRefLengthF"               , "0.02" ,        \
+               "vcLineArrowThicknessF"      , "2.5" ,         \
+               "vcRefAnnoOrthogonalPosF"    , "-1"  ,         \ ; Move reference into plot.
+               "vcRefAnnoArrowUseVecColor"  , "False" ,       \ ; Allow us to change ref vec color
+               "vcRefAnnoArrowLineColor"    , "Black"         \ ; Black ref vector
+               /)
 
   return(set_res_value_keep(res_in,res_attr))
 end
@@ -159,7 +158,7 @@ end
 ;_____________________________________________________________________________
 undef("set_map_latlon_res")
 function set_map_latlon_res(res_in:logical,lonL:float,lonR:float, \
-        latB:float,latU:float)
+                            latB:float,latU:float)
 local res_in,res_attr
 
 begin

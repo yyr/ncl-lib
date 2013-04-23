@@ -27,7 +27,7 @@ end
 undef("wrf_user_getvar_weighted_sum")
 function wrf_user_getvar_weighted_sum(file_handle,var_in:string, time:integer)
 local var, var, ph,phb,pres,gh,dim, wgt_var, noflevels, \
-        lay_var,dgh,dp, lay_wgt, lay_wgt_var, wgt_var,time,g
+lay_var,dgh,dp, lay_wgt, lay_wgt_var, wgt_var,time,g
 
 begin
   g = 9.8                       ; gravity
@@ -339,7 +339,7 @@ end
 ;_____________________________________________________________________________
 undef("wrf_div")
 function wrf_div(u:numeric,v:numeric,dx:numeric,dy:numeric, \
-        msft:numeric)
+                 msft:numeric)
 local div, dx ,dy, m2, i, j, nx, ny, dux, duy, dudx, dudy
 
 begin
@@ -382,7 +382,7 @@ end
 ;_____________________________________________________________________________
 undef("wrf_div2")
 function wrf_div2(u:numeric,v:numeric,dx:numeric,dy:numeric, \
-        mx:numeric,my:numeric)
+                  mx:numeric,my:numeric)
 local div, dx ,dy, m2, i, j, nx, ny, dux, duy, dudx, dudy
 
 begin
