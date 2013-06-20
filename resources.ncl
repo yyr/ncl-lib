@@ -83,14 +83,15 @@ end
 ;_____________________________________________________________________________
 undef("set_cn_resorces")
 function set_cn_resorces(res_in:logical)
-local res_in, res_attr
+local res, res_in, res_attr
 begin
+  res = res_in
   res_attr = (/ "cnFillColor" , "True",  \
                "gsnSpreadColors"   , "True",  \
                "cnFillOn"          , "True",  \
                "cnInfoLabelOn"     , "False"  \
                /)
-  return(set_res_value_keep(res_in,res_attr))
+  return(set_res_value_keep(res,res_attr))
 end
 
 ;_____________________________________________________________________________
@@ -169,4 +170,19 @@ begin
   res_out@mpLeftCornerLonF      = lonL
   res_out@mpRightCornerLonF     = lonR
   return(res_out)
+end
+
+;_____________________________________________________________________________
+; Function: set_panel_resources
+; Doc:
+;_____________________________________________________________________________
+undef("set_panel_resources")
+function set_panel_resources(res:logical)
+begin
+  res@gsnPanelBottom = 0.05              ; add some space at bottom
+  res@gsnPanelLabelBar = True                   ; add common colorbar
+  res@gsnMaximize = True
+  res@gsnPanelFigureStrings = (/"a", "b", "c", "d", "e", "f"/)
+  res@amJust   = "TopLeft"
+  return(res)
 end
