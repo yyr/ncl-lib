@@ -131,6 +131,40 @@ begin
 end
 
 ;_____________________________________________________________________________
+; Function: set_aspectratio
+; Doc: Stright from WRFUserARW.ncl.
+;_____________________________________________________________________________
+undef("set_aspectratio")
+function set_aspectratio(data:numeric,opts:logical)
+local data, opts
+
+begin
+  dims  = dimsizes(data)
+  ratio = 1.*dims(0)/dims(1)
+
+  if(ratio .gt. 1.2) then
+    ratio = 1.2
+  end if
+  if(ratio .lt. 0.6667) then
+    ratio = 0.6667
+  end if
+
+  if(ratio .gt. 1)
+    width  = 0.65 * 1.0/ratio
+    height = 0.65
+  else
+    width  = 0.85
+    height = 0.85 * ratio
+  end if
+
+  opts@vpWidthF = width
+  opts@vpHeightF = height
+
+  return(opts)
+end
+
+
+;_____________________________________________________________________________
 ; Function: set_vc_res
 ; Doc: set some common vector resources. (fair defaults)
 ;_____________________________________________________________________________
