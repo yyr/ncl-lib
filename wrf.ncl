@@ -268,7 +268,6 @@ begin
   opt_args@pmLabelBarHeightF = 0.1
 
   opt_args@tiMainString = "Model Domain"
-
   plot = gsn_csm_contour_map(wks, Z, opt_args)
 
   return(plot)
@@ -365,13 +364,18 @@ begin
       dsy = (jp1-jm1)*dy
       mm = msft(j,i) * msft(j,i)
 
-      dudx = (u(j,i)/msft(j,ip1) - u(j,im1)/msft(j,im1)) / dsx*mm
-      dudy = (v(jp1,i)/msft(jp1,i) - u(jm1,i)/msft(jm1,i)) / dsy*mm
+      dudx = (u(j,i)/msft(j,ip1) - u(j,im1)/msft(j,im1)) / dsx
+      dudy = (v(jp1,i)/msft(jp1,i) - v(jm1,i)/msft(jm1,i)) / dsy
+      dudx = dudx * mm
+      dudy = dudy * mm
 
       div(j,i) = dudx + dudy
 
     end do
   end do
+  div!0 = "south_north"
+  div!1 = "west_east"
+  div@description = "divergence"
 
   return(div)
 end
@@ -382,7 +386,7 @@ end
 ;_____________________________________________________________________________
 undef("wrf_div2")
 function wrf_div2(u:numeric,v:numeric,dx:numeric,dy:numeric, \
-                  mx:numeric,my:numeric)
+                  msft:numeric, mu:numeric,mv:numeric)
 local div, dx ,dy, m2, i, j, nx, ny, dux, duy, dudx, dudy
 
 begin
@@ -406,15 +410,21 @@ begin
 
       dsx = (ip1-im1)*dx
       dsy = (jp1-jm1)*dy
-      mm = mx(j,i) * my(j,i)
+      mm = msft(j,i) * msft(j,i)
+      mu_l = mu(j,ip1)
+      mu_r = mu(j,im1)
 
-      dudx = (u(j,i)/mx(j,ip1) - u(j,im1)/mx(j,im1)) / dsx*mm
-      dudy = (v(jp1,i)/my(jp1,i) - u(jm1,i)/my(jm1,i)) / dsy*mm
+      dudx = (u(j,i)/mu_l - u(j,im1)/mu_r) / dsx
+      dudy = (v(jp1,i)/mv(jp1,i) - v(jm1,i)/mv(jm1,i)) / dsy
+      dudx = dudx * mm
+      dudy = dudy * mm
 
       div(j,i) = dudx + dudy
-
     end do
   end do
+  div!0 = "south_north"
+  div!1 = "west_east"
+  div@description = "divergence"
   return(div)
 end
 
