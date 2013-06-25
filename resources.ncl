@@ -86,7 +86,7 @@ function set_cn_resorces(res_in:logical)
 local res, res_in, res_attr
 begin
   res = res_in
-  res_attr = (/ "cnFillColor" , "True",  \
+  res_attr = (/"cnFillColor" , "True",        \
                "gsnSpreadColors"   , "True",  \
                "cnFillOn"          , "True",  \
                "cnInfoLabelOn"     , "False"  \
@@ -135,10 +135,12 @@ end
 ; Doc: Stright from WRFUserARW.ncl.
 ;_____________________________________________________________________________
 undef("set_aspectratio")
-function set_aspectratio(data:numeric,opts:logical)
-local data, opts
+function set_aspectratio(data:numeric,opts_in:logical)
+local data, opts_in, opts
 
 begin
+  opts = opts_in
+
   dims  = dimsizes(data)
   ratio = 1.*dims(0)/dims(1)
 
@@ -159,7 +161,6 @@ begin
 
   opts@vpWidthF = width
   opts@vpHeightF = height
-
   return(opts)
 end
 
@@ -178,7 +179,7 @@ begin
                "vcMinDistanceF"             , "0.03" ,        \
                "vcRefMagnitudeF"            , "10." ,         \
                "vcRefLengthF"               , "0.02" ,        \
-               "vcLineArrowThicknessF"      , "2.5" ,         \
+               "vcLineArrowThicknessF"      , "1.5" ,         \
                "vcRefAnnoOrthogonalPosF"    , "-1"  ,         \ ; Move reference into plot.
                "vcRefAnnoArrowUseVecColor"  , "False" ,       \ ; Allow us to change ref vec color
                "vcRefAnnoArrowLineColor"    , "Black"         \ ; Black ref vector
