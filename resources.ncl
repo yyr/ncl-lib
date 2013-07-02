@@ -214,10 +214,14 @@ end
 undef("set_panel_resources")
 function set_panel_resources(res:logical)
 begin
-  res@gsnPanelBottom = 0.05              ; add some space at bottom
-  res@gsnPanelLabelBar = True                   ; add common colorbar
-  res@gsnMaximize = True
-  res@gsnPanelFigureStrings = (/"a", "b", "c", "d", "e", "f"/)
-  res@amJust   = "TopLeft"
+  res_attr = (/ "lbLabelStride"   , "3"        , \
+               "gsnPanelBottom"   , "0.05"     , \
+               "gsnPanelLabelBar" , "True"     , \
+               "gsnMaximize"      , "True"     , \
+               "lbOrientation"    , "vertical" , \
+               "amJust"           , "TopLeft"    \
+  /)
+  res@gsnPanelFigureStrings = (/"a", "b", "c", "d", "e", "f", "g", "h"/)
+  res = set_res_value_keep(res,res_attr)
   return(res)
 end
