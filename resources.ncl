@@ -16,10 +16,10 @@ undef("set_no_frame_res")
 function set_no_frame_res(res_in:logical)
 local res_in, res_attr
 begin
-  res_attr = (/ "gsnMaximize" , "True", \
-               "gsnPaperMargin", "0.0",      \ ; no margins
-               "gsnDraw" , "False",          \ ; Do not draw plot
-               "gsnFrame", "False"           \ ; Do not advance frame
+  res_attr = (/"gsnMaximize"    , "True"  , \
+               "gsnPaperMargin" , "0.0"   , \ ; no margins
+               "gsnDraw"        , "False" , \ ; Do not draw plot
+               "gsnFrame"       , "False"   \ ; Do not advance frame
                /)
 
   return(set_res_value_keep(res_in,res_attr))
@@ -34,8 +34,8 @@ function set_tm_size_res(res_in:logical)
 local res_in, res_attr
 
 begin
-  res_attr = (/ "tmXBLabelFontHeightF" , "0.014", \
-               "tmYLLabelFontHeightF", "0.014"      \
+  res_attr = (/"tmXBLabelFontHeightF" , "0.014" , \
+               "tmYLLabelFontHeightF" , "0.014"   \
                /)
   return(set_res_value_keep(res_in,res_attr))
 end
@@ -49,13 +49,13 @@ function set_wrf_no_headers(res_in:logical)
 local res_in, res_attr
 
 begin
-  res_attr = (/ "InitTime" , "False", \
-               "NoHeaderFooter" , "True",  \
-               "NoTitles"       , "True",  \
-               "ValidTime"      , "False", \
-               "FramePlot"      , "False", \
-               "PanelPlot"      , "False", \
-               "MainTitlePos"   , "False"  \
+  res_attr = (/"InitTime"       , "False" , \
+               "NoHeaderFooter" , "True"  , \
+               "NoTitles"       , "True"  , \
+               "ValidTime"      , "False" , \
+               "FramePlot"      , "False" , \
+               "PanelPlot"      , "False" , \
+               "MainTitlePos"   , "False"   \
                /)
 
   return(set_res_value_keep(res_in,res_attr))
@@ -70,9 +70,9 @@ function set_high_res_coast(res_in:logical)
 local res_in, res_attr
 
 begin
-  res_attr = (/ "mpDataBaseVersion"     , "HighRes", \
-               "mpGeophysicalLineColor"      , "Black",   \
-               "mpGeophysicalLineThicknessF" , "1.5"      \
+  res_attr = (/"mpDataBaseVersion"           , "HighRes" , \
+               "mpGeophysicalLineColor"      , "Black"   , \
+               "mpGeophysicalLineThicknessF" , "2"         \
                /)
   return(set_res_value_keep(res_in,res_attr))
 end
@@ -89,7 +89,8 @@ begin
   res_attr = (/"cnFillColor" , "True",        \
                "gsnSpreadColors"   , "True",  \
                "cnFillOn"          , "True",  \
-               "cnInfoLabelOn"     , "False"  \
+               "cnInfoLabelOn"     , "False", \
+               "cnLineLabelsOn"    , "False"  \
                /)
   return(set_res_value_keep(res,res_attr))
 end
@@ -174,15 +175,15 @@ function set_vc_res(res_in:logical)
 local res_in, res_attr
 
 begin
-  res_attr = (/ "vcMonoLineArrowColor" , "True" ,        \
-               "vcGlyphStyle"               , "CurlyVector" , \ ; turn on curly vectors
-               "vcMinDistanceF"             , "0.03" ,        \
-               "vcRefMagnitudeF"            , "10." ,         \
-               "vcRefLengthF"               , "0.02" ,        \
-               "vcLineArrowThicknessF"      , "1.5" ,         \
-               "vcRefAnnoOrthogonalPosF"    , "-1"  ,         \ ; Move reference into plot.
-               "vcRefAnnoArrowUseVecColor"  , "False" ,       \ ; Allow us to change ref vec color
-               "vcRefAnnoArrowLineColor"    , "Black"         \ ; Black ref vector
+  res_attr = (/ "vcMonoLineArrowColor"     , "True"        , \
+               "vcGlyphStyle"              , "CurlyVector" , \ ; turn on curly vectors
+               "vcMinDistanceF"            , "0.03"        , \
+               "vcRefMagnitudeF"           , "10."         , \
+               "vcRefLengthF"              , "0.02"        , \
+               "vcLineArrowThicknessF"     , "1.5"         , \
+               "vcRefAnnoOrthogonalPosF"   , "-1"          , \ ; Move reference into plot.
+               "vcRefAnnoArrowUseVecColor" , "False"       , \ ; Allow us to change ref vec color
+               "vcRefAnnoArrowLineColor"   , "Black"         \ ; Black ref vector
                /)
 
   return(set_res_value_keep(res_in,res_attr))
@@ -215,7 +216,7 @@ undef("set_panel_resources")
 function set_panel_resources(res:logical)
 begin
   res_attr = (/ "lbLabelStride"   , "3"        , \
-               "gsnPanelBottom"   , "0.05"     , \
+               "gsnPanelBottom"   , "0.03"     , \
                "gsnPanelLabelBar" , "True"     , \
                "gsnMaximize"      , "True"     , \
                "lbOrientation"    , "vertical" , \
