@@ -180,6 +180,7 @@ begin
                "vcMinDistanceF"            , "0.03"        , \
                "vcRefMagnitudeF"           , "10."         , \
                "vcRefLengthF"              , "0.02"        , \
+               "vcRefAnnoOn"               , "True"        , \
                "vcLineArrowThicknessF"     , "1.5"         , \
                "vcRefAnnoOrthogonalPosF"   , "-1"          , \ ; Move reference into plot.
                "vcRefAnnoArrowUseVecColor" , "False"       , \ ; Allow us to change ref vec color
