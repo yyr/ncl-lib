@@ -222,8 +222,34 @@ begin
                "gsnMaximize"      , "True"     , \
                "lbOrientation"    , "vertical" , \
                "amJust"           , "TopLeft"    \
-  /)
+               /)
   res@gsnPanelFigureStrings = (/"a", "b", "c", "d", "e", "f", "g", "h"/)
   res = set_res_value_keep(res,res_attr)
   return(res)
+end
+
+;_____________________________________________________________________________
+; Function: set_lb_res
+; Doc: slick version of WRFUserARW.ncl's set_lb_resources
+;_____________________________________________________________________________
+undef("set_lb_res")
+function set_lb_res(res:logical)
+local res_out
+
+begin
+  res_out                    = res
+  res_attr = (/ "lbAutoManage"       ,"False"         , \
+               "lbOrientation"      , "Horizontal"   , \
+               "lbPerimOn"          , "False"        , \
+               "lbLabelJust"        , "BottomCenter" , \
+               "lbLabelAutoStride"  ,"True"          , \
+               "lbBoxMinorExtentF"  , "0.13"         , \
+               "lbTitleFontHeightF" , "0.015"        , \
+               "lbLabelFontHeightF" , "0.015"        , \
+               "lbTitleJust"        , "BottomCenter" , \
+               "lbTitleOn"          , "False"        , \
+               "lbTitleOffsetF"     , "-0.5"          \
+               /)
+  res_out = set_res_value_keep(res_out,res_attr)
+  return(res_out)
 end
