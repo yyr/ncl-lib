@@ -132,6 +132,18 @@ begin
 end
 
 ;_____________________________________________________________________________
+; procedure: set_aspectratio_manual
+; Doc:
+;_____________________________________________________________________________
+undef("set_aspectratio_manual")
+procedure set_aspectratio_manual(res:logical,width:numeric,height:numeric)
+begin
+  res@mpShapeMode = "FreeAspect"
+  res@vpWidthF = 0.8
+  res@vpHeightF = 0.4
+end
+
+;_____________________________________________________________________________
 ; Function: set_aspectratio
 ; Doc: Stright from WRFUserARW.ncl.
 ;_____________________________________________________________________________
