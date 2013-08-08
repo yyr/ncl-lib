@@ -176,9 +176,9 @@ local res_in, res_attr
 
 begin
   res_attr = (/ "vcMonoLineArrowColor"     , "True"        , \
-               "vcGlyphStyle"              , "CurlyVector" , \ ; turn on curly vectors
                "vcMinDistanceF"            , "0.03"        , \
                "vcRefMagnitudeF"           , "10."         , \
+               "vcWindBarbTickLengthF"     , "0.1"         , \
                "vcRefLengthF"              , "0.02"        , \
                "vcRefAnnoOn"               , "True"        , \
                "vcLineArrowThicknessF"     , "1.5"         , \
