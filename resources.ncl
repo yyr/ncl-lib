@@ -222,11 +222,11 @@ begin
 end
 
 ;_____________________________________________________________________________
-; Function: set_panel_resources
+; Function: set_res_panel
 ; Doc:
 ;_____________________________________________________________________________
-undef("set_panel_resources")
-function set_panel_resources(res:logical)
+undef("set_res_panel")
+function set_res_panel(res:logical)
 begin
   res_attr = (/ "lbLabelStride"   , "3"        , \
                "gsnPanelBottom"   , "0.03"     , \
