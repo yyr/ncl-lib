@@ -96,11 +96,11 @@ begin
 end
 
 ;_____________________________________________________________________________
-; procedure: set_cn_limits
+; procedure: set_res_cn_limits
 ; Doc: self descriptive
 ;_____________________________________________________________________________
-undef("set_cn_limits")
-procedure set_cn_limits(res_in:logical,minn:numeric,maxx:numeric,interval:numeric)
+undef("set_res_cn_limits")
+procedure set_res_cn_limits(res_in:logical,minn:numeric,maxx:numeric,interval:numeric)
 local res_in
 begin
   res_in@cnLevelSelectionMode = "ManualLevels"
