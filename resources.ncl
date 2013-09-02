@@ -203,11 +203,11 @@ begin
 end
 
 ;_____________________________________________________________________________
-; Function: set_map_latlon_res
+; Function: set_res_mp_latlon
 ; Doc: set zoom resources in of a plot
 ;_____________________________________________________________________________
-undef("set_map_latlon_res")
-function set_map_latlon_res(res_in:logical,lonL:float,lonR:float, \
+undef("set_res_mp_latlon")
+function set_res_mp_latlon(res_in:logical,lonL:float,lonR:float, \
                             latB:float,latU:float)
 local res_in,res_attr
 
