@@ -250,7 +250,7 @@ begin
 
   opt_args = set_res_no_frame(opt_args)
   opt_args = set_res_cn(opt_args)
-  opt_args = set_high_res_coast(opt_args)
+  opt_args = set_res_highres_coast(opt_args)
 
   opt_args@gsnPaperMargin = 1.
   opt_args@gsnAddCyclic = False

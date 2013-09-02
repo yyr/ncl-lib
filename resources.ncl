@@ -62,11 +62,11 @@ begin
 end
 
 ;_____________________________________________________________________________
-; Function: set_high_res_coast
+; Function: set_res_highres_coast
 ; Doc: self descriptive
 ;_____________________________________________________________________________
-undef("set_high_res_coast")
-function set_high_res_coast(res_in:logical)
+undef("set_res_highres_coast")
+function set_res_highres_coast(res_in:logical)
 local res_in, res_attr
 
 begin

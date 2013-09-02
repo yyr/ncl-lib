@@ -7,7 +7,7 @@ begin
   wks = gsn_open_wks("png","mp_plot")
 
   mp_res = wrf_map_resources(a,True)  ; set all map res
-  mp_res = set_high_res_coast(mp_res) ; high resultion
+  mp_res = set_res_highres_coast(mp_res) ; high resultion
 
   mp  = wrf_map(wks,a,mp_res)
 
