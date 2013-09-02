@@ -248,7 +248,7 @@ begin
 
   set_colormap(wks,"hgt")
 
-  opt_args = set_no_frame_res(opt_args)
+  opt_args = set_res_no_frame(opt_args)
   opt_args = set_res_cn(opt_args)
   opt_args = set_high_res_coast(opt_args)
 

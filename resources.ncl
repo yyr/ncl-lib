@@ -9,11 +9,11 @@
 
 load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_code.ncl"
 ;_____________________________________________________________________________
-; Function: set_no_frame_res
+; Function: set_res_no_frame
 ; Doc: add gsnDraw and gsnFrame to false and maxmize plot to True and return it
 ;_____________________________________________________________________________
-undef("set_no_frame_res")
-function set_no_frame_res(res_in:logical)
+undef("set_res_no_frame")
+function set_res_no_frame(res_in:logical)
 local res_in, res_attr
 begin
   res_attr = (/"gsnMaximize"    , "True"  , \
