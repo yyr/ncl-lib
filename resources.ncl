@@ -179,11 +179,11 @@ end
 
 
 ;_____________________________________________________________________________
-; Function: set_vc_res
+; Function: set_res_vc
 ; Doc: set some common vector resources. (fair defaults)
 ;_____________________________________________________________________________
-undef("set_vc_res")
-function set_vc_res(res_in:logical)
+undef("set_res_vc")
+function set_res_vc(res_in:logical)
 local res_in, res_attr
 
 begin
