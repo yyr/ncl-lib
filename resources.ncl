@@ -132,11 +132,11 @@ begin
 end
 
 ;_____________________________________________________________________________
-; procedure: set_aspectratio_manual
+; procedure: set_res_aspectratio_manual
 ; Doc:
 ;_____________________________________________________________________________
-undef("set_aspectratio_manual")
-procedure set_aspectratio_manual(res:logical,width:numeric,height:numeric)
+undef("set_res_aspectratio_manual")
+procedure set_res_aspectratio_manual(res:logical,width:numeric,height:numeric)
 begin
   res@mpShapeMode = "FreeAspect"
   res@vpWidthF = 0.8
