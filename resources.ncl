@@ -26,11 +26,11 @@ begin
 end
 
 ;_____________________________________________________________________________
-; Function: set_tm_size_res
+; Function: set_res_tm_size
 ; Doc: set tickmark size bit visible, useful escipially in the panel plot
 ;_____________________________________________________________________________
-undef("set_tm_size_res")
-function set_tm_size_res(res_in:logical)
+undef("set_res_tm_size")
+function set_res_tm_size(res_in:logical)
 local res_in, res_attr
 
 begin
