@@ -41,11 +41,11 @@ begin
 end
 
 ;_____________________________________________________________________________
-; Function: set_wrf_no_headers
+; Function: set_res_wrf_no_headers
 ; Doc: Disable set ugly wrf resorces.
 ;_____________________________________________________________________________
-undef("set_wrf_no_headers")
-function set_wrf_no_headers(res_in:logical)
+undef("set_res_wrf_no_headers")
+function set_res_wrf_no_headers(res_in:logical)
 local res_in, res_attr
 
 begin
