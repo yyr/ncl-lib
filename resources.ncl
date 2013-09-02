@@ -78,11 +78,11 @@ begin
 end
 
 ;_____________________________________________________________________________
-; Function: set_cn_resorces
+; Function: set_res_cn
 ; Doc: self descriptive.
 ;_____________________________________________________________________________
-undef("set_cn_resorces")
-function set_cn_resorces(res_in:logical)
+undef("set_res_cn")
+function set_res_cn(res_in:logical)
 local res, res_in, res_attr
 begin
   res = res_in
