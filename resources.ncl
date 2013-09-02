@@ -241,11 +241,11 @@ begin
 end
 
 ;_____________________________________________________________________________
-; Function: set_lb_res
+; Function: set_res_lb
 ; Doc: slick version of WRFUserARW.ncl's set_lb_resources
 ;_____________________________________________________________________________
-undef("set_lb_res")
-function set_lb_res(res:logical)
+undef("set_res_lb")
+function set_res_lb(res:logical)
 local res_out
 
 begin
