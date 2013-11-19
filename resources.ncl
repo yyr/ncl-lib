@@ -234,7 +234,7 @@ begin
                "lbOrientation"    , "vertical" , \
                "amJust"           , "TopLeft"    \
                /)
-  res@gsnPanelFigureStrings = (/"a", "b", "c", "d", "e", "f", "g", "h"/)
+  res@gsnPanelFigureStrings = get_res_value_keep(res, "gsnPanelFigureStrings", (/"a", "b", "c", "d", "e", "f", "g", "h"/))
   res = set_res_value_keep(res,res_attr)
   return(res)
 end
@@ -261,6 +261,38 @@ begin
                "lbTitleOn"          , "False"        , \
                "lbTitleOffsetF"     , "-0.5"          \
                /)
+  res_out = set_res_value_keep(res_out,res_attr)
+  return(res_out)
+end
+
+;_____________________________________________________________________________
+; Function: set_res_vp_21_upper
+; Doc:
+;_____________________________________________________________________________
+undef("set_res_vp_21_upper")
+function set_res_vp_21_upper(res_in)
+local res_out
+begin
+  res_out = res_in
+  res_attr = (/"vpYF"      , "0.99" , \
+               "vpHeightF" , "0.49"  \
+               /)
+  res_out = set_res_value_keep(res_out,res_attr)
+  return(res_out)
+end
+
+;_____________________________________________________________________________
+; Function: set_res_vp_21_lower
+; Doc:
+;_____________________________________________________________________________
+undef("set_res_vp_21_lower")
+function set_res_vp_21_lower(res_in)
+local res_out
+begin
+  res_out = res_in
+  res_attr = (/"vpYF"      , "0.49" , \
+               "vpHeightF" , "0.49"   \
+  /)
   res_out = set_res_value_keep(res_out,res_attr)
   return(res_out)
 end
