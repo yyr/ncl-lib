@@ -1,4 +1,5 @@
 import("WRFUserARW")
+import("shea_util")
 
 ;__________________ I/O ________________________________________
 
@@ -30,8 +31,7 @@ local var, var, ph,phb,pres,gh,dim, wgt_var, noflevels, \
 lay_var,dgh,dp, lay_wgt, lay_wgt_var, wgt_var,time,g
 
 begin
-  g = 9.8                       ; gravity
-  noflevels = 14
+  g = 9.81                       ; gravity
 
 ; check the file handle is okay
   if(typeof(file_handle).eq."file") then
@@ -62,7 +62,7 @@ begin
   wgt_var = new((/ dim(1),dim(2) /),typeof(var))
 
   wgt_var = 0                   ;intialize
-  do z = 0, noflevels, 1   ; z level
+  do z = 0, 30, 1   ; z level
     lay_var = (var(z+1,:,:) + var(z,:,:)) / 2. ; mean var
 
     dgh = gh(z+1,:,:) - gh(z,:,:) ; 𝑑𝑧
