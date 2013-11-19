@@ -188,7 +188,6 @@ local res_in, res_attr
 
 begin
   res_attr = (/ "vcMonoLineArrowColor"     , "True"        , \
-               "vcMinDistanceF"            , "0.03"        , \
                "vcRefMagnitudeF"           , "10."         , \
                "vcWindBarbTickLengthF"     , "0.1"         , \
                "vcRefLengthF"              , "0.02"        , \
