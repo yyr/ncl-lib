@@ -53,6 +53,12 @@ begin
     end do
   end if
 
+  p_surf = (/nc_file->PSFC(time,:,:)/)
+  p_tp_in = (/nc_file->P_TOP/)     ;pressure at top of model
+
+  eta = (/nc_file->ZNU(0,:)/)           ;eta values on half-levels (mass)
+  nEta = dimsizes(eta)
+
   ph = wrf_user_getvar(nc_file,"PH",time)
   phb = wrf_user_getvar(nc_file,"PHB",time)
   pres = wrf_user_getvar(nc_file,"pressure",time)
@@ -62,7 +68,7 @@ begin
   wgt_var = new((/ dim(1),dim(2) /),typeof(var))
 
   wgt_var = 0                   ;intialize
-  do z = 0, 30, 1   ; z level
+  do z = 0, nEta - 2, 1   ; z level
     lay_var = (var(z+1,:,:) + var(z,:,:)) / 2. ; mean var
 
     dgh = gh(z+1,:,:) - gh(z,:,:) ; 𝑑𝑧
