@@ -62,21 +62,24 @@ begin
   ph = wrf_user_getvar(nc_file,"PH",time)
   phb = wrf_user_getvar(nc_file,"PHB",time)
   pres = wrf_user_getvar(nc_file,"pressure",time)
-  gh = ph + phb               ;geo potential height
+  height = wrf_user_getvar(nc_file,"height",time)
 
+  gh = ph + phb               ;geo potential height
   dim = dimsizes(var)
   wgt_var = new((/ dim(1),dim(2) /),typeof(var))
 
   wgt_var = 0                   ;intialize
   do z = 0, nEta - 2, 1   ; z level
     lay_var = (var(z+1,:,:) + var(z,:,:)) / 2. ; mean var
-
-    dgh = gh(z+1,:,:) - gh(z,:,:) ; 𝑑𝑧
+    dgh = gh(z+1,:,:) - gh(z,:,:) ; 𝑑Φ
     dp = pres(z+1,:,:) - pres(z,:,:) ; 𝑑𝑝
-    lay_wgt = -1 * (dp/dgh) / g    ;  𝜚 = - 𝑑𝑝/𝑑𝑧 / 𝑔
-    lay_wgt_var = lay_var * lay_wgt
+    dz = height(z+1,:,:) - height(z,:,:) ; 𝑑z
+
+    lay_wgt = -dz * (dp/dgh)   ;  𝜚 = - 𝑑𝑝/(𝑑𝑧 * 𝑔) = - dp/𝑑Φ
+    lay_wgt_var = lay_var * lay_wgt ; 𝜚 * var = -dp * var /dΦ
     wgt_var = wgt_var + lay_wgt_var
   end do
+  printVarInfo(wgt_var,"")
   return(wgt_var)
 end
 
