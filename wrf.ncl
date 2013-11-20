@@ -27,13 +27,12 @@ end
 ;_____________________________________________________________________________
 undef("wrf_user_getvar_weighted_sum")
 function wrf_user_getvar_weighted_sum(file_handle,var_in:string, time:integer)
-local var, var, ph,phb,pres,gh,dim, wgt_var, noflevels, \
-lay_var,dgh,dp, lay_wgt, lay_wgt_var, wgt_var,time,g
+local g, lat, nS_N,nW_E, eta, nEta, tmp, p_eta, p_surf, d_pres, p_int, \
+insum, r_c_eta, p_eta, p_tp_in, p_tp
 
 begin
   g = 9.81                       ; gravity
 
-; check the file handle is okay
   if(typeof(file_handle).eq."file") then
     ISFILE = True
     nc_file = file_handle
@@ -43,44 +42,47 @@ begin
     return
   end if
 
-; get var we need to return
-  if ( dim_len0(var_in) .eq. 1) then
-    var = wrf_user_getvar(nc_file,var_in,time)
-  else
-    var = wrf_user_getvar(nc_file,var_in(0),time)
-    do it = 1, dim_len0(var_in) - 1, 1
-      var = var + wrf_user_getvar(nc_file,var_in(0),time)
-    end do
-  end if
-
-  p_surf = (/nc_file->PSFC(time,:,:)/)
-  p_tp_in = (/nc_file->P_TOP/)     ;pressure at top of model
-
+  lat = (/nc_file->XLAT(0,:,:)/)        ;lat (mass)
+  DimLat = dimsizes(lat)
+  nS_N = DimLat(0)           ;S_N dimension
+  nW_E = DimLat(1)           ;W_E dimension
   eta = (/nc_file->ZNU(0,:)/)           ;eta values on half-levels (mass)
   nEta = dimsizes(eta)
 
-  ph = wrf_user_getvar(nc_file,"PH",time)
-  phb = wrf_user_getvar(nc_file,"PHB",time)
-  pres = wrf_user_getvar(nc_file,"pressure",time)
-  height = wrf_user_getvar(nc_file,"height",time)
+  p_eta = new((/nEta,nS_N,nW_E/), float, "No_FillValue")
+  p_surf = new((/nS_N,nW_E/), float, "No_FillValue")
+  d_pres = new((/nS_N,nW_E/), float, "No_FillValue")
+  p_int = new((/nEta+1,nS_N,nW_E/), float, "No_FillValue")
 
-  gh = ph + phb               ;geo potential height
-  dim = dimsizes(var)
-  wgt_var = new((/ dim(1),dim(2) /),typeof(var))
+  insum = new((/nS_N,nW_E/), float, "No_FillValue")
+  r_c_eta = new((/nEta,nS_N,nW_E/), float, "No_FillValue")
+  r_c_eta = (/nc_file->$var_in$(time,:,:,:)/)
 
-  wgt_var = 0                   ;intialize
-  do z = 0, nEta - 2, 1   ; z level
-    lay_var = (var(z+1,:,:) + var(z,:,:)) / 2. ; mean var
-    dgh = gh(z+1,:,:) - gh(z,:,:) ; 𝑑Φ
-    dp = pres(z+1,:,:) - pres(z,:,:) ; 𝑑𝑝
-    dz = height(z+1,:,:) - height(z,:,:) ; 𝑑z
+  ; get values
+  p_eta = (/wrf_user_getvar(nc_file,"pressure",time)/)
+  p_surf = (/nc_file->PSFC(time,:,:)/)
+  p_tp_in = (/nc_file->P_TOP/)     ;pressure at top of model
 
-    lay_wgt = -dz * (dp/dgh)   ;  𝜚 = - 𝑑𝑝/(𝑑𝑧 * 𝑔) = - dp/𝑑Φ
-    lay_wgt_var = lay_var * lay_wgt ; 𝜚 * var = -dp * var /dΦ
-    wgt_var = wgt_var + lay_wgt_var
+  ;in some files P_TOP has two dimensions, in some it has one dimension
+  if ((dimsizes(dimsizes(p_tp_in))) .eq. 2) then
+    p_tp = p_tp_in(0,0)
+  else
+    p_tp = p_tp_in(0)
+  end if
+
+  ; -calculate the pressure at the intersection between eta levels
+  p_int(0,:,:) = p_surf
+  p_int(nEta,:,:) = p_tp
+  do k = 1, nEta-1
+    p_int(k,:,:) = (p_eta(k-1,:,:)+p_eta(k,:,:))*0.5
   end do
-  printVarInfo(wgt_var,"")
-  return(wgt_var)
+
+  do k = 0, nEta-1
+    ; -calculate the difference in pressure between eta levels
+    d_pres = p_int(k,:,:) - p_int(k+1,:,:)
+    insum(:,:) = insum(:,:) + (r_c_eta(k,:,:)*d_pres/9.81)
+  end do
+  return(insum)
 end
 
 ;_____________________________________________________________________________
