@@ -53,9 +53,16 @@ begin
   p_surf = new((/nS_N,nW_E/), float, "No_FillValue")
   d_pres = new((/nS_N,nW_E/), float, "No_FillValue")
   p_int = new((/nEta+1,nS_N,nW_E/), float, "No_FillValue")
-
   insum = new((/nS_N,nW_E/), float, "No_FillValue")
   r_c_eta = new((/nEta,nS_N,nW_E/), float, "No_FillValue")
+
+  p_eta = 0.
+  p_int = 0.
+  p_dpres = 0.
+  p_surf = 0.
+  r_c_eta = 0.
+  insum = 0.
+
   r_c_eta = (/nc_file->$var_in$(time,:,:,:)/)
 
   ; get values
