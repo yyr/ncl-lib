@@ -110,6 +110,20 @@ begin
   return
 end
 
+;_____________________________________________________________________________
+; procedure: set_res_cn_limits
+; Doc: self descriptive
+;_____________________________________________________________________________
+undef("set_res_cn_limits_explicit")
+procedure set_res_cn_limits_explicit(res_in:logical,levs:numeric)
+local res_in
+begin
+  res_in@cnLevelSelectionMode = "ExplicitLevels"
+  res_in@cnLevels = levs
+  return
+end
+
+
 
 ;_____________________________________________________________________________
 ; procedure: set_colormap
