@@ -174,11 +174,13 @@ local env,fh
 begin
   env = "NCL_FIN"
   fname = getenv(env)
+  file_name_str = "wrfout"
+
   if ( .not. ismissing(fname) ) then
     fh = addfile(fname,"r")
   else
     delete(fname)
-    fname = systemfunc("ls wrfout*")
+    fname = systemfunc("ls " + file_name_str + "*")
     print_info("NCL_FIN environment is not set. " + \
                "Trying to search wrfout in current directory","warn")
     if ( .not. ismissing(fname) ) then
