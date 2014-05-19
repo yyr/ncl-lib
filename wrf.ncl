@@ -21,10 +21,9 @@ begin
 end
 
 ;_____________________________________________________________________________
-; wrf_user_getvar_weighted_sum:
-;          Calculate weight of the layer will be calculated using
-;          hydrostatic equation.
-;_____________________________________________________________________________
+; wrf_user_getvar_weighted_sum: Calculate weight of the layer using
+; hydrostatic equation.
+; _____________________________________________________________________________
 undef("wrf_user_getvar_weighted_sum")
 function wrf_user_getvar_weighted_sum(file_handle,var_in:string, time:integer)
 local g, lat, nS_N,nW_E, eta, nEta, tmp, p_eta, p_surf, d_pres, p_int, \
@@ -63,7 +62,16 @@ begin
   r_c_eta = 0.
   insum = 0.
 
-  r_c_eta = (/nc_file->$var_in$(time,:,:,:)/)
+  if ( dim_len0(var_in) .eq. 1 ) then
+    r_c_eta = (/nc_file->$var_in$(time,:,:,:)/)
+  else
+    do it = 0, dim_len0(var_in) - 1, 1    ; doc
+      v = var_in(it)
+;      print("Adding " + var_in(it))
+      r_c_eta = r_c_eta + (/nc_file->$v$(time,:,:,:)/)
+    end do
+  end if
+
 
   ; get values
   p_eta = (/wrf_user_getvar(nc_file,"pressure",time)/)
