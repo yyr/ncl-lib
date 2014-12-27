@@ -96,6 +96,25 @@ begin
 end
 
 ;_____________________________________________________________________________
+; Function: set_res_cn_lines
+; Doc: self descriptive.
+;_____________________________________________________________________________
+undef("set_res_cn_lines")
+function set_res_cn_lines(res_in:logical)
+local res, res_in, res_attr
+begin
+  res = res_in
+  res_attr = (/"cnFillColor" , "False",        \
+               "gsnSpreadColors"   , "False",  \
+               "cnFillOn"          , "False",  \
+               "cnLinesOn"         , "True",   \
+               "cnInfoLabelOn"     , "False",  \
+               "cnLineLabelsOn"    , "True"    \
+               /)
+  return(set_res_value_keep(res,res_attr))
+end
+
+;_____________________________________________________________________________
 ; procedure: set_res_cn_limits
 ; Doc: self descriptive
 ;_____________________________________________________________________________
