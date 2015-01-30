@@ -8,6 +8,33 @@
 ; my dumb ncl functions/procedures
 
 load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_code.ncl"
+
+;_____________________________________________________________________________
+; procedure: true
+; Doc: put True "s" a property of resource "r"
+;_____________________________________________________________________________
+undef("true")
+procedure true(r:logical, s:string)
+local r, s
+begin
+  r@$s$ = True
+  return
+end
+
+;_____________________________________________________________________________
+; procedure: false
+; Doc:
+;_____________________________________________________________________________
+undef("false")
+procedure false(r:logical, s:string)
+local r, s
+begin
+  r@$s$ = False
+  return
+end
+
+
+
 ;_____________________________________________________________________________
 ; Function: set_res_no_frame
 ; Doc: add gsnDraw and gsnFrame to false and maxmize plot to True and return it
@@ -89,6 +116,7 @@ begin
   res_attr = (/"cnFillColor"       , "True",  \
                "cnSmoothingOn"     , "True",  \
                "cnFillOn"          , "True",  \
+               "cnLinesOn"         , "False",   \
                "cnInfoLabelOn"     , "False", \
                "cnLineLabelsOn"    , "False", \
                "gsnSpreadColors"   , "True"   \
