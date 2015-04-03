@@ -270,7 +270,7 @@ end
 ;_____________________________________________________________________________
 undef("set_res_mp_latlon")
 function set_res_mp_latlon(res_in:logical,lonL:float,lonR:float, \
-                            latB:float,latU:float)
+                           latB:float,latU:float)
 local res_in,res_attr
 
 begin
@@ -295,7 +295,9 @@ begin
                "gsnPanelLabelBar" , "True"     , \
                "gsnMaximize"      , "True"     , \
                "lbOrientation"    , "vertical" , \
-               "amJust"           , "TopLeft"    \
+               "gsnPanelFigureStringsFontHeightF", "0.01", \
+               "amJust"           , "TopLeft",   \
+               "lbAutoManage"     , "True"       \
                /)
   res@gsnPanelFigureStrings = get_res_value_keep(res, "gsnPanelFigureStrings", (/"a", "b", "c", "d", "e", "f", "g", "h"/))
   res = set_res_value_keep(res,res_attr)
@@ -319,9 +321,9 @@ begin
                "lbLabelAutoStride"  ,"True"          , \
                "lbBoxMinorExtentF"  , "0.13"         , \
                "lbTitleFontHeightF" , "0.015"        , \
-               "lbLabelFontHeightF" , "0.015"        , \
+               "lbLabelFontHeightF" , "0.01"        , \
                "lbTitleJust"        , "BottomCenter" , \
-               "lbTitleOn"          , "False"        , \
+               "lbTitleOn"          , "True"        , \
                "lbTitleOffsetF"     , "-0.5"          \
                /)
   res_out = set_res_value_keep(res_out,res_attr)
