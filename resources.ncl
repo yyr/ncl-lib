@@ -61,8 +61,8 @@ function set_res_tm_size(res_in:logical)
 local res_in, res_attr
 
 begin
-  res_attr = (/"tmXBLabelFontHeightF" , "0.014" , \
-               "tmYLLabelFontHeightF" , "0.014"   \
+  res_attr = (/"tmXBLabelFontHeightF" , "0.02" , \
+               "tmYLLabelFontHeightF" , "0.02"   \
                /)
   return(set_res_value_keep(res_in,res_attr))
 end
