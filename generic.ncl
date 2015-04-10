@@ -271,10 +271,13 @@ begin
   do it = 0, dimsizes(att_list) -1 ,  2
     if ( islogicalstring(att_list(it+1)) ) then
       res@$att_list(it)$ = get_res_value_keep(res,att_list(it),string2logical(att_list(it+1)))
-      else if ( isnumstring(att_list(it+1))) then
-        res@$att_list(it)$ = get_res_value_keep(res,att_list(it),string2int_or_float(att_list(it+1)))
-      else
+      else if ( strlen(att_list(it+1)) .eq. 0)
         res@$att_list(it)$ = get_res_value_keep(res,att_list(it),att_list(it+1)) ; no conversions
+        else if ( isnumstring(att_list(it+1))) then
+          res@$att_list(it)$ = get_res_value_keep(res,att_list(it),string2int_or_float(att_list(it+1)))
+        else
+          res@$att_list(it)$ = get_res_value_keep(res,att_list(it),att_list(it+1)) ; no conversions
+        end if
       end if
     end if
   end do
