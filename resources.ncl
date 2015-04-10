@@ -61,8 +61,8 @@ function set_res_tm_size(res_in:logical)
 local res_in, res_attr
 
 begin
-  res_attr = (/"tmXBLabelFontHeightF" , "0.02" , \
-               "tmYLLabelFontHeightF" , "0.02"   \
+  res_attr = (/"tmXBLabelFontHeightF" , "0.03" , \
+               "tmYLLabelFontHeightF" , "0.03"   \
                /)
   return(set_res_value_keep(res_in,res_attr))
 end
@@ -318,13 +318,14 @@ begin
                "lbOrientation"      , "Horizontal"   , \
                "lbPerimOn"          , "False"        , \
                "lbLabelJust"        , "BottomCenter" , \
-               "lbLabelAutoStride"  ,"True"          , \
+               "lbLabelAutoStride"  , "True"          , \
+               "lbTitleString"      , ""         , \
                "lbBoxMinorExtentF"  , "0.13"         , \
                "lbTitleFontHeightF" , "0.015"        , \
                "lbLabelFontHeightF" , "0.01"        , \
                "lbTitleJust"        , "BottomCenter" , \
                "lbTitleOn"          , "True"        , \
-               "lbTitleOffsetF"     , "-0.5"          \
+               "lbTitleOffsetF"     , "-.5"          \
                /)
   res_out = set_res_value_keep(res_out,res_attr)
   return(res_out)
