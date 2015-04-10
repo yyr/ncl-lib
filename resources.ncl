@@ -201,9 +201,9 @@ end
 undef("set_res_aspectratio_manual")
 procedure set_res_aspectratio_manual(res:logical,width:numeric,height:numeric)
 begin
-  res@mpShapeMode = "FreeAspect"
-  res@vpWidthF = 0.8
-  res@vpHeightF = 0.4
+  ; res@mpShapeMode = "FreeAspect"
+  res@vpWidthF = width
+  res@vpHeightF = height
 end
 
 ;_____________________________________________________________________________
