@@ -265,6 +265,20 @@ begin
 end
 
 ;_____________________________________________________________________________
+; Function: set_res_vc_anno
+; Doc:
+;_____________________________________________________________________________
+undef("set_res_vc_anno")
+function set_res_vc_anno(res:logical)
+begin
+    res@vcRefAnnoString2 = ""
+    res@vcRefAnnoString1 = "10 m/s"
+    res@vcRefAnnoZone = 1
+    res@vcRefAnnoOrthogonalPosF = 1
+  return(res)
+end
+
+;_____________________________________________________________________________
 ; Function: set_res_mp_latlon
 ; Doc: set zoom resources in of a plot
 ;_____________________________________________________________________________
