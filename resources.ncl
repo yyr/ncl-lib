@@ -43,8 +43,7 @@ undef("set_res_no_frame")
 function set_res_no_frame(res_in:logical)
 local res_in, res_attr
 begin
-  res_attr = (/"gsnMaximize"    , "True"  , \
-               "gsnPaperMargin" , "0.0"   , \ ; no margins
+  res_attr = (/"gsnPaperMargin" , "0.0"   , \ ; no margins
                "gsnDraw"        , "False" , \ ; Do not draw plot
                "gsnFrame"       , "False"   \ ; Do not advance frame
                /)
@@ -61,8 +60,8 @@ function set_res_tm_size(res_in:logical)
 local res_in, res_attr
 
 begin
-  res_attr = (/"tmXBLabelFontHeightF" , "0.03" , \
-               "tmYLLabelFontHeightF" , "0.03"   \
+  res_attr = (/"tmXBLabelFontHeightF" , "0.015" , \
+               "tmYLLabelFontHeightF" , "0.015"   \
                /)
   return(set_res_value_keep(res_in,res_attr))
 end
