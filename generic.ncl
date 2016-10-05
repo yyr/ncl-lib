@@ -48,6 +48,17 @@ begin
   return
 end
 
+;_____________________________________________________________________________
+; procedure: ppname
+; Doc:
+;_____________________________________________________________________________
+undef("ppname")
+procedure ppname(pname:string, ext:string)
+local pname, ext
+
+begin
+  print("PLOT ==> " + pname + "." + ext)
+end
 
 ;_____________________________________________________________________________
 ; Function: rank_of
