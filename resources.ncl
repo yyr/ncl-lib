@@ -9,6 +9,7 @@
 
 load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_code.ncl"
 
+load "$nsc/generic.ncl"
 ;_____________________________________________________________________________
 ; procedure: true
 ; Doc: put True "s" a property of resource "r"

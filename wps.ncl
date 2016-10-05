@@ -1,8 +1,7 @@
 ;    File: wps.ncl
 ; Created: 月曜日, 8月 20 2012
 
-import("WRFUserARW")
-
+load "$NCARG_ROOT/lib/ncarg/nclscripts/wrf/WRFUserARW.ncl"
 
 ;_____________________________________________________________________________
 ; Function: wps_parse_namelist_for_domain

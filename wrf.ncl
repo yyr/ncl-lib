@@ -1,5 +1,5 @@
-import("WRFUserARW")
-import("shea_util")
+load "$NCARG_ROOT/nclscripts/wrf/WRFUserARW.ncl"
+load "$NCARG_ROOT/nclscripts/contrib/shea_util.ncl"
 
 ;__________________ I/O ________________________________________
 

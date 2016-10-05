@@ -1,5 +1,4 @@
-import("gsn_code")
-import("gsn_csm")
+load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_code.ncl"
 
 ;_____________________________________________________________________________
 undef("panelize")
