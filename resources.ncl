@@ -8,6 +8,8 @@
 ; my dumb ncl functions/procedures
 
 load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_code.ncl"
+load "$nsc/generic.ncl"
+
 ;_____________________________________________________________________________
 ; Function: set_res_no_frame
 ; Doc: add gsnDraw and gsnFrame to false and maxmize plot to True and return it

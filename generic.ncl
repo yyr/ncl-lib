@@ -4,8 +4,7 @@
 ; License: GPL v3 or later. <http://www.gnu.org/licenses/gpl.html>
 ;
 
-import("is")
-import("gsn_code")
+load "$nsc/is.ncl"
 
 ;; define exit_codes
 coerce_error = 2
@@ -48,6 +47,7 @@ begin
   end if
   return
 end
+
 
 ;_____________________________________________________________________________
 ; Function: rank_of
