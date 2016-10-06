@@ -376,3 +376,22 @@ begin
   res_out = set_res_value_keep(res_out,res_attr)
   return(res_out)
 end
+
+;_____________________________________________________________________________
+; Function: month_name
+; Doc:
+;_____________________________________________________________________________
+undef("month_name")
+function month_name(n:integer)
+local n, month_names
+
+begin
+  month_names = (/"JAN", "FEB", "MAR", "APR", "MAY", \
+                  "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"/)
+  if ( n .le. 11 ) then
+    return(month_names(n))
+  else
+    print_info("WRONG MONTH SUBSCRIPT", "warn")
+    return("WRONG MONTH SUBSCRIPT")
+  end if
+end
