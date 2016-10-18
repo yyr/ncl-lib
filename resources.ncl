@@ -395,3 +395,26 @@ begin
     return("WRONG MONTH SUBSCRIPT")
   end if
 end
+
+;_____________________________________________________________________________
+; Function: set_res_legend
+; Doc:
+;_____________________________________________________________________________
+undef("set_res_legend")
+function set_res_legend(res:logical)
+local res_out
+
+begin
+  res_out                    = res
+  res_attr = (/"pmLegendDisplayMode"    , "Always", \ ; turn on legend
+               "pmLegendSide"           , "Top",    \ ; Change location of
+               "pmLegendParallelPosF"   , ".9",     \ ; move units right
+               "pmLegendOrthogonalPosF" , "-0.2",   \ ; move units down
+               "pmLegendWidthF"         , "0.05",   \ ; Change width and
+               "pmLegendHeightF"        , "0.08",   \ ; height of legend.
+               "lgPerimOn"              , "False",  \ ; turn off box around
+               "lgLabelFontHeightF"     , ".02"     \ ; label font height
+  /)
+  res_out = set_res_value_keep(res_out,res_attr)
+  return(res_out)
+end
