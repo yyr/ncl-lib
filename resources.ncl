@@ -418,3 +418,18 @@ begin
   res_out = set_res_value_keep(res_out,res_attr)
   return(res_out)
 end
+
+;_____________________________________________________________________________
+; Function: set_res_centered_pacific
+; Doc:
+;_____________________________________________________________________________
+undef("set_res_centered_pacific")
+function set_res_centered_pacific(res:logical)
+local res
+
+begin
+  res@mpMinLonF=0
+  res@mpMaxLonF=360
+  res@mpCenterLonF=180
+  return(res)
+end
