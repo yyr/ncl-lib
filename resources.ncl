@@ -464,3 +464,36 @@ begin
   res@trYMaxF = maxv
   return(res)
 end
+
+;_____________________________________________________________________________
+; Function: set_res_tm_manual
+; Doc:
+;_____________________________________________________________________________
+undef("set_res_tm_manual")
+function set_res_tm_manual(res:logical, strt, endd, spacing)
+local  res, strt, endd, spacing
+
+begin
+  res@tmXBMode        = "Manual"
+  res@tmXBTickStartF  = strt
+  res@tmXBTickEndF    = endd
+  res@tmXBTickSpacingF= spacing
+  return(res)
+end
+
+
+;_____________________________________________________________________________
+; Function: set_res_tm_explicit
+; Doc:
+;_____________________________________________________________________________
+undef("set_res_tm_explicit")
+function set_res_tm_explicit(res:logical, vals, labls, minors)
+local  res, vals, labls, minors
+
+begin
+  res@tmXBMode        = "Explicit"
+  res@tmXBValues      = vals
+  res@tmXBLabels      = labls
+  res@tmXBMinorValues = minors
+  return(res)
+end
