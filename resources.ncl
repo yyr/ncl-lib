@@ -199,11 +199,14 @@ end
 ; Doc:
 ;_____________________________________________________________________________
 undef("set_res_aspectratio_manual")
-procedure set_res_aspectratio_manual(res:logical,width:numeric,height:numeric)
+function set_res_aspectratio_manual(res:logical,width:numeric,height:numeric)
+local res, width, height
+
 begin
   ; res@mpShapeMode = "FreeAspect"
   res@vpWidthF = width
   res@vpHeightF = height
+  return(res)
 end
 
 ;_____________________________________________________________________________
