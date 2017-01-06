@@ -436,3 +436,31 @@ begin
   res@mpCenterLonF=180
   return(res)
 end
+
+;_____________________________________________________________________________
+; Function: set_res_tix_limits
+; Doc:
+;_____________________________________________________________________________
+undef("set_res_tix_limits")
+function set_res_tix_limits(res, minv:numeric, maxv:numeric)
+local res, minv, maxv
+
+begin
+  res@trXMinF = minv
+  res@trXMaxF = maxv
+  return(res)
+end
+
+;_____________________________________________________________________________
+; Function: set_res_tiy_limits
+; Doc:
+;_____________________________________________________________________________
+undef("set_res_tiy_limits")
+function set_res_tiy_limits(res, minv:numeric, maxv:numeric)
+local res, minv, maxv
+
+begin
+  res@trYMinF = minv
+  res@trYMaxF = maxv
+  return(res)
+end
