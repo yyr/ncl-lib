@@ -97,9 +97,9 @@ function set_res_highres_coast(res_in:logical)
 local res_in, res_attr
 
 begin
-  res_attr = (/"mpDataBaseVersion"           , "HighRes" , \
+  res_attr = (/"mpDataBaseVersion"           , "MediumRes" , \
                "mpGeophysicalLineColor"      , "Black"   , \
-               "mpGeophysicalLineThicknessF" , "2"         \
+               "mpGeophysicalLineThicknessF" , "1"         \
                /)
   return(set_res_value_keep(res_in,res_attr))
 end
