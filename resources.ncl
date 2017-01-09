@@ -44,13 +44,28 @@ undef("set_res_no_frame")
 function set_res_no_frame(res_in:logical)
 local res_in, res_attr
 begin
-  res_attr = (/"gsnPaperMargin" , "0.0"   , \ ; no margins
-               "gsnDraw"        , "False" , \ ; Do not draw plot
+  res_attr = (/"gsnDraw"        , "False" , \ ; Do not draw plot
                "gsnFrame"       , "False"   \ ; Do not advance frame
                /)
 
   return(set_res_value_keep(res_in,res_attr))
 end
+
+;_____________________________________________________________________________
+; Function: set_res_no_margin
+; Doc:
+;_____________________________________________________________________________
+undef("set_res_no_margin")
+function set_res_no_margin(res_in:logical)
+local res_in, res_attr
+
+begin
+  res_attr = (/"gsnPaperMargin" , "0.1"   , \ ; no margins
+               "gsnMaximize"    , "True"    \ ; crop almost
+               /)
+  return(set_res_value_keep(res_in,res_attr))
+end
+
 
 ;_____________________________________________________________________________
 ; Function: set_res_tm_size
