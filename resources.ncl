@@ -470,6 +470,21 @@ begin
 end
 
 ;_____________________________________________________________________________
+; Function: set_res_xy
+; Doc:
+;_____________________________________________________________________________
+undef("set_res_xy")
+function set_res_xy(res)
+local res
+
+begin
+  res@xyLineThicknesses = (/3.0, 3.0, 3.0, 3.0/) ; make second line thicker
+  res@xyDashPattern  = 0                         ; Make curves all solid
+  return(res)
+end
+
+
+;_____________________________________________________________________________
 ; Function: set_res_centered_pacific
 ; Doc:
 ;_____________________________________________________________________________
