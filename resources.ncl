@@ -316,6 +316,38 @@ begin
 end
 
 ;_____________________________________________________________________________
+; Function: set_res_mp_lon_limits
+; Doc: set lon limits to horizontal plot
+;_____________________________________________________________________________
+undef("set_res_mp_lon_limits")
+function set_res_mp_lon_limits(res_in:logical, lonB:float, lonU:float)
+local res_in,res_attr
+
+begin
+  res_out  = res_in
+  res_out@mpLimitMode = "LatLon"
+  res_out@mpMinLonF      = lonB
+  res_out@mpMaxLonF = lonU
+  return(res_out)
+end
+
+;_____________________________________________________________________________
+; Function: set_res_mp_lat_limits
+; Doc: set lat limits to horizontal plot
+;_____________________________________________________________________________
+undef("set_res_mp_lat_limits")
+function set_res_mp_lat_limits(res_in:logical, latB:float, latU:float)
+local res_in,res_attr
+
+begin
+  res_out  = res_in
+  res_out@mpLimitMode = "LatLon"
+  res_out@mpMinLatF      = latB
+  res_out@mpMaxLatF = latU
+  return(res_out)
+end
+
+;_____________________________________________________________________________
 ; Function: set_res_panel
 ; Doc:
 ;_____________________________________________________________________________
