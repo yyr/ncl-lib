@@ -528,11 +528,11 @@ begin
 end
 
 ;_____________________________________________________________________________
-; Function: set_res_tm_manual
+; Function: set_res_tmxb_manual
 ; Doc:
 ;_____________________________________________________________________________
-undef("set_res_tm_manual")
-function set_res_tm_manual(res:logical, strt, endd, spacing)
+undef("set_res_tmxb_manual")
+function set_res_tmxb_manual(res:logical, strt, endd, spacing)
 local  res, strt, endd, spacing
 
 begin
@@ -543,13 +543,30 @@ begin
   return(res)
 end
 
-
 ;_____________________________________________________________________________
-; Function: set_res_tm_explicit
+; Function: set_res_tmyl_manual
 ; Doc:
 ;_____________________________________________________________________________
-undef("set_res_tm_explicit")
-function set_res_tm_explicit(res:logical, vals, labls, minors)
+undef("set_res_tmyl_manual")
+function set_res_tmyl_manual(res:logical, strt, endd)
+local  res, strt, endd, spacing
+
+begin
+  res@tmYLMode        = "Manual"
+  res@tmYLTickStartF  = strt
+  res@tmYLTickEndF    = endd
+  ; res@tmYLTickSpacingF= spacing
+  return(res)
+end
+
+
+
+;_____________________________________________________________________________
+; Function: set_res_tmxb_explicit
+; Doc:
+;_____________________________________________________________________________
+undef("set_res_tmxb_explicit")
+function set_res_tmxb_explicit(res:logical, vals, labls, minors)
 local  res, vals, labls, minors
 
 begin
@@ -559,3 +576,21 @@ begin
   res@tmXBMinorValues = minors
   return(res)
 end
+
+;_____________________________________________________________________________
+; Function: set_res_tmyl_explicit
+; Doc:
+;_____________________________________________________________________________
+undef("set_res_tmyl_explicit")
+function set_res_tmyl_explicit(res:logical, vals, labls, minors)
+local  res, vals, labls, minors
+
+begin
+  res@tmYLMode        = "Explicit"
+  res@tmYLValues      = vals
+  res@tmYLLabels      = labls
+  res@tmYLMinorValues = minors
+  return(res)
+end
+
+;_____________________________________________________________________________
