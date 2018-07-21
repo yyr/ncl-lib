@@ -1,5 +1,5 @@
-load "$NCARG_ROOT/nclscripts/wrf/WRFUserARW.ncl"
-load "$NCARG_ROOT/nclscripts/contrib/shea_util.ncl"
+load "$NCARG_ROOT/lib/ncarg/nclscripts/wrf/WRFUserARW.ncl"
+load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/shea_util.ncl"
 
 ;__________________ I/O ________________________________________
 
