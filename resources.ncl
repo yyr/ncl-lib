@@ -566,14 +566,13 @@ end
 ; Doc:
 ;_____________________________________________________________________________
 undef("set_res_tmxb_explicit")
-function set_res_tmxb_explicit(res:logical, vals, labls, minors)
-local  res, vals, labls, minors
+function set_res_tmxb_explicit(res:logical, vals, labls)
+local  res, vals, labls
 
 begin
   res@tmXBMode        = "Explicit"
   res@tmXBValues      = vals
   res@tmXBLabels      = labls
-  res@tmXBMinorValues = minors
   return(res)
 end
 
@@ -582,14 +581,13 @@ end
 ; Doc:
 ;_____________________________________________________________________________
 undef("set_res_tmyl_explicit")
-function set_res_tmyl_explicit(res:logical, vals, labls, minors)
-local  res, vals, labls, minors
+function set_res_tmyl_explicit(res:logical, vals, labls)
+local  res, vals, labls
 
 begin
   res@tmYLMode        = "Explicit"
   res@tmYLValues      = vals
   res@tmYLLabels      = labls
-  res@tmYLMinorValues = minors
   return(res)
 end
 
