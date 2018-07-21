@@ -594,3 +594,52 @@ begin
 end
 
 ;_____________________________________________________________________________
+; Function: reassign_viewport
+; Doc:
+;_____________________________________________________________________________
+undef("reassign_viewport")
+function reassign_viewport(plot, res)
+local res
+
+begin
+
+  getvalues plot
+    "vpXF"      : vpxf
+    "vpYF"      : vpyf
+    "vpHeightF" : vpheightf
+    "vpWidthF"  : vpwidthf
+  end getvalues
+
+  res@vpXF      = vpxf
+  res@vpYF      = vpyf
+  res@vpHeightF = vpheightf
+  res@vpWidthF  = vpwidthf
+  return(res)
+end
+
+;_____________________________________________________________________________
+; Function: res_unset_titles
+; Doc:
+;_____________________________________________________________________________
+undef("res_unset_titles")
+function res_unset_titles(res)
+local res
+begin
+  if (isatt(res,"tiMainString") ) then
+    delete(res@tiMainString)
+  end if
+
+  if (isatt(res,"gsnCenterString")) then
+    delete(res@gsnCenterString)
+  end if
+
+  if (isatt(res,"gsnLeftString")) then
+    delete(res@gsnLeftString)
+  end if
+
+  if (isatt(res,"gsnRightString")) then
+    delete(res@gsnRightString)
+  end if
+
+  return(res)
+end
