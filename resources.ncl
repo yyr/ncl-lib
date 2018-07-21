@@ -641,3 +641,17 @@ begin
 
   return(res)
 end
+
+;_____________________________________________________________________________
+; Function: set_res_tmtr_off
+; Doc:
+;_____________________________________________________________________________
+undef("set_res_tmtr_off")
+function set_res_tmtr_off(res)
+local res
+
+begin
+    res@tmXTOn = False
+    res@tmYROn = False
+  return(res)
+end
