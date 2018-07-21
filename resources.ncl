@@ -571,7 +571,14 @@ local  res, vals, labls
 
 begin
   res@tmXBMode        = "Explicit"
+  if (isatt(res,"tmXBValues") ) then
+    delete(res@tmXBValues)
+  end if
   res@tmXBValues      = vals
+
+  if (isatt(res,"tmXBLabels") ) then
+    delete(res@tmXBLabels)
+  end if
   res@tmXBLabels      = labls
   return(res)
 end
@@ -586,8 +593,15 @@ local  res, vals, labls
 
 begin
   res@tmYLMode        = "Explicit"
+  if (isatt(res,"tmYLValues") ) then
+    delete(res@tmYLValues)
+  end if
   res@tmYLValues      = vals
-  res@tmYLLabels      = labls
+
+  if (isatt(res,"tmYLLabels") ) then
+    delete(res@tmYLLabels)
+  end if
+    res@tmYLLabels      = labls
   return(res)
 end
 
